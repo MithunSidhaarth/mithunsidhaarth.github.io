@@ -10,50 +10,46 @@
 
 <style>
 /* GLOBAL RESET */
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 :root{
-  /* --- LIGHT MODE VARIABLES --- */
+  /* --- COLORS --- */
   --bg: #e8e8e8;
   --text: #1a1a1a;
   --muted: #555;
   --accent: #000;
   
-  /* Premium Matte Variables */
+  /* PREMIUM MATTE GLASS */
   --card-bg: rgba(255, 255, 255, 0.65);
   --card-border: 1px solid rgba(255, 255, 255, 0.6);
   --card-blur: blur(24px);
   
-  /* Shadows */
+  /* SHADOWS */
   --premium-shadow: 
       0 20px 40px -10px rgba(0,0,0,0.1), 
       0 0 1px rgba(0,0,0,0.05);
 
-  /* Buttons */
+  /* INTERACTIVE ELEMENTS */
   --btn-bg: rgba(255, 255, 255, 0.5);
   --btn-hover: rgba(255, 255, 255, 0.9);
-  
   --modal-bg: rgba(255, 255, 255, 0.85);
+  
   --term-font: "JetBrains Mono", monospace;
-
-  /* --- TORCH UPDATE: BLACK IN LIGHT MODE --- */
   --torch-color: rgba(0, 0, 0, 0.25); 
+  
+  /* NEURAL NETWORK VISIBILITY */
+  --particle-color: rgba(0,0,0,0.2); 
 }
 
 body.dark{
-  /* --- DARK MODE VARIABLES --- */
   --bg: #050505;
   --text: #e0e0e0;
   --muted: #888;
   --accent: #fff;
   
-  /* Dark Mode Matte */
   --card-bg: rgba(20, 20, 20, 0.6);
   --card-border: 1px solid rgba(255, 255, 255, 0.08);
   
-  /* Deep Dark Shadows */
   --premium-shadow: 
       0 25px 50px -12px rgba(0,0,0,0.5), 
       0 0 1px rgba(255,255,255,0.05);
@@ -62,9 +58,22 @@ body.dark{
   --btn-hover: rgba(255, 255, 255, 0.15);
   
   --modal-bg: rgba(20, 20, 20, 0.9);
-
-  /* --- TORCH UPDATE: WHITE IN DARK MODE --- */
   --torch-color: rgba(255, 255, 255, 0.15);
+  
+  /* NEURAL NETWORK VISIBILITY */
+  --particle-color: rgba(255,255,255,0.2);
+}
+
+/* MATRIX MODE (Secret Theme) */
+body.matrix-mode {
+    --text: #00ff41;
+    --accent: #00ff41;
+    --muted: #008f11;
+    --bg: #000;
+    --card-bg: rgba(0, 20, 0, 0.8);
+    --card-border: 1px solid #003b00;
+    --torch-color: rgba(0, 255, 65, 0.2);
+    --particle-color: rgba(0, 255, 65, 0.3);
 }
 
 body{
@@ -75,6 +84,15 @@ body{
   height:100vh;
   overflow:hidden;
   transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* BACKGROUND CANVAS */
+#neural-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1; /* Behind everything */
+    pointer-events: none;
 }
 
 #layout{
@@ -102,7 +120,6 @@ body{
   -webkit-backdrop-filter: var(--card-blur);
   border: var(--card-border);
   box-shadow: var(--premium-shadow);
-  
   border-radius:24px;
   padding:36px;
   display: flex;
@@ -115,12 +132,12 @@ body{
     overflow-y: auto;
     overflow-x: hidden;
     padding-right: 0;
-    scrollbar-width: none;  /* Firefox */
-    -ms-overflow-style: none;  /* IE */
+    scrollbar-width: none; 
+    -ms-overflow-style: none;
 }
-.info-scroll::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+.info-scroll::-webkit-scrollbar { display: none; }
 
-/* NAME STYLES */
+/* ANIMATIONS */
 @keyframes attention {
     0% { transform: scale(1); text-shadow: 0 0 0 transparent; }
     50% { transform: scale(1.02); text-shadow: 0 0 25px var(--torch-color); }
@@ -140,11 +157,32 @@ body{
 #subtitle{ 
     font-size:1.1rem; 
     color:var(--muted); 
-    margin-bottom:32px; 
+    margin-bottom:24px; 
     font-weight:500; 
     letter-spacing: 0.05em;
     text-transform: uppercase;
 }
+
+/* HACKER BIO */
+#bio-typewriter {
+    font-family: var(--term-font);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text);
+    margin-bottom: 32px;
+    min-height: 80px; 
+    white-space: pre-wrap;
+    opacity: 0.9;
+}
+#bio-typewriter::after {
+    content: '▋';
+    display: inline-block;
+    vertical-align: baseline;
+    animation: blink 1s step-end infinite;
+    color: var(--accent);
+    margin-left: 2px;
+}
+@keyframes blink { 50% { opacity: 0; } }
 
 .section { margin-bottom:32px; }
 .section h3{ font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:2px; margin:0 0 14px 0; font-weight:700; opacity: 0.8; }
@@ -157,20 +195,35 @@ body{
     background: var(--btn-bg);
     border: var(--card-border);
     border-radius: 16px;
-    padding: 20px;
-    font-size: 0.85rem;
+    padding: 24px;
+    font-size: 0.8rem;
     backdrop-filter: blur(10px);
+}
+.cheat-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+.cheat-header {
+    font-weight: 700;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 0.7rem;
+    color: var(--muted);
+    opacity: 0.8;
+    border-bottom: 1px solid rgba(125,125,125,0.2);
+    padding-bottom: 4px;
 }
 .cheat-row {
     display: flex;
     justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px dashed rgba(125,125,125,0.2);
+    padding: 6px 0;
+    border-bottom: 1px dashed rgba(125,125,125,0.15);
 }
 .cheat-row:last-child { border-bottom: none; }
 .cmd-key { font-family: var(--term-font); font-weight: 700; color: var(--accent); }
 .cmd-desc { color: var(--muted); }
-
 
 /* --- RIGHT PANEL --- */
 #right{
@@ -185,7 +238,6 @@ body{
   backdrop-filter: var(--card-blur);
   border: var(--card-border);
   box-shadow: inset 0 0 30px rgba(0,0,0,0.03), var(--premium-shadow);
-  
   font-family: var(--term-font);
   padding: 32px;
 }
@@ -229,13 +281,11 @@ input{
     padding: 0;
     backdrop-filter: none;
 }
-
 .contact-list{ 
     display:grid; 
     grid-template-columns: repeat(4, 1fr); 
     gap:16px; 
 }
-
 .contact-item{
   display:flex; align-items:center; gap:10px;
   justify-content: center;
@@ -250,18 +300,13 @@ input{
   transition: all .3s cubic-bezier(0.25, 0.8, 0.25, 1);
   backdrop-filter: blur(5px);
 }
-
 .contact-item:hover{ 
     background: var(--btn-hover); 
     color: var(--text); 
     transform: translateY(-4px); 
     box-shadow: 0 10px 20px rgba(0,0,0,0.08);
 }
-
-.contact-item .icon { 
-    font-size: 1.1rem; 
-    color: var(--accent);
-}
+.contact-item .icon { font-size: 1.1rem; color: var(--accent); }
 
 /* --- MOBILE --- */
 @media (max-width: 900px) {
@@ -270,12 +315,12 @@ input{
     #left { order: 1; height: auto; display: block;}
     .info-scroll { overflow: visible; }
     #name { font-size: 2.8rem; }
-    
     #right { order: 2; height: auto; gap: 16px; }
     #terminal { height: 500px; }
-    
     .contact-list { grid-template-columns: 1fr 1fr; } 
+    .cheat-cols { grid-template-columns: 1fr; gap: 16px; }
     #torch { display: none; } 
+    #neural-canvas { display: none; } /* Save mobile battery */
 }
 
 /* --- EXTRAS --- */
@@ -319,6 +364,8 @@ input{
 </head>
 <body>
 
+<canvas id="neural-canvas"></canvas>
+
 <div id="torch"></div>
 
 <div id="modal-overlay">
@@ -342,6 +389,8 @@ input{
     <div class="info-scroll">
       <div id="name">Mithun Sidhaarth</div>
       <div id="subtitle">Tech Enthusiast</div>
+
+      <div id="bio-typewriter"></div>
 
       <div class="section">
         <h3>Projects</h3>
@@ -379,27 +428,48 @@ input{
   </div>
   
   <div class="cheat-sheet">
-    <div style="font-weight:700; margin-bottom:12px; text-transform:uppercase; letter-spacing:1.5px; font-size:0.7rem; color:var(--muted); opacity:0.8;">System Shortcuts</div>
-    
-    <div class="cheat-row">
-      <span class="cmd-key">projects</span>
-      <span class="cmd-desc">List all projects</span>
-    </div>
-    <div class="cheat-row">
-      <span class="cmd-key">open [id]</span>
-      <span class="cmd-desc">Select item #1-3</span>
-    </div>
-    <div class="cheat-row">
-      <span class="cmd-key">demo / code</span>
-      <span class="cmd-desc">View selected</span>
-    </div>
-    <div class="cheat-row">
-      <span class="cmd-key">theme</span>
-      <span class="cmd-desc">Toggle Dark Mode</span>
-    </div>
-     <div class="cheat-row">
-      <span class="cmd-key">Tab / ↑ ↓</span>
-      <span class="cmd-desc">Auto / History</span>
+    <div class="cheat-cols">
+      
+      <div class="cheat-col">
+        <div class="cheat-header">Navigation</div>
+        <div class="cheat-row">
+          <span class="cmd-key">projects</span>
+          <span class="cmd-desc">List all</span>
+        </div>
+        <div class="cheat-row">
+          <span class="cmd-key">open [id]</span>
+          <span class="cmd-desc">Select</span>
+        </div>
+        <div class="cheat-row">
+          <span class="cmd-key">demo/code</span>
+          <span class="cmd-desc">View</span>
+        </div>
+        <div class="cheat-row">
+          <span class="cmd-key">Tab/↑↓</span>
+          <span class="cmd-desc">History</span>
+        </div>
+      </div>
+
+      <div class="cheat-col">
+        <div class="cheat-header">More</div>
+        <div class="cheat-row">
+          <span class="cmd-key">resume</span>
+          <span class="cmd-desc">View PDF</span>
+        </div>
+        <div class="cheat-row">
+          <span class="cmd-key">hack</span>
+          <span class="cmd-desc">Simulate</span>
+        </div>
+        <div class="cheat-row">
+          <span class="cmd-key">matrix</span>
+          <span class="cmd-desc">Mode</span>
+        </div>
+        <div class="cheat-row">
+          <span class="cmd-key">theme</span>
+          <span class="cmd-desc">L/D Mode</span>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -413,15 +483,13 @@ input{
 
   <div class="contact-panel">
     <div class="contact-list">
-      <div class="contact-item" onclick="openLink('mailto:your@email.com')"><span class="icon">✉</span> Email</div>
-      <div class="contact-item" onclick="openLink('https://linkedin.com')"><span class="icon">in</span> LinkedIn</div>
-      <div class="contact-item" onclick="openLink('https://github.com')"><span class="icon">🐙</span> GitHub</div>
-      <div class="contact-item" onclick="openLink('https://twitter.com')"><span class="icon">𝕏</span> Twitter</div>
-      
-      <div class="contact-item" onclick="openLink('https://instagram.com')"><span class="icon">📷</span> Insta</div>
-      <div class="contact-item" onclick="openLink('https://hashnode.com')"><span class="icon">✍</span> Blog</div>
-      <div class="contact-item" onclick="openLink('https://researchgate.net')"><span class="icon">RG</span> Papers</div>
-      <div class="contact-item" onclick="openLink('https://t.me')"><span class="icon">✈</span> Telegram</div>
+      <div class="contact-item" onclick="openLink('mailto:mithunsidhaartham@gmail.com')"><span class="icon">✉</span> Email</div>
+      <div class="contact-item" onclick="openLink('https://www.linkedin.com/in/mithunsidhaarth/')"><span class="icon">in</span> LinkedIn</div>
+      <div class="contact-item" onclick="openLink('https://github.com/MithunSidhaarth')"><span class="icon">🐙</span> GitHub</div>
+      <div class="contact-item" onclick="openLink('https://www.researchgate.net/profile/Mithun-Sidhaarth-Am')"><span class="icon">RG</span> Papers</div>
+      <div class="contact-item" onclick="openLink('https://www.instagram.com/mithunsidhaarth/')"><span class="icon">📷</span> Insta</div>
+      <div class="contact-item" onclick="openLink('https://hashnode.com/@mithunsidhaarth')"><span class="icon">✍</span> Blog</div>
+      <div class="contact-item" onclick="openLink('https://t.me/aceduke')"><span class="icon">✈</span> Telegram</div>
     </div>
   </div>
 </div>
@@ -429,14 +497,123 @@ input{
 </div>
 
 <script>
-/* TORCH */
-let tx=0,ty=0,cx=0,cy=0;
-const torch=document.getElementById("torch");
-document.addEventListener("mousemove",e=>{tx=e.clientX;ty=e.clientY;});
-setInterval(()=>{
-  cx+=(tx-cx)*.15; cy+=(ty-cy)*.15;
-  torch.style.left=cx+"px"; torch.style.top=cy+"px";
-},16);
+/* ----------------------------------------------------------------
+   1. NEURAL NETWORK CANVAS (UPDATED VISIBILITY)
+   ---------------------------------------------------------------- */
+const canvas = document.getElementById("neural-canvas");
+const ctx = canvas.getContext("2d");
+let particles = [];
+let mouse = { x: null, y: null };
+
+function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resize);
+resize();
+
+document.addEventListener("mousemove", (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+    
+    // Sync Torch
+    const torch = document.getElementById("torch");
+    torch.style.left = e.clientX + "px";
+    torch.style.top = e.clientY + "px";
+});
+
+class Particle {
+    constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.5; // Velocity
+        this.vy = (Math.random() - 0.5) * 0.5;
+        this.size = Math.random() * 2 + 1;
+    }
+
+    update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        // Bounce off edges
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+
+        // Mouse Repulsion (Interaction)
+        let dx = mouse.x - this.x;
+        let dy = mouse.y - this.y;
+        let distance = Math.sqrt(dx*dx + dy*dy);
+        if (distance < 150) {
+            const forceDirectionX = dx / distance;
+            const forceDirectionY = dy / distance;
+            const force = (150 - distance) / 150;
+            this.vx -= forceDirectionX * force * 0.5;
+            this.vy -= forceDirectionY * force * 0.5;
+        }
+    }
+
+    draw() {
+        const style = getComputedStyle(document.body);
+        ctx.fillStyle = style.getPropertyValue('--particle-color').trim();
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
+
+function initParticles() {
+    particles = [];
+    const count = window.innerWidth > 900 ? 80 : 30; // Fewer on mobile
+    for (let i = 0; i < count; i++) particles.push(new Particle());
+}
+
+function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    const style = getComputedStyle(document.body);
+    const pColor = style.getPropertyValue('--particle-color').trim();
+    
+    particles.forEach((p, index) => {
+        p.update();
+        p.draw();
+        
+        // Draw lines
+        for (let j = index; j < particles.length; j++) {
+            const dx = p.x - particles[j].x;
+            const dy = p.y - particles[j].y;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            
+            if (dist < 150) {
+                ctx.beginPath();
+                ctx.strokeStyle = pColor; 
+                ctx.lineWidth = 0.5;
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(particles[j].x, particles[j].y);
+                ctx.stroke();
+                ctx.closePath();
+            }
+        }
+    });
+    requestAnimationFrame(animateParticles);
+}
+
+initParticles();
+animateParticles();
+
+
+/* ----------------------------------------------------------------
+   2. TYPEWRITER & LOGIC
+   ---------------------------------------------------------------- */
+const bioText = "I’m Mithun Sidhaarth, someone who loves learning across boundaries. I’m deeply interested in computer science, but just as curious about how people think, feel, and decide. Philosophy helps me question, psychology helps me understand, and technology gives me a way to build.";
+const bioElement = document.getElementById("bio-typewriter");
+
+function typeBio(text, i) {
+    if (i < text.length) {
+        bioElement.textContent += text.charAt(i);
+        setTimeout(() => typeBio(text, i + 1), 15); 
+    }
+}
+setTimeout(() => typeBio(bioText, 0), 500);
 
 /* DATA */
 const data={
@@ -453,7 +630,7 @@ const data={
     {title:"Malware Detection Using DL",link:"#"}
   ],
   skills:["Python","Deep Learning","NLP","AWS","Linux","JavaScript"],
-  commands: ["help","projects","blogs","research","skills","contact","status","theme","clear","resume","search","timeline","demo","code","read","paper","ls","sudo","whoami"]
+  commands: ["help","projects","blogs","research","skills","contact","status","theme","clear","resume","search","timeline","demo","code","read","paper","ls","sudo","whoami","hack","matrix"]
 };
 
 let context=null;
@@ -472,7 +649,7 @@ function typeWriter(text, i, fnCallback) {
   if (i < text.length) {
     output.textContent += text.charAt(i);
     output.scrollTop = output.scrollHeight;
-    setTimeout(function() { typeWriter(text, i + 1, fnCallback) }, 3); 
+    setTimeout(function() { typeWriter(text, i + 1, fnCallback) }, 2); 
   } else if (typeof fnCallback == 'function') { fnCallback(); }
 }
 
@@ -486,7 +663,41 @@ function print(t, instant=false){
   typeWriter(t + "\n\n", 0, function(){ isTyping = false; input.disabled = false; input.focus(); });
 }
 
-print("MithunOS v5.1 Premium.\nGuest session started.\nType 'help' to begin.");
+print("MithunOS v6.3 [Connected].\nGuest session active.\nType 'help' for commands.");
+
+/* 3. SIMULATION FEATURE (HACK) */
+function runHackSimulation() {
+    const codeLines = [
+        "Initializing bruteforce protocol...",
+        "Targeting mainframe [192.168.0.1]...",
+        "Bypassing firewall (Port 443)... SUCCESS",
+        "Injecting payload.exe...",
+        "Accessing shadow database...",
+        "Decryption keys found: 4",
+        "Downloading assets... 12%",
+        "Downloading assets... 45%",
+        "Downloading assets... 89%",
+        "Downloading assets... 100%",
+        "System compromise complete.",
+        "ACCESS GRANTED."
+    ];
+    let i = 0;
+    input.disabled = true;
+    function printLine() {
+        if(i < codeLines.length) {
+            output.textContent += `> ${codeLines[i]}\n`;
+            output.scrollTop = output.scrollHeight;
+            i++;
+            setTimeout(printLine, 150 + Math.random()*200);
+        } else {
+            input.disabled = false;
+            input.focus();
+            print("\nSimulation finished.");
+        }
+    }
+    printLine();
+}
+
 
 function openModal(title, url) {
     if(!url || url === "#") { return print("Error: No valid link provided."); }
@@ -520,23 +731,28 @@ ${p("research")} View research papers
 ${p("blogs")}    Read technical articles
 ${p("skills")}   List technical skills
 ${p("status")}   System status check
-${p("theme")}    Toggle Light/Dark mode
 ${p("resume")}   Open PDF Resume
-${p("search")}   Search [keyword]
+${p("hack")}     Run 'hack' simulation
+${p("matrix")}   Matrix Color Mode
+${p("theme")}    Toggle Light/Dark
 ${p("clear")}    Clear terminal`
     );
+  }
+
+  if(cmd==="hack") return runHackSimulation();
+  if(cmd==="matrix"){
+      document.body.classList.toggle("matrix-mode");
+      return print("Matrix mode toggled.");
   }
 
   if(cmd==="projects"){
     context="projects";
     return print("PROJECTS:\n" + data.projects.map((p,i)=>`[${i+1}] ${p.title}`).join("\n") + "\n\nType 'open [number]' to select.");
   }
-
   if(cmd==="blogs"){
     context="blogs";
     return print("BLOGS:\n" + data.blogs.map((b,i)=>`[${i+1}] ${b.title}`).join("\n") + "\n\nType 'open [number]' to read.");
   }
-
   if(cmd==="research"){
     context="research";
     return print("PUBLICATIONS:\n" + data.research.map((r,i)=>`[${i+1}] ${r.title}`).join("\n") + "\n\nType 'open [number]' to read.");
@@ -550,7 +766,6 @@ ${p("clear")}    Clear terminal`
   if(cmd.startsWith("open")){
     const i=parseInt(cmd.split(" ")[1])-1;
     if(isNaN(i)) return print("Usage: open [number]");
-
     if(context==="projects" && data.projects[i]){
       context=data.projects[i]; 
       return print(`SELECTED: ${context.title}\n> Type 'demo' to view live\n> Type 'code' to view source`);
