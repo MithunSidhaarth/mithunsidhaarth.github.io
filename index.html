@@ -25,7 +25,7 @@
   --torch-color: rgba(0, 0, 0, 0.25); 
   --particle-color: rgba(0,0,0,0.2); 
   --skill-track: rgba(0,0,0,0.05);
-  --skill-fill: #1a1a1a;
+  --skill-fill: var(--hacker-red);
 }
 body.dark{
   --bg: #050505;
@@ -190,13 +190,13 @@ input{ border:none; background:transparent; color:var(--text); outline:none; wid
 #modal-iframe { flex: 1; border: none; background: #fff; }
 #modal-text {
     flex: 1; display: none; justify-content: center; align-items: center;
-    padding: 40px; text-align: center; font-size: 1.8rem; font-weight: 700;
+    padding: 40px; text-align: center; font-size: 1.2rem; font-weight: 500;
     color: var(--text); font-family: "Space Grotesk", sans-serif;
-    overflow-y: auto; white-space: pre-wrap; line-height: 1.5;
+    overflow-y: auto; white-space: pre-wrap; line-height: 1.5; flex-direction: column;
 }
 </style>
 </head>
-<body>
+<body class="dark">
 <canvas id="neural-canvas"></canvas>
 <div id="torch"></div>
 <div id="modal-overlay">
@@ -332,26 +332,21 @@ const bioElement = document.getElementById("bio-typewriter");
 function typeBio(text, i) { if (i < text.length) { bioElement.textContent += text.charAt(i); setTimeout(() => typeBio(text, i + 1), 15); } }
 setTimeout(() => typeBio(bioText, 0), 500);
 let data={
-  currentStatus: "Building a Neural Network visualizer.",
+  currentStatus: "Figuring out what to learn next w a bottle of omr",
   projects:[
-    {title:"Malware Detection System", demo:"https://en.wikipedia.org/wiki/Malware", code:"#"},
-    {title:"AI Chatbot", demo:"https://en.wikipedia.org/wiki/Chatbot", code:"#"},
-    {title:"Portfolio Console", demo:"#", code:"#"}
+    {title:"Portfolio Console", demo:"https://methsole.hashnode.dev/building-my-portfolio-os-a-personal-system-for-thinking-creating-and-growing?showSharer=true", code:"#"}
   ],
   blogs:[
-    {title:"Transformers Explained", link:"#"},
-    {title:"Systems Thinking in AI", link:"#"}
+    {title:"Malware Detection Survey", link:"https://malwaredl.hashnode.dev/a-survey-of-malware-detection-using-deep-learning-explained-with-reflections?showSharer=true"}
   ],
-  research:[
-    {title:"Malware Detection Using DL", link:"#"}
-  ],
+  research:[],
   skills:[
-    {name: "Python", level: 95},
-    {name: "Deep Learning", level: 85},
-    {name: "NLP", level: 80},
-    {name: "AWS", level: 70},
-    {name: "Linux", level: 90},
-    {name: "JavaScript", level: 75}
+    {name: "WordPress Dev", level: 75},
+    {name: "Linux", level: 60},
+    {name: "Python", level: 60},
+    {name: "HTML/CSS", level: 40},
+    {name: "Machine Learning", level: 15},
+    {name: "Cloud Dashboard Mgmt", level: 10}
   ],
   commands: ["help","projects","blogs","research","skills","contact","status","theme","clear","resume","search","hack","matrix","ls","cd","open","login","export","new"]
 };
@@ -405,21 +400,36 @@ function print(t, instant=false){
   if(instant){ output.textContent += t + "\n\n"; output.scrollTop = output.scrollHeight; return; }
   isTyping = true; input.disabled = true; typeWriter(t + "\n\n", 0, function(){ isTyping = false; input.disabled = false; input.focus(); });
 }
-print("MithunOS v19.0 [Online].\nType 'help' for commands.");
+print("MithunOS v26.0 [Online].\nType 'help' for commands.");
 function openModal(title, url) {
     modalText.style.display = "none";
     modalFrame.style.display = "block";
     modalExtBtn.style.display = "block";
-    if(!url || url === "#") return print("Error: Invalid Link.");
-    modalTitle.innerText = title; modalFrame.src = url; 
-    modalExtBtn.onclick = () => window.open(url, "_blank");
+    if (url.includes("hashnode.dev") || url.includes("github.com") || url.includes("linkedin.com")) {
+        modalFrame.style.display = "none";
+        modalText.style.display = "flex";
+        modalText.innerHTML = `
+            <div style="text-align:center">
+                <p style="font-size:2rem; margin-bottom:10px">⚠️</p>
+                <p>Security Protocol: Embed Denied</p>
+                <p style="font-size:0.9rem; color:var(--muted); margin-bottom:20px">${url}</p>
+                <button class="export-btn" onclick="window.open('${url}', '_blank')">OPEN IN NEW TAB ↗</button>
+            </div>
+        `;
+        modalTitle.innerText = "Security Alert";
+    } else {
+        if(!url || url === "#") return print("Error: Invalid Link.");
+        modalTitle.innerText = title; 
+        modalFrame.src = url; 
+        modalExtBtn.onclick = () => window.open(url, "_blank");
+    }
     modalOverlay.style.display = "flex"; setTimeout(() => modalOverlay.classList.add("active"), 10);
 }
 function showStatusModal() {
     modalFrame.style.display = "none";
     modalExtBtn.style.display = "none";
     modalText.style.display = "flex";
-    modalText.innerText = data.currentStatus;
+    modalText.innerHTML = data.currentStatus;
     modalTitle.innerText = "Current Status";
     modalOverlay.style.display = "flex"; setTimeout(() => modalOverlay.classList.add("active"), 10);
 }
@@ -461,7 +471,7 @@ function handle(cmd){
   }
   if(cmd && cmd !== cmdHistory[cmdHistory.length-1]){ cmdHistory.push(cmd); historyIndex = cmdHistory.length; }
   const p = (str) => str.padEnd(12, ' ');
-  if(cmd==="help") return print(`COMMANDS\n--------\n${p("ls")} List files\n${p("cd [dir]")} Change dir\n${p("open [id]")} Open item\n${p("resume")} PDF Resume\n${p("hack")} Simulation\n${p("theme")} Light/Dark`);
+  if(cmd==="help") return print(`COMMANDS\n--------\n${p("ls")} List files\n${p("cd [dir]")} Change dir\n${p("open [id]")} Open item\n${p("resume")} PDF Resume\n${p("hack")} Simulation\n${p("matrix")} Matrix Mode\n${p("theme")} Light/Dark`);
   if(cmd==="sudo login") {
       inputState = 'login';
       return print("Enter Password:");
