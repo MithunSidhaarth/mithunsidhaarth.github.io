@@ -1,123 +1,621 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Your Name | Portfolio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Personal portfolio of Your Name — AI, Research, and Software Development.">
+<meta charset="UTF-8">
+<title>Mithun Sidhaarth | Tech Enthusiast</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #ffffff;
-      color: #111;
-      line-height: 1.6;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 60px 20px;
-    }
+<style>
+/* GLOBAL RESET */
+* {
+    box-sizing: border-box;
+}
 
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
-    }
+:root{
+  /* --- LIGHT MODE VARIABLES --- */
+  --bg: #e8e8e8;
+  --text: #1a1a1a;
+  --muted: #555;
+  --accent: #000;
+  
+  /* Premium Matte Variables */
+  --card-bg: rgba(255, 255, 255, 0.65);
+  --card-border: 1px solid rgba(255, 255, 255, 0.6);
+  --card-blur: blur(24px);
+  
+  /* Shadows */
+  --premium-shadow: 
+      0 20px 40px -10px rgba(0,0,0,0.1), 
+      0 0 1px rgba(0,0,0,0.05);
 
-    .tagline {
-      font-size: 1.2rem;
-      color: #555;
-      margin-bottom: 30px;
-    }
+  /* Buttons */
+  --btn-bg: rgba(255, 255, 255, 0.5);
+  --btn-hover: rgba(255, 255, 255, 0.9);
+  
+  --modal-bg: rgba(255, 255, 255, 0.85);
+  --term-font: "JetBrains Mono", monospace;
 
-    nav a {
-      margin-right: 20px;
-      text-decoration: none;
-      color: #111;
-      font-weight: 500;
-    }
+  /* --- TORCH UPDATE: BLACK IN LIGHT MODE --- */
+  --torch-color: rgba(0, 0, 0, 0.25); 
+}
 
-    nav a:hover {
-      text-decoration: underline;
-    }
+body.dark{
+  /* --- DARK MODE VARIABLES --- */
+  --bg: #050505;
+  --text: #e0e0e0;
+  --muted: #888;
+  --accent: #fff;
+  
+  /* Dark Mode Matte */
+  --card-bg: rgba(20, 20, 20, 0.6);
+  --card-border: 1px solid rgba(255, 255, 255, 0.08);
+  
+  /* Deep Dark Shadows */
+  --premium-shadow: 
+      0 25px 50px -12px rgba(0,0,0,0.5), 
+      0 0 1px rgba(255,255,255,0.05);
 
-    section {
-      margin-top: 80px;
-    }
+  --btn-bg: rgba(255, 255, 255, 0.05);
+  --btn-hover: rgba(255, 255, 255, 0.15);
+  
+  --modal-bg: rgba(20, 20, 20, 0.9);
 
-    .card {
-      border: 1px solid #eee;
-      padding: 20px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-    }
+  /* --- TORCH UPDATE: WHITE IN DARK MODE --- */
+  --torch-color: rgba(255, 255, 255, 0.15);
+}
 
-    footer {
-      margin-top: 100px;
-      color: #777;
-      font-size: 0.9rem;
-    }
-  </style>
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Space Grotesk", sans-serif;
+  height:100vh;
+  overflow:hidden;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+#layout{
+  display:grid;
+  grid-template-columns: 1fr 1.3fr;
+  height:100vh;
+  gap:24px;
+  padding:24px;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+/* --- LEFT PANEL --- */
+#left{
+  display:grid;
+  grid-template-rows: 1fr auto;
+  gap:24px;
+  height: 100%;
+  overflow: hidden; 
+}
+
+.panel{
+  background: var(--card-bg);
+  backdrop-filter: var(--card-blur);
+  -webkit-backdrop-filter: var(--card-blur);
+  border: var(--card-border);
+  box-shadow: var(--premium-shadow);
+  
+  border-radius:24px;
+  padding:36px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* SCROLLABLE INFO AREA */
+.info-scroll {
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 0;
+    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;  /* IE */
+}
+.info-scroll::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
+/* NAME STYLES */
+@keyframes attention {
+    0% { transform: scale(1); text-shadow: 0 0 0 transparent; }
+    50% { transform: scale(1.02); text-shadow: 0 0 25px var(--torch-color); }
+    100% { transform: scale(1); text-shadow: 0 0 0 transparent; }
+}
+
+#name{ 
+    font-size:3.5rem; 
+    font-weight:700; 
+    letter-spacing:-0.03em; 
+    line-height:1;
+    margin-bottom: 8px;
+    animation: attention 4s infinite ease-in-out;
+    transform-origin: left center;
+}
+
+#subtitle{ 
+    font-size:1.1rem; 
+    color:var(--muted); 
+    margin-bottom:32px; 
+    font-weight:500; 
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.section { margin-bottom:32px; }
+.section h3{ font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:2px; margin:0 0 14px 0; font-weight:700; opacity: 0.8; }
+.section ul{ list-style:none; padding:0; margin:0; font-size:1.05rem; line-height:1.6; font-weight: 500; }
+.section li{ padding-left:20px; position:relative; margin-bottom: 8px; }
+.section li:before{ content:"•"; position:absolute; left:0; color:var(--accent); font-weight:bold; }
+
+/* --- CHEAT SHEET --- */
+.cheat-sheet {
+    background: var(--btn-bg);
+    border: var(--card-border);
+    border-radius: 16px;
+    padding: 20px;
+    font-size: 0.85rem;
+    backdrop-filter: blur(10px);
+}
+.cheat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed rgba(125,125,125,0.2);
+}
+.cheat-row:last-child { border-bottom: none; }
+.cmd-key { font-family: var(--term-font); font-weight: 700; color: var(--accent); }
+.cmd-desc { color: var(--muted); }
+
+
+/* --- RIGHT PANEL --- */
+#right{
+  display:grid;
+  grid-template-rows: 1fr auto;
+  gap:24px;
+  height: 100%;
+}
+
+#terminal{
+  background: var(--card-bg);
+  backdrop-filter: var(--card-blur);
+  border: var(--card-border);
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.03), var(--premium-shadow);
+  
+  font-family: var(--term-font);
+  padding: 32px;
+}
+
+#output{
+  flex:1;
+  overflow-y:auto;
+  white-space: pre-wrap;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text);
+  padding-bottom: 20px;
+  text-shadow: 0 0 1px rgba(0,0,0,0.05);
+}
+#output::-webkit-scrollbar { width: 6px; }
+#output::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 4px; }
+
+#input{
+  display:flex;
+  margin-top:auto;
+  align-items: center;
+  border-top: 1px solid rgba(125,125,125,0.2);
+  padding-top: 20px;
+}
+#input span{ margin-right:16px; color:var(--accent); font-weight:bold; }
+input{
+  border:none;
+  background:transparent;
+  color:var(--text);
+  outline:none;
+  width:100%;
+  font-family: var(--term-font);
+  font-size:1rem;
+}
+
+/* --- CONTACT GRID --- */
+.contact-panel {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    backdrop-filter: none;
+}
+
+.contact-list{ 
+    display:grid; 
+    grid-template-columns: repeat(4, 1fr); 
+    gap:16px; 
+}
+
+.contact-item{
+  display:flex; align-items:center; gap:10px;
+  justify-content: center;
+  padding:18px 10px; 
+  background: var(--btn-bg);
+  border: var(--card-border);
+  border-radius:16px;
+  cursor:pointer; 
+  font-size:.85rem; 
+  font-weight: 600;
+  color: var(--muted);
+  transition: all .3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  backdrop-filter: blur(5px);
+}
+
+.contact-item:hover{ 
+    background: var(--btn-hover); 
+    color: var(--text); 
+    transform: translateY(-4px); 
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+}
+
+.contact-item .icon { 
+    font-size: 1.1rem; 
+    color: var(--accent);
+}
+
+/* --- MOBILE --- */
+@media (max-width: 900px) {
+    body { overflow-y: auto; height: auto; }
+    #layout { display: flex; flex-direction: column; height: auto; padding: 16px; gap: 16px; }
+    #left { order: 1; height: auto; display: block;}
+    .info-scroll { overflow: visible; }
+    #name { font-size: 2.8rem; }
+    
+    #right { order: 2; height: auto; gap: 16px; }
+    #terminal { height: 500px; }
+    
+    .contact-list { grid-template-columns: 1fr 1fr; } 
+    #torch { display: none; } 
+}
+
+/* --- EXTRAS --- */
+#torch{
+  position:fixed; width:450px; height:450px;
+  border-radius:50%; pointer-events:none;
+  background:radial-gradient(circle,var(--torch-color),transparent 65%);
+  filter:blur(50px); transform:translate(-50%,-50%);
+  z-index:999; transition: background 0.3s ease;
+}
+
+#modal-overlay {
+  display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(16px);
+  z-index: 2000; justify-content: center; align-items: center;
+  opacity: 0; transition: opacity 0.3s ease; padding: 20px; box-sizing: border-box;
+}
+#modal-overlay.active { display: flex; opacity: 1; }
+#modal-container {
+  width: 100%; height: 100%; max-width: 1100px; max-height: 85vh;
+  background: var(--modal-bg); 
+  border: var(--card-border);
+  border-radius: 20px; 
+  box-shadow: 0 40px 80px -20px rgba(0,0,0,0.6);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+#modal-header {
+  padding: 16px 24px; border-bottom: 1px solid rgba(125,125,125,0.1);
+  display: flex; justify-content: space-between; align-items: center;
+}
+#modal-title { font-weight: 700; font-size: 1.1rem; }
+.modal-controls { display: flex; gap: 10px; }
+.modal-btn {
+  background: transparent; border: 1px solid rgba(125,125,125,0.3); color: var(--text);
+  padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600;
+}
+.modal-btn:hover { background: rgba(125,125,125,0.1); }
+#modal-iframe { flex: 1; border: none; background: #fff; }
+
+</style>
 </head>
 <body>
 
-  <div class="container">
+<div id="torch"></div>
 
-    <h1>Your Name</h1>
-    <div class="tagline">AI • Research • Software Development</div>
+<div id="modal-overlay">
+  <div id="modal-container">
+    <div id="modal-header">
+      <span id="modal-title">Preview</span>
+      <div class="modal-controls">
+        <button class="modal-btn" id="modal-ext">↗ External</button>
+        <button class="modal-btn" onclick="closeModal()">✕ Close</button>
+      </div>
+    </div>
+    <iframe id="modal-iframe" src=""></iframe>
+  </div>
+</div>
 
-    <nav>
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#blog">Blog</a>
-      <a href="#contact">Contact</a>
-    </nav>
+<div id="layout">
 
-    <section id="about">
-      <h2>About</h2>
-      <p>
-        I am a student and researcher interested in artificial intelligence, machine learning,
-        and building meaningful software systems. This site documents my projects, learning,
-        and research reflections.
-      </p>
-    </section>
+<div id="left">
+  
+  <div class="panel" style="flex:1; overflow:hidden;">
+    <div class="info-scroll">
+      <div id="name">Mithun Sidhaarth</div>
+      <div id="subtitle">Tech Enthusiast</div>
 
-    <section id="projects">
-      <h2>Projects</h2>
-
-      <div class="card">
-        <h3>Project Title</h3>
-        <p>Short description of what the project does.</p>
-        <p><strong>Tech:</strong> Python, TensorFlow</p>
+      <div class="section">
+        <h3>Projects</h3>
+        <ul>
+          <li>Malware Detection System</li>
+          <li>AI Chatbot</li>
+          <li>Portfolio Console</li>
+        </ul>
       </div>
 
-      <div class="card">
-        <h3>Another Project</h3>
-        <p>Short description of the project.</p>
-        <p><strong>Tech:</strong> JavaScript, HTML, CSS</p>
+      <div class="section">
+        <h3>Blogs</h3>
+        <ul>
+          <li>Transformers Explained</li>
+          <li>Systems Thinking in AI</li>
+        </ul>
       </div>
-    </section>
 
-    <section id="blog">
-      <h2>Blog</h2>
-      <p>You can read my articles and research breakdowns here.</p>
-      <a href="blog.html">Go to Blog →</a>
-    </section>
+      <div class="section">
+        <h3>Research</h3>
+        <ul>
+          <li>Malware Detection Using DL</li>
+        </ul>
+      </div>
 
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>Email: yourmail@example.com</p>
-      <p>GitHub: github.com/yourusername</p>
-      <p>LinkedIn: linkedin.com/in/yourname</p>
-    </section>
-
-    <footer>
-      © 2026 Your Name. Built with simplicity.
-    </footer>
-
+      <div class="section">
+        <h3>Skills</h3>
+        <ul>
+          <li>Python, DL, NLP</li>
+          <li>AWS, Linux</li>
+          <li>JavaScript, HTML, CSS</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <div class="cheat-sheet">
+    <div style="font-weight:700; margin-bottom:12px; text-transform:uppercase; letter-spacing:1.5px; font-size:0.7rem; color:var(--muted); opacity:0.8;">System Shortcuts</div>
+    
+    <div class="cheat-row">
+      <span class="cmd-key">projects</span>
+      <span class="cmd-desc">List all projects</span>
+    </div>
+    <div class="cheat-row">
+      <span class="cmd-key">open [id]</span>
+      <span class="cmd-desc">Select item #1-3</span>
+    </div>
+    <div class="cheat-row">
+      <span class="cmd-key">demo / code</span>
+      <span class="cmd-desc">View selected</span>
+    </div>
+    <div class="cheat-row">
+      <span class="cmd-key">theme</span>
+      <span class="cmd-desc">Toggle Dark Mode</span>
+    </div>
+     <div class="cheat-row">
+      <span class="cmd-key">Tab / ↑ ↓</span>
+      <span class="cmd-desc">Auto / History</span>
+    </div>
   </div>
 
+</div>
+
+<div id="right">
+  <div class="panel" id="terminal">
+    <div id="output"></div>
+    <div id="input"><span>➜ ~</span><input id="cmd" autofocus placeholder="Type 'help'..." autocomplete="off"></div>
+  </div>
+
+  <div class="contact-panel">
+    <div class="contact-list">
+      <div class="contact-item" onclick="openLink('mailto:your@email.com')"><span class="icon">✉</span> Email</div>
+      <div class="contact-item" onclick="openLink('https://linkedin.com')"><span class="icon">in</span> LinkedIn</div>
+      <div class="contact-item" onclick="openLink('https://github.com')"><span class="icon">🐙</span> GitHub</div>
+      <div class="contact-item" onclick="openLink('https://twitter.com')"><span class="icon">𝕏</span> Twitter</div>
+      
+      <div class="contact-item" onclick="openLink('https://instagram.com')"><span class="icon">📷</span> Insta</div>
+      <div class="contact-item" onclick="openLink('https://hashnode.com')"><span class="icon">✍</span> Blog</div>
+      <div class="contact-item" onclick="openLink('https://researchgate.net')"><span class="icon">RG</span> Papers</div>
+      <div class="contact-item" onclick="openLink('https://t.me')"><span class="icon">✈</span> Telegram</div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+/* TORCH */
+let tx=0,ty=0,cx=0,cy=0;
+const torch=document.getElementById("torch");
+document.addEventListener("mousemove",e=>{tx=e.clientX;ty=e.clientY;});
+setInterval(()=>{
+  cx+=(tx-cx)*.15; cy+=(ty-cy)*.15;
+  torch.style.left=cx+"px"; torch.style.top=cy+"px";
+},16);
+
+/* DATA */
+const data={
+  projects:[
+    {title:"Malware Detection System",demo:"https://en.wikipedia.org/wiki/Malware",code:"https://github.com"},
+    {title:"AI Chatbot",demo:"https://en.wikipedia.org/wiki/Chatbot",code:"https://github.com"},
+    {title:"Portfolio Console",demo:"#",code:"#"}
+  ],
+  blogs:[
+    {title:"Transformers Explained",link:"https://wikipedia.org/wiki/Transformer_(machine_learning_model)"},
+    {title:"Systems Thinking in AI",link:"#"}
+  ],
+  research:[
+    {title:"Malware Detection Using DL",link:"#"}
+  ],
+  skills:["Python","Deep Learning","NLP","AWS","Linux","JavaScript"],
+  commands: ["help","projects","blogs","research","skills","contact","status","theme","clear","resume","search","timeline","demo","code","read","paper","ls","sudo","whoami"]
+};
+
+let context=null;
+let cmdHistory=[];
+let historyIndex=-1;
+let isTyping = false;
+
+const output=document.getElementById("output");
+const input=document.getElementById("cmd");
+const modalOverlay = document.getElementById("modal-overlay");
+const modalTitle = document.getElementById("modal-title");
+const modalFrame = document.getElementById("modal-iframe");
+const modalExtBtn = document.getElementById("modal-ext");
+
+function typeWriter(text, i, fnCallback) {
+  if (i < text.length) {
+    output.textContent += text.charAt(i);
+    output.scrollTop = output.scrollHeight;
+    setTimeout(function() { typeWriter(text, i + 1, fnCallback) }, 3); 
+  } else if (typeof fnCallback == 'function') { fnCallback(); }
+}
+
+function print(t, instant=false){
+  if(instant){
+     output.textContent += t + "\n\n";
+     output.scrollTop = output.scrollHeight;
+     return;
+  }
+  isTyping = true; input.disabled = true;
+  typeWriter(t + "\n\n", 0, function(){ isTyping = false; input.disabled = false; input.focus(); });
+}
+
+print("MithunOS v5.1 Premium.\nGuest session started.\nType 'help' to begin.");
+
+function openModal(title, url) {
+    if(!url || url === "#") { return print("Error: No valid link provided."); }
+    modalTitle.innerText = title;
+    modalFrame.src = url;
+    modalExtBtn.onclick = () => window.open(url, "_blank");
+    modalOverlay.style.display = "flex";
+    setTimeout(() => modalOverlay.classList.add("active"), 10);
+    print(`Previewing: ${title}...`);
+}
+
+function closeModal() {
+    modalOverlay.classList.remove("active");
+    setTimeout(() => { modalOverlay.style.display = "none"; modalFrame.src = ""; }, 300);
+}
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modalOverlay.classList.contains("active")) closeModal();
+});
+
+function handle(cmd){
+  if(cmd && cmd !== cmdHistory[cmdHistory.length-1]){ cmdHistory.push(cmd); historyIndex = cmdHistory.length; }
+  const p = (str) => str.padEnd(12, ' ');
+
+  if(cmd==="help"){
+    return print(
+`AVAILABLE COMMANDS
+------------------
+${p("projects")} View detailed project list
+${p("research")} View research papers
+${p("blogs")}    Read technical articles
+${p("skills")}   List technical skills
+${p("status")}   System status check
+${p("theme")}    Toggle Light/Dark mode
+${p("resume")}   Open PDF Resume
+${p("search")}   Search [keyword]
+${p("clear")}    Clear terminal`
+    );
+  }
+
+  if(cmd==="projects"){
+    context="projects";
+    return print("PROJECTS:\n" + data.projects.map((p,i)=>`[${i+1}] ${p.title}`).join("\n") + "\n\nType 'open [number]' to select.");
+  }
+
+  if(cmd==="blogs"){
+    context="blogs";
+    return print("BLOGS:\n" + data.blogs.map((b,i)=>`[${i+1}] ${b.title}`).join("\n") + "\n\nType 'open [number]' to read.");
+  }
+
+  if(cmd==="research"){
+    context="research";
+    return print("PUBLICATIONS:\n" + data.research.map((r,i)=>`[${i+1}] ${r.title}`).join("\n") + "\n\nType 'open [number]' to read.");
+  }
+
+  if(cmd==="skills") return print("ACTIVE MODULES:\n" + data.skills.join("\n"));
+  if(cmd==="contact") return print("CONTACT:\nSee the buttons below.");
+
+  if(cmd==="status" || cmd==="top") return print(`SYSTEM STATUS\n-------------\nOS: MithunOS Web\nUptime: ${Math.floor(performance.now()/1000)}s\nMemory: Optimal`);
+
+  if(cmd.startsWith("open")){
+    const i=parseInt(cmd.split(" ")[1])-1;
+    if(isNaN(i)) return print("Usage: open [number]");
+
+    if(context==="projects" && data.projects[i]){
+      context=data.projects[i]; 
+      return print(`SELECTED: ${context.title}\n> Type 'demo' to view live\n> Type 'code' to view source`);
+    }
+    if(context==="blogs" && data.blogs[i]){
+      context=data.blogs[i]; return print(`SELECTED: ${context.title}\n> Type 'read' to open`);
+    }
+    if(context==="research" && data.research[i]){
+      context=data.research[i]; return print(`SELECTED: ${context.title}\n> Type 'paper' to view`);
+    }
+    return print("Error: View a category first.");
+  }
+
+  if(cmd==="demo"){
+      if(context && context.demo) return openModal(context.title + " (Demo)", context.demo);
+      return print("Error: No demo available.");
+  }
+  if(cmd==="code"){
+      if(context && context.code) return openModal(context.title + " (Code)", context.code);
+      return print("Error: No code available.");
+  }
+  if(cmd==="read" && context?.link) return openModal(context.title, context.link);
+  if(cmd==="paper" && context?.link) return openModal(context.title, context.link);
+  if(cmd==="resume") return openModal("Resume", "resume.pdf");
+
+  if(cmd.startsWith("search")){
+    const q=cmd.replace("search","").trim();
+    if(!q) return print("Usage: search [keyword]");
+    let res=[];
+    data.projects.forEach(p=>p.title.toLowerCase().includes(q)&&res.push("PROJ: "+p.title));
+    data.blogs.forEach(b=>b.title.toLowerCase().includes(q)&&res.push("BLOG: "+b.title));
+    return print(res.join("\n")||"No results found.");
+  }
+
+  if(cmd==="timeline") return print("TIMELINE:\n2019 [Curiosity] -> 2022 [Systems] -> 2024 [Research]");
+  if(cmd==="theme"){ document.body.classList.toggle("dark"); return print("Theme switched."); }
+  if(cmd==="clear"){ output.textContent=""; return; }
+  
+  if(cmd==="ls") return print("drwx------ projects\ndrwx------ blogs\n-r--r--r-- secret.txt");
+  if(cmd.startsWith("sudo")) return print("Permission denied.");
+  if(cmd==="whoami") return print("guest");
+
+  print(`Command not found: '${cmd}'.`);
+}
+
+input.addEventListener("keydown",e=>{
+  if(isTyping) { e.preventDefault(); return; }
+  if(e.key === "Tab"){
+      e.preventDefault();
+      const curr = input.value.toLowerCase();
+      const match = data.commands.find(c => c.startsWith(curr));
+      if(match) input.value = match;
+  }
+  if(e.key === "ArrowUp" && historyIndex > 0){ historyIndex--; input.value = cmdHistory[historyIndex]; }
+  if(e.key === "ArrowDown"){
+      if(historyIndex < cmdHistory.length - 1){ historyIndex++; input.value = cmdHistory[historyIndex]; } 
+      else { historyIndex = cmdHistory.length; input.value = ""; }
+  }
+  if(e.key==="Enter"){
+    const c=input.value.toLowerCase().trim();
+    if(c) { print("➜ ~ " + c, true); handle(c); input.value=""; }
+  }
+});
+
+function openLink(url){ window.open(url,"_blank"); }
+</script>
 </body>
 </html>
