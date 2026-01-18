@@ -149,6 +149,27 @@ input{ border:none; background:transparent; color:var(--text); outline:none; wid
     background: var(--text); color: var(--bg); border: 1px solid var(--accent);
 }
 .status-btn:hover { background: var(--accent); color: var(--bg); }
+
+#music-widget {
+    position: fixed; top: 24px; right: 24px;
+    background: var(--card-bg); border: var(--card-border);
+    padding: 10px 20px; border-radius: 50px;
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    cursor: pointer; display: flex; align-items: center; gap: 12px;
+    box-shadow: var(--premium-shadow); z-index: 1500;
+    transition: all 0.3s ease;
+}
+#music-widget:hover { transform: translateY(2px); border-color: var(--hacker-red); }
+.music-bars { display: flex; align-items: flex-end; gap: 3px; height: 16px; }
+.bar { width: 3px; background: var(--muted); height: 4px; border-radius: 2px; transition: all 0.2s; }
+.playing .bar { background: var(--hacker-red); animation: equalize 0.8s infinite ease-in-out; }
+.playing .bar:nth-child(1) { animation-delay: 0.1s; }
+.playing .bar:nth-child(2) { animation-delay: 0.3s; }
+.playing .bar:nth-child(3) { animation-delay: 0.0s; }
+.playing .bar:nth-child(4) { animation-delay: 0.4s; }
+@keyframes equalize { 0% { height: 4px; } 50% { height: 16px; } 100% { height: 4px; } }
+#music-label { font-family: var(--term-font); font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; color: var(--text); }
+
 @media (max-width: 900px) {
     body { overflow-y: auto; height: auto; }
     #layout { display: flex; flex-direction: column; gap: 32px; padding: 24px; height: auto; }
@@ -162,6 +183,8 @@ input{ border:none; background:transparent; color:var(--text); outline:none; wid
     .cheat-cols { grid-template-columns: 1fr; gap: 16px; }
     #torch { display: none; } 
     #neural-canvas { display: none; }
+    #music-widget { top: auto; bottom: 16px; right: 16px; transform: none; }
+    #music-widget:hover { transform: translateY(-2px); }
 }
 #torch{
   position:fixed; width:450px; height:450px; border-radius:50%; pointer-events:none;
@@ -199,6 +222,13 @@ input{ border:none; background:transparent; color:var(--text); outline:none; wid
 <body class="dark">
 <canvas id="neural-canvas"></canvas>
 <div id="torch"></div>
+<audio id="bg-music" src="music.mp3" loop></audio>
+<div id="music-widget" onclick="toggleAudio()">
+    <div class="music-bars" id="visualizer">
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+    <span id="music-label">SONIC FEED: OFF</span>
+</div>
 <div id="modal-overlay">
   <div id="modal-container">
     <div id="modal-header">
@@ -252,8 +282,9 @@ input{ border:none; background:transparent; color:var(--text); outline:none; wid
         <div class="cheat-header">More</div>
         <div class="cheat-row"><span class="cmd-key">resume</span><span class="cmd-desc">View PDF</span></div>
         <div class="cheat-row"><span class="cmd-key">hack</span><span class="cmd-desc">Simulate</span></div>
-        <div class="cheat-row"><span class="cmd-key">matrix</span><span class="cmd-desc">Mode</span></div>
+        <div class="cheat-row"><span class="cmd-key">music</span><span class="cmd-desc">Play/Pause</span></div>
         <div class="cheat-row"><span class="cmd-key">theme</span><span class="cmd-desc">L/D Mode</span></div>
+        <div class="cheat-row"><span class="cmd-key">matrix</span><span class="cmd-desc">Matrix Mode</span></div>
       </div>
     </div>
   </div>
@@ -348,7 +379,7 @@ let data={
     {name: "Machine Learning", level: 15},
     {name: "Cloud Dashboard Mgmt", level: 10}
   ],
-  commands: ["help","projects","blogs","research","skills","contact","status","theme","clear","resume","search","hack","matrix","ls","cd","open","login","export","new"]
+  commands: ["help","projects","blogs","research","skills","contact","status","theme","clear","resume","search","hack","matrix","ls","cd","open","login","export","new","music"]
 };
 function renderLeftPanel() {
     const createList = (id, cat) => {
@@ -400,7 +431,7 @@ function print(t, instant=false){
   if(instant){ output.textContent += t + "\n\n"; output.scrollTop = output.scrollHeight; return; }
   isTyping = true; input.disabled = true; typeWriter(t + "\n\n", 0, function(){ isTyping = false; input.disabled = false; input.focus(); });
 }
-print("MithunOS v26.0 [Online].\nType 'help' for commands.");
+print("MithunOS v29.0 [Online].\nType 'help' for commands.");
 function openModal(title, url) {
     modalText.style.display = "none";
     modalFrame.style.display = "block";
@@ -435,6 +466,23 @@ function showStatusModal() {
 }
 function closeModal() { modalOverlay.classList.remove("active"); setTimeout(() => { modalOverlay.style.display = "none"; modalFrame.src = ""; }, 300); }
 document.addEventListener("keydown", e => { if (e.key === "Escape" && modalOverlay.classList.contains("active")) closeModal(); });
+const audioPlayer = document.getElementById("bg-music");
+const musicWidget = document.getElementById("music-widget");
+const musicLabel = document.getElementById("music-label");
+const visualizer = document.getElementById("visualizer");
+audioPlayer.volume = 0.5;
+function toggleAudio() {
+    if(audioPlayer.paused) {
+        audioPlayer.play().then(() => {
+            musicLabel.innerText = "SONIC FEED: LIVE";
+            visualizer.classList.add("playing");
+        }).catch(e => print("Error: Interaction required to play music."));
+    } else {
+        audioPlayer.pause();
+        musicLabel.innerText = "SONIC FEED: OFF";
+        visualizer.classList.remove("playing");
+    }
+}
 function handle(cmd){
   if(inputState === 'login') {
       if(btoa(cmd) === 'ZGNzdWNrczEyMy8t') {
@@ -471,7 +519,7 @@ function handle(cmd){
   }
   if(cmd && cmd !== cmdHistory[cmdHistory.length-1]){ cmdHistory.push(cmd); historyIndex = cmdHistory.length; }
   const p = (str) => str.padEnd(12, ' ');
-  if(cmd==="help") return print(`COMMANDS\n--------\n${p("ls")} List files\n${p("cd [dir]")} Change dir\n${p("open [id]")} Open item\n${p("resume")} PDF Resume\n${p("hack")} Simulation\n${p("matrix")} Matrix Mode\n${p("theme")} Light/Dark`);
+  if(cmd==="help") return print(`COMMANDS\n--------\n${p("ls")} List files\n${p("cd [dir]")} Change dir\n${p("open [id]")} Open item\n${p("resume")} PDF Resume\n${p("hack")} Simulation\n${p("music")} Play/Pause\n${p("matrix")} Matrix Mode\n${p("theme")} Light/Dark`);
   if(cmd==="sudo login") {
       inputState = 'login';
       return print("Enter Password:");
@@ -559,6 +607,14 @@ function handle(cmd){
       run(); return;
   }
   if(cmd==="matrix"){ document.body.classList.toggle("matrix-mode"); return print("Matrix Mode."); }
+  if(cmd==="music" || cmd==="music play") {
+      if(audioPlayer.paused) { toggleAudio(); return print("Music started."); }
+      else { toggleAudio(); return print("Music paused."); }
+  }
+  if(cmd==="music pause" || cmd==="music stop") {
+      if(!audioPlayer.paused) toggleAudio();
+      return print("Music stopped.");
+  }
   print(`Command not found: '${cmd}'.`);
 }
 input.addEventListener("keydown",e=>{
