@@ -4,353 +4,182 @@
 <meta charset="UTF-8">
 <title>Mithun Sidhaarth | Tech Enthusiast</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
 <style>
-/* GLOBAL RESET */
 * { box-sizing: border-box; }
-
 :root{
-  /* --- COLORS --- */
   --bg: #e8e8e8;
   --text: #1a1a1a;
   --muted: #555;
   --accent: #000;
-  
-  /* PREMIUM MATTE GLASS */
+  --hacker-red: #d00000;
   --card-bg: rgba(255, 255, 255, 0.65);
   --card-border: 1px solid rgba(255, 255, 255, 0.6);
   --card-blur: blur(24px);
-  
-  /* SHADOWS */
-  --premium-shadow: 
-      0 20px 40px -10px rgba(0,0,0,0.1), 
-      0 0 1px rgba(0,0,0,0.05);
-
-  /* INTERACTIVE ELEMENTS */
+  --premium-shadow: 0 20px 40px -10px rgba(0,0,0,0.1), 0 0 1px rgba(0,0,0,0.05);
   --btn-bg: rgba(255, 255, 255, 0.5);
   --btn-hover: rgba(255, 255, 255, 0.9);
-  --modal-bg: rgba(255, 255, 255, 0.85);
-  
+  --modal-bg: rgba(255, 255, 255, 0.95);
   --term-font: "JetBrains Mono", monospace;
   --torch-color: rgba(0, 0, 0, 0.25); 
-  
-  /* NEURAL NETWORK VISIBILITY */
   --particle-color: rgba(0,0,0,0.2); 
+  --skill-track: rgba(0,0,0,0.05);
+  --skill-fill: #1a1a1a;
 }
-
 body.dark{
   --bg: #050505;
   --text: #e0e0e0;
   --muted: #888;
   --accent: #fff;
-  
+  --hacker-red: #ff3333;
   --card-bg: rgba(20, 20, 20, 0.6);
   --card-border: 1px solid rgba(255, 255, 255, 0.08);
-  
-  --premium-shadow: 
-      0 25px 50px -12px rgba(0,0,0,0.5), 
-      0 0 1px rgba(255,255,255,0.05);
-
+  --premium-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), 0 0 1px rgba(255,255,255,0.05);
   --btn-bg: rgba(255, 255, 255, 0.05);
   --btn-hover: rgba(255, 255, 255, 0.15);
-  
-  --modal-bg: rgba(20, 20, 20, 0.9);
+  --modal-bg: rgba(20, 20, 20, 0.95);
   --torch-color: rgba(255, 255, 255, 0.15);
-  
-  /* NEURAL NETWORK VISIBILITY */
   --particle-color: rgba(255,255,255,0.2);
+  --skill-track: rgba(255,255,255,0.1);
+  --skill-fill: var(--hacker-red);
 }
-
-/* MATRIX MODE (Secret Theme) */
 body.matrix-mode {
     --text: #00ff41;
     --accent: #00ff41;
     --muted: #008f11;
     --bg: #000;
+    --hacker-red: #ff0000;
     --card-bg: rgba(0, 20, 0, 0.8);
     --card-border: 1px solid #003b00;
     --torch-color: rgba(0, 255, 65, 0.2);
     --particle-color: rgba(0, 255, 65, 0.3);
+    --skill-fill: #00ff41;
+    --skill-track: #003b00;
 }
-
+body.admin-mode { --accent: #ff3333; }
 body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:"Space Grotesk", sans-serif;
-  height:100vh;
-  overflow:hidden;
-  transition: background 0.4s ease, color 0.4s ease;
+  margin:0; background:var(--bg); color:var(--text); font-family:"Space Grotesk", sans-serif;
+  height:100vh; overflow:hidden; transition: background 0.4s ease, color 0.4s ease;
 }
-
-/* BACKGROUND CANVAS */
-#neural-canvas {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: -1; /* Behind everything */
-    pointer-events: none;
-}
-
+#neural-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 #layout{
-  display:grid;
-  grid-template-columns: 1fr 1.3fr;
-  height:100vh;
-  gap:24px;
-  padding:24px;
-  max-width: 1800px;
-  margin: 0 auto;
+  display:grid; grid-template-columns: 1fr 1.3fr; height:100vh; gap:24px; padding:24px; max-width: 1800px; margin: 0 auto;
 }
-
-/* --- LEFT PANEL --- */
-#left{
-  display:grid;
-  grid-template-rows: 1fr auto;
-  gap:24px;
-  height: 100%;
-  overflow: hidden; 
-}
-
+#left{ display:grid; grid-template-rows: 1fr auto; gap:24px; height: 100%; overflow: hidden; }
 .panel{
-  background: var(--card-bg);
-  backdrop-filter: var(--card-blur);
-  -webkit-backdrop-filter: var(--card-blur);
-  border: var(--card-border);
-  box-shadow: var(--premium-shadow);
-  border-radius:24px;
-  padding:36px;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: var(--card-bg); backdrop-filter: var(--card-blur); -webkit-backdrop-filter: var(--card-blur);
+  border: var(--card-border); box-shadow: var(--premium-shadow); border-radius:24px; padding:36px;
+  display: flex; flex-direction: column; transition: transform 0.3s ease, box-shadow 0.3s ease; min-height: 0;
 }
-
-/* SCROLLABLE INFO AREA */
-.info-scroll {
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding-right: 0;
-    scrollbar-width: none; 
-    -ms-overflow-style: none;
-}
-.info-scroll::-webkit-scrollbar { display: none; }
-
-/* ANIMATIONS */
-@keyframes attention {
-    0% { transform: scale(1); text-shadow: 0 0 0 transparent; }
-    50% { transform: scale(1.02); text-shadow: 0 0 25px var(--torch-color); }
-    100% { transform: scale(1); text-shadow: 0 0 0 transparent; }
-}
-
-#name{ 
-    font-size:3.5rem; 
-    font-weight:700; 
-    letter-spacing:-0.03em; 
-    line-height:1;
-    margin-bottom: 8px;
-    animation: attention 4s infinite ease-in-out;
-    transform-origin: left center;
-}
-
-#subtitle{ 
-    font-size:1.1rem; 
-    color:var(--muted); 
-    margin-bottom:24px; 
-    font-weight:500; 
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-}
-
-/* HACKER BIO */
+.panel-header { flex-shrink: 0; margin-bottom: 20px; border-bottom: 1px solid rgba(125,125,125,0.1); padding-bottom: 15px; }
+.panel-scroll { flex: 1; overflow-y: auto; overflow-x: hidden; padding-right: 0; scrollbar-width: none; -ms-overflow-style: none; }
+.panel-scroll::-webkit-scrollbar { display: none; }
+#name{ font-size:3.5rem; font-weight:700; letter-spacing:-0.03em; line-height:1; margin-bottom: 8px; transform-origin: left center; }
+#subtitle{ font-size:1.1rem; color:var(--muted); margin-bottom:24px; font-weight:500; letter-spacing: 0.05em; text-transform: uppercase; }
 #bio-typewriter {
-    font-family: var(--term-font);
-    font-size: 0.9rem;
-    line-height: 1.6;
-    color: var(--text);
-    margin-bottom: 32px;
-    min-height: 80px; 
-    white-space: pre-wrap;
-    opacity: 0.9;
+    font-family: var(--term-font); font-size: 0.9rem; line-height: 1.6; color: var(--text);
+    margin-bottom: 10px; min-height: 80px; white-space: pre-wrap; opacity: 0.9;
 }
-#bio-typewriter::after {
-    content: '▋';
-    display: inline-block;
-    vertical-align: baseline;
-    animation: blink 1s step-end infinite;
-    color: var(--accent);
-    margin-left: 2px;
-}
+#bio-typewriter::after { content: '▋'; display: inline-block; animation: blink 1s step-end infinite; color: var(--hacker-red); margin-left: 2px; }
 @keyframes blink { 50% { opacity: 0; } }
-
 .section { margin-bottom:32px; }
 .section h3{ font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:2px; margin:0 0 14px 0; font-weight:700; opacity: 0.8; }
-.section ul{ list-style:none; padding:0; margin:0; font-size:1.05rem; line-height:1.6; font-weight: 500; }
-.section li{ padding-left:20px; position:relative; margin-bottom: 8px; }
-.section li:before{ content:"•"; position:absolute; left:0; color:var(--accent); font-weight:bold; }
-
-/* --- CHEAT SHEET --- */
-.cheat-sheet {
-    background: var(--btn-bg);
-    border: var(--card-border);
-    border-radius: 16px;
-    padding: 24px;
-    font-size: 0.8rem;
-    backdrop-filter: blur(10px);
+.interactive-list { list-style: none; padding: 0; margin: 0; }
+.interactive-item {
+    position: relative; padding: 6px 0 6px 20px; font-size: 1.05rem; font-weight: 500;
+    cursor: pointer; transition: all 0.2s ease; border-radius: 6px;
 }
-.cheat-cols {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
+.interactive-item:before { content: "•"; position: absolute; left: 0; color: var(--hacker-red); font-weight: bold; transition: color 0.2s; }
+.interactive-item:hover { background: var(--btn-hover); padding-left: 28px; color: var(--text); }
+.interactive-item:hover:before { color: var(--text); left: 8px; }
+.skill-container { margin-bottom: 14px; }
+.skill-info {
+    display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700;
+    font-family: var(--term-font); margin-bottom: 5px; color: var(--muted);
 }
+.skill-track { width: 100%; height: 8px; background: var(--skill-track); border-radius: 4px; overflow: hidden; position: relative; }
+.skill-fill {
+    height: 100%; background: var(--skill-fill); border-radius: 4px; width: 0%;
+    transition: width 1.5s cubic-bezier(0.2, 1, 0.3, 1); box-shadow: 0 0 10px var(--hacker-red);
+}
+.cheat-sheet { background: var(--btn-bg); border: var(--card-border); border-radius: 16px; padding: 24px; font-size: 0.8rem; backdrop-filter: blur(10px); }
+.cheat-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .cheat-header {
-    font-weight: 700;
-    margin-bottom: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-size: 0.7rem;
-    color: var(--muted);
-    opacity: 0.8;
-    border-bottom: 1px solid rgba(125,125,125,0.2);
-    padding-bottom: 4px;
+    font-weight: 700; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1.5px;
+    font-size: 0.7rem; color: var(--muted); opacity: 0.8; border-bottom: 1px solid rgba(125,125,125,0.2); padding-bottom: 4px;
 }
-.cheat-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 6px 0;
-    border-bottom: 1px dashed rgba(125,125,125,0.15);
-}
+.cheat-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed rgba(125,125,125,0.15); }
 .cheat-row:last-child { border-bottom: none; }
-.cmd-key { font-family: var(--term-font); font-weight: 700; color: var(--accent); }
+.cmd-key { font-family: var(--term-font); font-weight: 700; color: var(--hacker-red); }
 .cmd-desc { color: var(--muted); }
-
-/* --- RIGHT PANEL --- */
-#right{
-  display:grid;
-  grid-template-rows: 1fr auto;
-  gap:24px;
-  height: 100%;
-}
-
+#right{ display:grid; grid-template-rows: 1fr auto; gap:24px; height: 100%; overflow: hidden; }
 #terminal{
-  background: var(--card-bg);
-  backdrop-filter: var(--card-blur);
-  border: var(--card-border);
-  box-shadow: inset 0 0 30px rgba(0,0,0,0.03), var(--premium-shadow);
-  font-family: var(--term-font);
-  padding: 32px;
+  background: var(--card-bg); backdrop-filter: var(--card-blur); border: var(--card-border);
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.03), var(--premium-shadow); font-family: var(--term-font); padding: 32px;
+  min-height: 0; display: flex; flex-direction: column;
 }
-
 #output{
-  flex:1;
-  overflow-y:auto;
-  white-space: pre-wrap;
-  font-size: 0.95rem;
-  line-height: 1.7;
-  color: var(--text);
-  padding-bottom: 20px;
-  text-shadow: 0 0 1px rgba(0,0,0,0.05);
+  flex:1; overflow-y:auto; white-space: pre-wrap; font-size: 0.95rem; line-height: 1.7;
+  color: var(--text); padding-bottom: 20px; text-shadow: 0 0 1px rgba(0,0,0,0.05);
 }
 #output::-webkit-scrollbar { width: 6px; }
 #output::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 4px; }
-
-#input{
-  display:flex;
-  margin-top:auto;
-  align-items: center;
-  border-top: 1px solid rgba(125,125,125,0.2);
-  padding-top: 20px;
+#input{ display:flex; margin-top:auto; align-items: center; border-top: 1px solid rgba(125,125,125,0.2); padding-top: 20px; }
+#input span{ margin-right:16px; color:var(--hacker-red); font-weight:bold; }
+input{ border:none; background:transparent; color:var(--text); outline:none; width:100%; font-family: var(--term-font); font-size:1rem; }
+.export-btn {
+    display: inline-block; margin-top: 8px; padding: 8px 16px; background: var(--btn-bg);
+    border: 1px solid var(--accent); color: var(--text); font-family: var(--term-font);
+    font-weight: 600; cursor: pointer; border-radius: 4px; transition: all 0.2s;
 }
-#input span{ margin-right:16px; color:var(--accent); font-weight:bold; }
-input{
-  border:none;
-  background:transparent;
-  color:var(--text);
-  outline:none;
-  width:100%;
-  font-family: var(--term-font);
-  font-size:1rem;
-}
-
-/* --- CONTACT GRID --- */
-.contact-panel {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    padding: 0;
-    backdrop-filter: none;
-}
-.contact-list{ 
-    display:grid; 
-    grid-template-columns: repeat(4, 1fr); 
-    gap:16px; 
-}
+.export-btn:hover { background: var(--accent); color: var(--bg); }
+.contact-panel { background: transparent; border: none; box-shadow: none; padding: 0; backdrop-filter: none; }
+.contact-list{ display:grid; grid-template-columns: repeat(4, 1fr); gap:16px; }
 .contact-item{
-  display:flex; align-items:center; gap:10px;
-  justify-content: center;
-  padding:18px 10px; 
-  background: var(--btn-bg);
-  border: var(--card-border);
-  border-radius:16px;
-  cursor:pointer; 
-  font-size:.85rem; 
-  font-weight: 600;
-  color: var(--muted);
-  transition: all .3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  backdrop-filter: blur(5px);
+  display:flex; align-items:center; gap:10px; justify-content: center; padding:18px 10px; 
+  background: var(--btn-bg); border: var(--card-border); border-radius:16px; cursor:pointer; 
+  font-size:.85rem; font-weight: 600; color: var(--muted);
+  transition: all .3s cubic-bezier(0.25, 0.8, 0.25, 1); backdrop-filter: blur(5px);
 }
-.contact-item:hover{ 
-    background: var(--btn-hover); 
-    color: var(--text); 
-    transform: translateY(-4px); 
-    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+.contact-item:hover{ background: var(--btn-hover); color: var(--text); transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
+.contact-item .icon { font-size: 1.1rem; color: var(--accent); transition: color 0.3s; }
+.contact-item:hover .icon { color: var(--hacker-red); }
+.status-btn {
+    background: var(--text); color: var(--bg); border: 1px solid var(--accent);
 }
-.contact-item .icon { font-size: 1.1rem; color: var(--accent); }
-
-/* --- MOBILE --- */
+.status-btn:hover { background: var(--accent); color: var(--bg); }
 @media (max-width: 900px) {
     body { overflow-y: auto; height: auto; }
-    #layout { display: flex; flex-direction: column; height: auto; padding: 16px; gap: 16px; }
-    #left { order: 1; height: auto; display: block;}
-    .info-scroll { overflow: visible; }
+    #layout { display: flex; flex-direction: column; gap: 32px; padding: 24px; height: auto; }
+    #left { order: 1; height: auto; display: block; overflow: visible; }
+    .panel { height: auto; min-height: auto; margin-bottom: 24px; } 
+    .panel-scroll { overflow: visible; }
     #name { font-size: 2.8rem; }
-    #right { order: 2; height: auto; gap: 16px; }
-    #terminal { height: 500px; }
+    #right { order: 2; height: auto; gap: 24px; }
+    #terminal { height: 500px; min-height: 500px; }
     .contact-list { grid-template-columns: 1fr 1fr; } 
     .cheat-cols { grid-template-columns: 1fr; gap: 16px; }
     #torch { display: none; } 
-    #neural-canvas { display: none; } /* Save mobile battery */
+    #neural-canvas { display: none; }
 }
-
-/* --- EXTRAS --- */
 #torch{
-  position:fixed; width:450px; height:450px;
-  border-radius:50%; pointer-events:none;
+  position:fixed; width:450px; height:450px; border-radius:50%; pointer-events:none;
   background:radial-gradient(circle,var(--torch-color),transparent 65%);
-  filter:blur(50px); transform:translate(-50%,-50%);
-  z-index:999; transition: background 0.3s ease;
+  filter:blur(50px); transform:translate(-50%,-50%); z-index:999; transition: background 0.3s ease;
 }
-
 #modal-overlay {
   display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(16px);
-  z-index: 2000; justify-content: center; align-items: center;
-  opacity: 0; transition: opacity 0.3s ease; padding: 20px; box-sizing: border-box;
+  z-index: 2000; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; padding: 20px; box-sizing: border-box;
 }
 #modal-overlay.active { display: flex; opacity: 1; }
 #modal-container {
   width: 100%; height: 100%; max-width: 1100px; max-height: 85vh;
-  background: var(--modal-bg); 
-  border: var(--card-border);
-  border-radius: 20px; 
-  box-shadow: 0 40px 80px -20px rgba(0,0,0,0.6);
-  display: flex; flex-direction: column; overflow: hidden;
+  background: var(--modal-bg); border: var(--card-border); border-radius: 20px; 
+  box-shadow: 0 40px 80px -20px rgba(0,0,0,0.6); display: flex; flex-direction: column; overflow: hidden;
 }
-#modal-header {
-  padding: 16px 24px; border-bottom: 1px solid rgba(125,125,125,0.1);
-  display: flex; justify-content: space-between; align-items: center;
-}
+#modal-header { padding: 16px 24px; border-bottom: 1px solid rgba(125,125,125,0.1); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
 #modal-title { font-weight: 700; font-size: 1.1rem; }
 .modal-controls { display: flex; gap: 10px; }
 .modal-btn {
@@ -359,15 +188,17 @@ input{
 }
 .modal-btn:hover { background: rgba(125,125,125,0.1); }
 #modal-iframe { flex: 1; border: none; background: #fff; }
-
+#modal-text {
+    flex: 1; display: none; justify-content: center; align-items: center;
+    padding: 40px; text-align: center; font-size: 1.8rem; font-weight: 700;
+    color: var(--text); font-family: "Space Grotesk", sans-serif;
+    overflow-y: auto; white-space: pre-wrap; line-height: 1.5;
+}
 </style>
 </head>
 <body>
-
 <canvas id="neural-canvas"></canvas>
-
 <div id="torch"></div>
-
 <div id="modal-overlay">
   <div id="modal-container">
     <div id="modal-header">
@@ -378,109 +209,60 @@ input{
       </div>
     </div>
     <iframe id="modal-iframe" src=""></iframe>
+    <div id="modal-text"></div>
   </div>
 </div>
-
 <div id="layout">
-
 <div id="left">
-  
   <div class="panel" style="flex:1; overflow:hidden;">
-    <div class="info-scroll">
+    <div class="panel-header">
       <div id="name">Mithun Sidhaarth</div>
       <div id="subtitle">Tech Enthusiast</div>
-
       <div id="bio-typewriter"></div>
-
+    </div>
+    <div class="panel-scroll">
       <div class="section">
         <h3>Projects</h3>
-        <ul>
-          <li>Malware Detection System</li>
-          <li>AI Chatbot</li>
-          <li>Portfolio Console</li>
-        </ul>
+        <ul id="list-projects" class="interactive-list"></ul>
       </div>
-
       <div class="section">
         <h3>Blogs</h3>
-        <ul>
-          <li>Transformers Explained</li>
-          <li>Systems Thinking in AI</li>
-        </ul>
+        <ul id="list-blogs" class="interactive-list"></ul>
       </div>
-
       <div class="section">
         <h3>Research</h3>
-        <ul>
-          <li>Malware Detection Using DL</li>
-        </ul>
+        <ul id="list-research" class="interactive-list"></ul>
       </div>
-
       <div class="section">
         <h3>Skills</h3>
-        <ul>
-          <li>Python, DL, NLP</li>
-          <li>AWS, Linux</li>
-          <li>JavaScript, HTML, CSS</li>
-        </ul>
+        <div id="list-skills"></div>
       </div>
     </div>
   </div>
-  
   <div class="cheat-sheet">
     <div class="cheat-cols">
-      
       <div class="cheat-col">
         <div class="cheat-header">Navigation</div>
-        <div class="cheat-row">
-          <span class="cmd-key">projects</span>
-          <span class="cmd-desc">List all</span>
-        </div>
-        <div class="cheat-row">
-          <span class="cmd-key">open [id]</span>
-          <span class="cmd-desc">Select</span>
-        </div>
-        <div class="cheat-row">
-          <span class="cmd-key">demo/code</span>
-          <span class="cmd-desc">View</span>
-        </div>
-        <div class="cheat-row">
-          <span class="cmd-key">Tab/↑↓</span>
-          <span class="cmd-desc">History</span>
-        </div>
+        <div class="cheat-row"><span class="cmd-key">ls</span><span class="cmd-desc">See files</span></div>
+        <div class="cheat-row"><span class="cmd-key">cd [dir]</span><span class="cmd-desc">Open folder</span></div>
+        <div class="cheat-row"><span class="cmd-key">cd ..</span><span class="cmd-desc">Go back</span></div>
+        <div class="cheat-row"><span class="cmd-key">open [id]</span><span class="cmd-desc">View item</span></div>
       </div>
-
       <div class="cheat-col">
         <div class="cheat-header">More</div>
-        <div class="cheat-row">
-          <span class="cmd-key">resume</span>
-          <span class="cmd-desc">View PDF</span>
-        </div>
-        <div class="cheat-row">
-          <span class="cmd-key">hack</span>
-          <span class="cmd-desc">Simulate</span>
-        </div>
-        <div class="cheat-row">
-          <span class="cmd-key">matrix</span>
-          <span class="cmd-desc">Mode</span>
-        </div>
-        <div class="cheat-row">
-          <span class="cmd-key">theme</span>
-          <span class="cmd-desc">L/D Mode</span>
-        </div>
+        <div class="cheat-row"><span class="cmd-key">resume</span><span class="cmd-desc">View PDF</span></div>
+        <div class="cheat-row"><span class="cmd-key">hack</span><span class="cmd-desc">Simulate</span></div>
+        <div class="cheat-row"><span class="cmd-key">matrix</span><span class="cmd-desc">Mode</span></div>
+        <div class="cheat-row"><span class="cmd-key">theme</span><span class="cmd-desc">L/D Mode</span></div>
       </div>
-
     </div>
   </div>
-
 </div>
-
 <div id="right">
   <div class="panel" id="terminal">
     <div id="output"></div>
-    <div id="input"><span>➜ ~</span><input id="cmd" autofocus placeholder="Type 'help'..." autocomplete="off"></div>
+    <div id="input"><span id="prompt">➜ ~</span><input id="cmd" autofocus autocomplete="off"></div>
   </div>
-
   <div class="contact-panel">
     <div class="contact-list">
       <div class="contact-item" onclick="openLink('mailto:mithunsidhaartham@gmail.com')"><span class="icon">✉</span> Email</div>
@@ -490,346 +272,297 @@ input{
       <div class="contact-item" onclick="openLink('https://www.instagram.com/mithunsidhaarth/')"><span class="icon">📷</span> Insta</div>
       <div class="contact-item" onclick="openLink('https://hashnode.com/@mithunsidhaarth')"><span class="icon">✍</span> Blog</div>
       <div class="contact-item" onclick="openLink('https://t.me/aceduke')"><span class="icon">✈</span> Telegram</div>
+      <div class="contact-item status-btn" onclick="showStatusModal()"><span class="icon">⚡</span> Status</div>
     </div>
   </div>
 </div>
-
 </div>
-
 <script>
-/* ----------------------------------------------------------------
-   1. NEURAL NETWORK CANVAS (UPDATED VISIBILITY)
-   ---------------------------------------------------------------- */
 const canvas = document.getElementById("neural-canvas");
 const ctx = canvas.getContext("2d");
-let particles = [];
-let mouse = { x: null, y: null };
-
-function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-window.addEventListener("resize", resize);
-resize();
-
+let particles = [], mouse = { x: null, y: null };
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.addEventListener("resize", resize); resize();
 document.addEventListener("mousemove", (e) => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-    
-    // Sync Torch
-    const torch = document.getElementById("torch");
-    torch.style.left = e.clientX + "px";
-    torch.style.top = e.clientY + "px";
+    mouse.x = e.clientX; mouse.y = e.clientY;
+    document.getElementById("torch").style.left = e.clientX + "px";
+    document.getElementById("torch").style.top = e.clientY + "px";
 });
-
 class Particle {
     constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.5; // Velocity
-        this.vy = (Math.random() - 0.5) * 0.5;
+        this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.5; this.vy = (Math.random() - 0.5) * 0.5;
         this.size = Math.random() * 2 + 1;
     }
-
     update() {
-        this.x += this.vx;
-        this.y += this.vy;
-
-        // Bounce off edges
+        this.x += this.vx; this.y += this.vy;
         if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
         if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-
-        // Mouse Repulsion (Interaction)
-        let dx = mouse.x - this.x;
-        let dy = mouse.y - this.y;
-        let distance = Math.sqrt(dx*dx + dy*dy);
-        if (distance < 150) {
-            const forceDirectionX = dx / distance;
-            const forceDirectionY = dy / distance;
-            const force = (150 - distance) / 150;
-            this.vx -= forceDirectionX * force * 0.5;
-            this.vy -= forceDirectionY * force * 0.5;
+        let dx = mouse.x - this.x, dy = mouse.y - this.y;
+        let dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 150) {
+            this.vx -= (dx/dist) * ((150-dist)/150) * 0.5;
+            this.vy -= (dy/dist) * ((150-dist)/150) * 0.5;
         }
     }
-
     draw() {
-        const style = getComputedStyle(document.body);
-        ctx.fillStyle = style.getPropertyValue('--particle-color').trim();
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--particle-color').trim();
+        ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill();
     }
 }
-
-function initParticles() {
-    particles = [];
-    const count = window.innerWidth > 900 ? 80 : 30; // Fewer on mobile
-    for (let i = 0; i < count; i++) particles.push(new Particle());
-}
-
+function initParticles() { particles = []; for (let i = 0; i < (window.innerWidth>900?80:30); i++) particles.push(new Particle()); }
 function animateParticles() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    const style = getComputedStyle(document.body);
-    const pColor = style.getPropertyValue('--particle-color').trim();
-    
-    particles.forEach((p, index) => {
-        p.update();
-        p.draw();
-        
-        // Draw lines
-        for (let j = index; j < particles.length; j++) {
-            const dx = p.x - particles[j].x;
-            const dy = p.y - particles[j].y;
-            const dist = Math.sqrt(dx*dx + dy*dy);
-            
-            if (dist < 150) {
-                ctx.beginPath();
-                ctx.strokeStyle = pColor; 
-                ctx.lineWidth = 0.5;
-                ctx.moveTo(p.x, p.y);
-                ctx.lineTo(particles[j].x, particles[j].y);
-                ctx.stroke();
-                ctx.closePath();
+    const pColor = getComputedStyle(document.body).getPropertyValue('--particle-color').trim();
+    particles.forEach((p, i) => {
+        p.update(); p.draw();
+        for (let j = i; j < particles.length; j++) {
+            let dx = p.x - particles[j].x, dy = p.y - particles[j].y;
+            if (Math.sqrt(dx*dx+dy*dy) < 150) {
+                ctx.beginPath(); ctx.strokeStyle = pColor; ctx.lineWidth = 0.5;
+                ctx.moveTo(p.x, p.y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
             }
         }
     });
     requestAnimationFrame(animateParticles);
 }
-
-initParticles();
-animateParticles();
-
-
-/* ----------------------------------------------------------------
-   2. TYPEWRITER & LOGIC
-   ---------------------------------------------------------------- */
+initParticles(); animateParticles();
 const bioText = "I’m Mithun Sidhaarth, someone who loves learning across boundaries. I’m deeply interested in computer science, but just as curious about how people think, feel, and decide. Philosophy helps me question, psychology helps me understand, and technology gives me a way to build.";
 const bioElement = document.getElementById("bio-typewriter");
-
-function typeBio(text, i) {
-    if (i < text.length) {
-        bioElement.textContent += text.charAt(i);
-        setTimeout(() => typeBio(text, i + 1), 15); 
-    }
-}
+function typeBio(text, i) { if (i < text.length) { bioElement.textContent += text.charAt(i); setTimeout(() => typeBio(text, i + 1), 15); } }
 setTimeout(() => typeBio(bioText, 0), 500);
-
-/* DATA */
-const data={
+let data={
+  currentStatus: "Building a Neural Network visualizer.",
   projects:[
-    {title:"Malware Detection System",demo:"https://en.wikipedia.org/wiki/Malware",code:"https://github.com"},
-    {title:"AI Chatbot",demo:"https://en.wikipedia.org/wiki/Chatbot",code:"https://github.com"},
-    {title:"Portfolio Console",demo:"#",code:"#"}
+    {title:"Malware Detection System", demo:"https://en.wikipedia.org/wiki/Malware", code:"#"},
+    {title:"AI Chatbot", demo:"https://en.wikipedia.org/wiki/Chatbot", code:"#"},
+    {title:"Portfolio Console", demo:"#", code:"#"}
   ],
   blogs:[
-    {title:"Transformers Explained",link:"https://wikipedia.org/wiki/Transformer_(machine_learning_model)"},
-    {title:"Systems Thinking in AI",link:"#"}
+    {title:"Transformers Explained", link:"#"},
+    {title:"Systems Thinking in AI", link:"#"}
   ],
   research:[
-    {title:"Malware Detection Using DL",link:"#"}
+    {title:"Malware Detection Using DL", link:"#"}
   ],
-  skills:["Python","Deep Learning","NLP","AWS","Linux","JavaScript"],
-  commands: ["help","projects","blogs","research","skills","contact","status","theme","clear","resume","search","timeline","demo","code","read","paper","ls","sudo","whoami","hack","matrix"]
+  skills:[
+    {name: "Python", level: 95},
+    {name: "Deep Learning", level: 85},
+    {name: "NLP", level: 80},
+    {name: "AWS", level: 70},
+    {name: "Linux", level: 90},
+    {name: "JavaScript", level: 75}
+  ],
+  commands: ["help","projects","blogs","research","skills","contact","status","theme","clear","resume","search","hack","matrix","ls","cd","open","login","export","new"]
 };
-
-let context=null;
-let cmdHistory=[];
-let historyIndex=-1;
-let isTyping = false;
-
-const output=document.getElementById("output");
-const input=document.getElementById("cmd");
-const modalOverlay = document.getElementById("modal-overlay");
-const modalTitle = document.getElementById("modal-title");
-const modalFrame = document.getElementById("modal-iframe");
-const modalExtBtn = document.getElementById("modal-ext");
-
-function typeWriter(text, i, fnCallback) {
-  if (i < text.length) {
-    output.textContent += text.charAt(i);
-    output.scrollTop = output.scrollHeight;
-    setTimeout(function() { typeWriter(text, i + 1, fnCallback) }, 2); 
-  } else if (typeof fnCallback == 'function') { fnCallback(); }
+function renderLeftPanel() {
+    const createList = (id, cat) => {
+        const ul = document.getElementById(id);
+        ul.innerHTML = data[cat].map((item, i) => 
+            `<li class="interactive-item" onclick="openFromLeft('${cat}', ${i})">${item.title}</li>`
+        ).join('');
+    };
+    createList('list-projects', 'projects');
+    createList('list-blogs', 'blogs');
+    createList('list-research', 'research');
+    const skillContainer = document.getElementById('list-skills');
+    skillContainer.innerHTML = data.skills.map(skill => `
+        <div class="skill-container">
+            <div class="skill-info"><span>${skill.name}</span><span>${skill.level}%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width: 0%" data-width="${skill.level}%"></div></div>
+        </div>
+    `).join('');
+    setTimeout(() => {
+        document.querySelectorAll('.skill-fill').forEach(bar => { bar.style.width = bar.getAttribute('data-width'); });
+    }, 500);
 }
-
-function print(t, instant=false){
-  if(instant){
-     output.textContent += t + "\n\n";
-     output.scrollTop = output.scrollHeight;
-     return;
-  }
-  isTyping = true; input.disabled = true;
-  typeWriter(t + "\n\n", 0, function(){ isTyping = false; input.disabled = false; input.focus(); });
-}
-
-print("MithunOS v6.3 [Connected].\nGuest session active.\nType 'help' for commands.");
-
-/* 3. SIMULATION FEATURE (HACK) */
-function runHackSimulation() {
-    const codeLines = [
-        "Initializing bruteforce protocol...",
-        "Targeting mainframe [192.168.0.1]...",
-        "Bypassing firewall (Port 443)... SUCCESS",
-        "Injecting payload.exe...",
-        "Accessing shadow database...",
-        "Decryption keys found: 4",
-        "Downloading assets... 12%",
-        "Downloading assets... 45%",
-        "Downloading assets... 89%",
-        "Downloading assets... 100%",
-        "System compromise complete.",
-        "ACCESS GRANTED."
-    ];
-    let i = 0;
-    input.disabled = true;
-    function printLine() {
-        if(i < codeLines.length) {
-            output.textContent += `> ${codeLines[i]}\n`;
-            output.scrollTop = output.scrollHeight;
-            i++;
-            setTimeout(printLine, 150 + Math.random()*200);
-        } else {
-            input.disabled = false;
-            input.focus();
-            print("\nSimulation finished.");
-        }
+renderLeftPanel();
+function openFromLeft(category, index) {
+    const item = data[category][index];
+    if(item) {
+        let url = item.demo && item.demo !== "#" ? item.demo : (item.link || item.code);
+        if(!url || url === "#") { print(`Error: No link available for ${item.title}`); return; }
+        openModal(item.title, url);
+        print(`> Opening ${item.title}...`);
     }
-    printLine();
 }
-
-
+let currentPath = "~";
+let currentDirectory = "root"; 
+let selectedItem = null;
+let isAdmin = false;
+let inputState = null;
+let tempItem = {}; 
+let cmdHistory=[], historyIndex=-1, isTyping=false;
+const output=document.getElementById("output"), input=document.getElementById("cmd"), promptSpan=document.getElementById("prompt");
+const modalOverlay=document.getElementById("modal-overlay"), modalTitle=document.getElementById("modal-title"), modalFrame=document.getElementById("modal-iframe");
+const modalText = document.getElementById("modal-text");
+const modalExtBtn = document.getElementById("modal-ext");
+function typeWriter(text, i, fn) {
+  if (i < text.length) { output.textContent += text.charAt(i); output.scrollTop = output.scrollHeight; setTimeout(() => typeWriter(text, i + 1, fn), 2); } 
+  else if (typeof fn == 'function') fn();
+}
+function print(t, instant=false){
+  if(instant){ output.textContent += t + "\n\n"; output.scrollTop = output.scrollHeight; return; }
+  isTyping = true; input.disabled = true; typeWriter(t + "\n\n", 0, function(){ isTyping = false; input.disabled = false; input.focus(); });
+}
+print("MithunOS v19.0 [Online].\nType 'help' for commands.");
 function openModal(title, url) {
-    if(!url || url === "#") { return print("Error: No valid link provided."); }
-    modalTitle.innerText = title;
-    modalFrame.src = url;
+    modalText.style.display = "none";
+    modalFrame.style.display = "block";
+    modalExtBtn.style.display = "block";
+    if(!url || url === "#") return print("Error: Invalid Link.");
+    modalTitle.innerText = title; modalFrame.src = url; 
     modalExtBtn.onclick = () => window.open(url, "_blank");
-    modalOverlay.style.display = "flex";
-    setTimeout(() => modalOverlay.classList.add("active"), 10);
-    print(`Previewing: ${title}...`);
+    modalOverlay.style.display = "flex"; setTimeout(() => modalOverlay.classList.add("active"), 10);
 }
-
-function closeModal() {
-    modalOverlay.classList.remove("active");
-    setTimeout(() => { modalOverlay.style.display = "none"; modalFrame.src = ""; }, 300);
+function showStatusModal() {
+    modalFrame.style.display = "none";
+    modalExtBtn.style.display = "none";
+    modalText.style.display = "flex";
+    modalText.innerText = data.currentStatus;
+    modalTitle.innerText = "Current Status";
+    modalOverlay.style.display = "flex"; setTimeout(() => modalOverlay.classList.add("active"), 10);
 }
-
-document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && modalOverlay.classList.contains("active")) closeModal();
-});
-
+function closeModal() { modalOverlay.classList.remove("active"); setTimeout(() => { modalOverlay.style.display = "none"; modalFrame.src = ""; }, 300); }
+document.addEventListener("keydown", e => { if (e.key === "Escape" && modalOverlay.classList.contains("active")) closeModal(); });
 function handle(cmd){
+  if(inputState === 'login') {
+      if(btoa(cmd) === 'ZGNzdWNrczEyMy8t') {
+          isAdmin = true;
+          inputState = null;
+          document.body.classList.add('admin-mode');
+          return print("Access Granted. Welcome, Admin.\nNew commands unlocked:\n- new project | blog | paper\n- set status\n- set skill [name] [value]\n- export");
+      } else {
+          inputState = null;
+          return print("Access Denied.");
+      }
+  }
+  if(inputState && inputState.startsWith('new-')) {
+      if(cmd === 'cancel') { inputState = null; return print("Operation cancelled."); }
+      if(inputState === 'new-title') {
+          tempItem.title = cmd;
+          inputState = 'new-link';
+          return print("Enter Link/Demo URL:");
+      }
+      if(inputState === 'new-link') {
+          tempItem.demo = cmd; 
+          tempItem.link = cmd;
+          const cat = tempItem.category;
+          data[cat].push(tempItem);
+          renderLeftPanel(); 
+          inputState = null;
+          return print(`Success! Added "${tempItem.title}" to ${cat}.\nType 'export' to save.`);
+      }
+  }
+  if(inputState === 'set-status') {
+      data.currentStatus = cmd;
+      inputState = null;
+      return print("Status updated. Type 'export' to save.");
+  }
   if(cmd && cmd !== cmdHistory[cmdHistory.length-1]){ cmdHistory.push(cmd); historyIndex = cmdHistory.length; }
   const p = (str) => str.padEnd(12, ' ');
-
-  if(cmd==="help"){
-    return print(
-`AVAILABLE COMMANDS
-------------------
-${p("projects")} View detailed project list
-${p("research")} View research papers
-${p("blogs")}    Read technical articles
-${p("skills")}   List technical skills
-${p("status")}   System status check
-${p("resume")}   Open PDF Resume
-${p("hack")}     Run 'hack' simulation
-${p("matrix")}   Matrix Color Mode
-${p("theme")}    Toggle Light/Dark
-${p("clear")}    Clear terminal`
-    );
+  if(cmd==="help") return print(`COMMANDS\n--------\n${p("ls")} List files\n${p("cd [dir]")} Change dir\n${p("open [id]")} Open item\n${p("resume")} PDF Resume\n${p("hack")} Simulation\n${p("theme")} Light/Dark`);
+  if(cmd==="sudo login") {
+      inputState = 'login';
+      return print("Enter Password:");
   }
-
-  if(cmd==="hack") return runHackSimulation();
-  if(cmd==="matrix"){
-      document.body.classList.toggle("matrix-mode");
-      return print("Matrix mode toggled.");
+  if(cmd==="export") {
+      if(!isAdmin) return print("Permission denied.");
+      const btn = document.createElement("button");
+      btn.innerText = "Copy Data";
+      btn.className = "export-btn";
+      btn.onclick = function() {
+          navigator.clipboard.writeText(JSON.stringify(data, null, 2));
+          this.innerText = "Copied!";
+          this.style.background = "#28a745";
+          this.style.color = "#fff";
+      };
+      print("Export generated:", true);
+      output.appendChild(btn);
+      output.scrollTop = output.scrollHeight;
+      return;
   }
-
-  if(cmd==="projects"){
-    context="projects";
-    return print("PROJECTS:\n" + data.projects.map((p,i)=>`[${i+1}] ${p.title}`).join("\n") + "\n\nType 'open [number]' to select.");
+  if(cmd==="set status") {
+      if(!isAdmin) return print("Permission denied.");
+      inputState = 'set-status';
+      return print("Enter new status message:");
   }
-  if(cmd==="blogs"){
-    context="blogs";
-    return print("BLOGS:\n" + data.blogs.map((b,i)=>`[${i+1}] ${b.title}`).join("\n") + "\n\nType 'open [number]' to read.");
+  if(cmd.startsWith("set skill ")) {
+      if(!isAdmin) return print("Permission denied.");
+      const parts = cmd.split(" ");
+      if(parts.length < 4) return print("Usage: set skill [name] [level]");
+      const level = parseInt(parts.pop());
+      const name = parts.slice(2).join(" ");
+      const skill = data.skills.find(s => s.name.toLowerCase() === name.toLowerCase());
+      if(skill) {
+          skill.level = level;
+          renderLeftPanel();
+          return print(`Skill '${skill.name}' updated to ${level}%.`);
+      }
+      return print("Skill not found.");
   }
-  if(cmd==="research"){
-    context="research";
-    return print("PUBLICATIONS:\n" + data.research.map((r,i)=>`[${i+1}] ${r.title}`).join("\n") + "\n\nType 'open [number]' to read.");
+  if(cmd.startsWith("new ")) {
+      if(!isAdmin) return print("Permission denied.");
+      const type = cmd.replace("new ", "").trim();
+      let category = "";
+      if(type === "project") category = "projects";
+      else if(type === "blog") category = "blogs";
+      else if(type === "paper" || type === "research") category = "research";
+      if(category) {
+          inputState = 'new-title';
+          tempItem = { category: category };
+          return print(`Creating new ${type}...\nEnter Title:`);
+      }
+      return print("Invalid type.");
   }
-
-  if(cmd==="skills") return print("ACTIVE MODULES:\n" + data.skills.join("\n"));
-  if(cmd==="contact") return print("CONTACT:\nSee the buttons below.");
-
-  if(cmd==="status" || cmd==="top") return print(`SYSTEM STATUS\n-------------\nOS: MithunOS Web\nUptime: ${Math.floor(performance.now()/1000)}s\nMemory: Optimal`);
-
+  if(cmd.startsWith("cd")){
+      const target = cmd.replace("cd", "").trim();
+      if(!target || target === "~") { currentPath = "~"; currentDirectory = "root"; }
+      else if(target === "..") { currentPath = "~"; currentDirectory = "root"; }
+      else if(["projects","blogs","research"].includes(target)) { currentPath = `~/${target}`; currentDirectory = target; }
+      else return print(`cd: no such directory: ${target}`);
+      promptSpan.innerText = `➜ ${currentPath}`; selectedItem = null; return print("");
+  }
+  if(cmd === "ls") {
+      if(currentDirectory === "root") return print("drwx------ projects/\ndrwx------ blogs/\ndrwx------ research/\n-r--r--r-- resume.pdf");
+      return print(data[currentDirectory].map((item, i) => `[${i+1}] ${item.title}`).join("\n"));
+  }
   if(cmd.startsWith("open")){
     const i=parseInt(cmd.split(" ")[1])-1;
     if(isNaN(i)) return print("Usage: open [number]");
-    if(context==="projects" && data.projects[i]){
-      context=data.projects[i]; 
-      return print(`SELECTED: ${context.title}\n> Type 'demo' to view live\n> Type 'code' to view source`);
-    }
-    if(context==="blogs" && data.blogs[i]){
-      context=data.blogs[i]; return print(`SELECTED: ${context.title}\n> Type 'read' to open`);
-    }
-    if(context==="research" && data.research[i]){
-      context=data.research[i]; return print(`SELECTED: ${context.title}\n> Type 'paper' to view`);
-    }
-    return print("Error: View a category first.");
+    if(currentDirectory === "root") return print("Error: Enter a directory first.");
+    if(data[currentDirectory][i]) {
+        selectedItem = data[currentDirectory][i];
+        return print(`Selected: ${selectedItem.title}\nType 'demo', 'code', or 'read' to view.`);
+    } else return print("File not found.");
   }
-
-  if(cmd==="demo"){
-      if(context && context.demo) return openModal(context.title + " (Demo)", context.demo);
-      return print("Error: No demo available.");
-  }
-  if(cmd==="code"){
-      if(context && context.code) return openModal(context.title + " (Code)", context.code);
-      return print("Error: No code available.");
-  }
-  if(cmd==="read" && context?.link) return openModal(context.title, context.link);
-  if(cmd==="paper" && context?.link) return openModal(context.title, context.link);
+  if(cmd==="demo" && selectedItem?.demo) return openModal(selectedItem.title, selectedItem.demo);
+  if(cmd==="code" && selectedItem?.code) return openModal(selectedItem.title, selectedItem.code);
+  if(cmd==="read" && selectedItem?.link) return openModal(selectedItem.title, selectedItem.link);
   if(cmd==="resume") return openModal("Resume", "resume.pdf");
-
-  if(cmd.startsWith("search")){
-    const q=cmd.replace("search","").trim();
-    if(!q) return print("Usage: search [keyword]");
-    let res=[];
-    data.projects.forEach(p=>p.title.toLowerCase().includes(q)&&res.push("PROJ: "+p.title));
-    data.blogs.forEach(b=>b.title.toLowerCase().includes(q)&&res.push("BLOG: "+b.title));
-    return print(res.join("\n")||"No results found.");
-  }
-
-  if(cmd==="timeline") return print("TIMELINE:\n2019 [Curiosity] -> 2022 [Systems] -> 2024 [Research]");
   if(cmd==="theme"){ document.body.classList.toggle("dark"); return print("Theme switched."); }
   if(cmd==="clear"){ output.textContent=""; return; }
-  
-  if(cmd==="ls") return print("drwx------ projects\ndrwx------ blogs\n-r--r--r-- secret.txt");
-  if(cmd.startsWith("sudo")) return print("Permission denied.");
-  if(cmd==="whoami") return print("guest");
-
+  if(cmd==="hack") {
+      const lines=["Accessing Mainframe...","Bypassing Firewall...","Downloading Data...","Access Granted."];
+      let i=0; input.disabled=true;
+      function run(){ if(i<lines.length){ output.textContent+=`> ${lines[i++]}\n`; output.scrollTop=output.scrollHeight; setTimeout(run, 400); } else { input.disabled=false; input.focus(); } }
+      run(); return;
+  }
+  if(cmd==="matrix"){ document.body.classList.toggle("matrix-mode"); return print("Matrix Mode."); }
   print(`Command not found: '${cmd}'.`);
 }
-
 input.addEventListener("keydown",e=>{
   if(isTyping) { e.preventDefault(); return; }
-  if(e.key === "Tab"){
-      e.preventDefault();
-      const curr = input.value.toLowerCase();
-      const match = data.commands.find(c => c.startsWith(curr));
-      if(match) input.value = match;
-  }
-  if(e.key === "ArrowUp" && historyIndex > 0){ historyIndex--; input.value = cmdHistory[historyIndex]; }
-  if(e.key === "ArrowDown"){
-      if(historyIndex < cmdHistory.length - 1){ historyIndex++; input.value = cmdHistory[historyIndex]; } 
-      else { historyIndex = cmdHistory.length; input.value = ""; }
-  }
-  if(e.key==="Enter"){
-    const c=input.value.toLowerCase().trim();
-    if(c) { print("➜ ~ " + c, true); handle(c); input.value=""; }
+  if(e.key==="Tab"){ e.preventDefault(); const m=data.commands.find(c=>c.startsWith(input.value)); if(m) input.value=m; }
+  if(e.key==="ArrowUp" && historyIndex>0) input.value=cmdHistory[--historyIndex];
+  if(e.key==="ArrowDown") input.value = historyIndex<cmdHistory.length-1 ? cmdHistory[++historyIndex] : "";
+  if(e.key==="Enter"){ 
+      const c=input.value.trim().toLowerCase(); 
+      if(inputState === 'login') { print("➜ [HIDDEN]", true); handle(c); } 
+      else if(c){ print(`➜ ${currentPath} ${c}`, true); handle(c); }
+      input.value=""; 
   }
 });
-
 function openLink(url){ window.open(url,"_blank"); }
 </script>
 </body>
