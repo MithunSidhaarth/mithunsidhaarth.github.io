@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Portfolio Console — Mithun Sidhaarth</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="A terminal-styled personal portfolio built as an interactive system rather than a static page, command-line style navigation, a modal reading system for content, and theme controls, designed around structure and interaction over decoration.">
+<link rel="canonical" href="https://mithunsidhaarth.in/projects/portfolio-console/">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Mithun Sidhaarth">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Portfolio Console — Mithun Sidhaarth">
+<meta property="og:description" content="A terminal-styled personal portfolio built as an interactive system rather than a static page, command-line style navigation, a modal reading system for content, and theme controls, designed around structure and interaction over decoration.">
+<meta property="og:url" content="https://mithunsidhaarth.in/projects/portfolio-console/">
+<meta property="og:image" content="https://mithunsidhaarth.in/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Portfolio Console — Mithun Sidhaarth">
+<meta name="twitter:description" content="A terminal-styled personal portfolio built as an interactive system rather than a static page, command-line style navigation, a modal reading system for content, and theme controls, designed around structure and interaction over decoration.">
+<meta name="twitter:image" content="https://mithunsidhaarth.in/og-image.png">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": "Portfolio Console",
+  "description": "A terminal-styled personal portfolio built as an interactive system rather than a static page, command-line style navigation, a modal reading system for content, and theme controls, designed around structure and interaction over decoration.",
+  "url": "https://mithunsidhaarth.in/projects/portfolio-console/",
+  "author": {
+    "@type": "Person",
+    "name": "Mithun Sidhaarth",
+    "url": "https://mithunsidhaarth.in"
+  },
+  "sameAs": [
+    "https://mithunsidhaarth.in"
+  ]
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; }
+:root{
+  --bg: #e8e8e8;
+  --text: #1a1a1a;
+  --muted: #555;
+  --accent: #000;
+  --hacker-red: #d00000;
+  --card-bg: rgba(255, 255, 255, 0.65);
+  --card-border: 1px solid rgba(255, 255, 255, 0.6);
+  --card-blur: blur(24px);
+  --premium-shadow: 0 20px 40px -10px rgba(0,0,0,0.1), 0 0 1px rgba(0,0,0,0.05);
+  --btn-bg: rgba(255, 255, 255, 0.5);
+  --btn-hover: rgba(255, 255, 255, 0.9);
+  --modal-bg: rgba(255, 255, 255, 0.95);
+  --term-font: "JetBrains Mono", monospace;
+  --torch-color: rgba(0, 0, 0, 0.25); 
+  --particle-color: rgba(0,0,0,0.2); 
+  --skill-track: rgba(0,0,0,0.05);
+  --skill-fill: var(--hacker-red);
+  --aurora-1: rgba(208,0,0,0.18);
+  --aurora-2: rgba(0,60,208,0.14);
+  --aurora-3: rgba(0,150,120,0.12);
+  --grain-opacity: 0.035;
+  --grid-line: rgba(0,0,0,0.05);
+  --stat-accent: var(--hacker-red);
+}
+body.dark{
+  --bg: #050505;
+  --text: #e0e0e0;
+  --muted: #888;
+  --accent: #fff;
+  --hacker-red: #ff3333;
+  --card-bg: rgba(20, 20, 20, 0.6);
+  --card-border: 1px solid rgba(255, 255, 255, 0.08);
+  --premium-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), 0 0 1px rgba(255,255,255,0.05);
+  --btn-bg: rgba(255, 255, 255, 0.05);
+  --btn-hover: rgba(255, 255, 255, 0.15);
+  --modal-bg: rgba(20, 20, 20, 0.95);
+  --torch-color: rgba(255, 255, 255, 0.15);
+  --particle-color: rgba(255,255,255,0.2);
+  --skill-track: rgba(255,255,255,0.1);
+  --skill-fill: var(--hacker-red);
+  --aurora-1: rgba(255,51,51,0.16);
+  --aurora-2: rgba(120,60,255,0.14);
+  --aurora-3: rgba(0,200,180,0.12);
+  --grain-opacity: 0.05;
+  --grid-line: rgba(255,255,255,0.035);
+  --stat-accent: var(--hacker-red);
+}
+body.matrix-mode {
+    --text: #00ff41;
+    --accent: #00ff41;
+    --muted: #008f11;
+    --bg: #000;
+    --hacker-red: #ff0000;
+    --card-bg: rgba(0, 20, 0, 0.8);
+    --card-border: 1px solid #003b00;
+    --torch-color: rgba(0, 255, 65, 0.2);
+    --particle-color: rgba(0, 255, 65, 0.3);
+    --skill-fill: #00ff41;
+    --skill-track: #003b00;
+    --aurora-1: rgba(0,255,65,0.18);
+    --aurora-2: rgba(0,255,65,0.1);
+    --aurora-3: rgba(0,120,40,0.14);
+    --grain-opacity: 0.06;
+    --grid-line: rgba(0,255,65,0.06);
+    --stat-accent: #00ff41;
+}
+body.admin-mode { --accent: #ff3333; }
+body{
+  margin:0; background:var(--bg); color:var(--text); font-family:"Space Grotesk", sans-serif;
+  height:100vh; overflow:hidden; transition: background 0.4s ease, color 0.4s ease;
+}
+#neural-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+
+/* ---------- Atmosphere: aurora / grid / grain ---------- */
+#aurora { position: fixed; inset: 0; z-index: -3; overflow: hidden; pointer-events: none; }
+.aurora-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.9; will-change: transform; }
+.aurora-blob.b1 { width: 55vw; height: 55vw; top: -15%; left: -10%; background: var(--aurora-1); animation: aurora-drift-1 26s ease-in-out infinite alternate; }
+.aurora-blob.b2 { width: 45vw; height: 45vw; bottom: -15%; right: -10%; background: var(--aurora-2); animation: aurora-drift-2 32s ease-in-out infinite alternate; }
+.aurora-blob.b3 { width: 38vw; height: 38vw; top: 35%; left: 40%; background: var(--aurora-3); animation: aurora-drift-3 22s ease-in-out infinite alternate; }
+@keyframes aurora-drift-1 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(8vw,10vh) scale(1.15); } }
+@keyframes aurora-drift-2 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(-6vw,-8vh) scale(1.1); } }
+@keyframes aurora-drift-3 { 0% { transform: translate(-4vw,-4vh) scale(1); } 100% { transform: translate(5vw,6vh) scale(1.2); } }
+
+#grid-lines {
+  position: fixed; inset: 0; z-index: -2; pointer-events: none;
+  background-image: linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 48px 48px; opacity: 0.6;
+  animation: grid-shift 40s linear infinite;
+}
+@keyframes grid-shift { 0% { background-position: 0 0, 0 0; } 100% { background-position: 200px 400px, 200px 400px; } }
+
+#grain-overlay {
+  position: fixed; inset: 0; width: 100%; height: 100%; z-index: 900; pointer-events: none; opacity: var(--grain-opacity);
+  mix-blend-mode: overlay;
+}
+
+/* ---------- Custom cursor ---------- */
+body { cursor: none; }
+#cursor-dot, #cursor-ring { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 3000; border-radius: 50%; transform: translate(-50%,-50%); }
+#cursor-dot { width: 7px; height: 7px; background: var(--hacker-red); transition: transform 0.15s ease, background 0.2s ease; }
+#cursor-ring { width: 34px; height: 34px; border: 1.5px solid var(--accent); opacity: 0.5; transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, opacity 0.25s ease; }
+#cursor-ring.active { width: 56px; height: 56px; border-color: var(--hacker-red); opacity: 0.9; }
+@media (max-width: 900px), (hover: none) {
+  body { cursor: auto; }
+  #cursor-dot, #cursor-ring { display: none; }
+}
+
+/* ---------- Kinetic hero name ---------- */
+#name { display: flex; flex-wrap: wrap; position: relative; }
+#name .letter {
+  display: inline-block; background: linear-gradient(90deg, var(--text), var(--hacker-red), var(--text));
+  background-size: 250% auto; -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: name-sweep 6s linear infinite; transition: transform 0.25s cubic-bezier(0.2,1,0.3,1);
+}
+#name .letter.space { width: 0.32em; }
+@keyframes name-sweep { 0% { background-position: 0% center; } 100% { background-position: 250% center; } }
+
+/* ---------- Bento grid cards (techy/terminal style) ---------- */
+.bento-grid {
+  list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 0 4px 0 0; margin: 0;
+  max-height: 190px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--muted) transparent;
+}
+.bento-grid::-webkit-scrollbar { width: 6px; }
+.bento-grid::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 4px; }
+.bento-card {
+  position: relative; border-radius: 10px; overflow: hidden; cursor: pointer; min-height: 80px;
+  background: linear-gradient(155deg, rgba(255,255,255,0.045), rgba(255,255,255,0.01)), var(--card-bg);
+  border: 1px solid rgba(125,125,125,0.18); border-left: 2px solid var(--hacker-red);
+  display: flex; flex-direction: column; justify-content: space-between; padding: 10px 12px;
+  transition: transform 0.25s cubic-bezier(0.2,1,0.3,1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.bento-card::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.5;
+  background-image: linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 14px 14px;
+}
+.bento-card:hover {
+  transform: translateY(-4px); border-color: var(--hacker-red);
+  box-shadow: 0 14px 28px -14px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,51,51,0.25);
+}
+.bento-topline { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; }
+.bento-tag {
+  font-family: var(--term-font); font-size: 0.62rem; font-weight: 700; letter-spacing: 1.5px;
+  color: var(--hacker-red); opacity: 0.85; text-transform: uppercase;
+}
+.bento-icon { font-family: var(--term-font); font-size: 0.8rem; color: var(--muted); transition: transform 0.2s ease, color 0.2s ease; }
+.bento-card:hover .bento-icon { color: var(--hacker-red); transform: translateX(3px); }
+.bento-card-title {
+  position: relative; z-index: 1; font-size: 0.85rem; font-weight: 700; line-height: 1.35; color: var(--text);
+}
+.bento-card-sub {
+  position: relative; z-index: 1; font-size: 0.68rem; font-weight: 500; line-height: 1.3; color: var(--muted);
+  margin-top: 2px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+@media (max-width: 500px) { .bento-grid { grid-template-columns: 1fr; max-height: 320px; } }
+
+/* ---------- Rich detail panel inside modal ---------- */
+#modal-text.detail-panel { flex: 1; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; padding: 20px 24px; overflow-y: auto; text-align: left; white-space: normal; }
+.detail-kicker { font-family: var(--term-font); font-size: 0.68rem; font-weight: 700; letter-spacing: 1.5px; color: var(--hacker-red); text-transform: uppercase; opacity: 0.85; margin-bottom: 8px; }
+.detail-intro { font-size: 0.98rem; line-height: 1.6; color: var(--text); font-family: "Space Grotesk", sans-serif; margin: 0 0 16px 0; white-space: pre-wrap; }
+.detail-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; }
+.detail-btn {
+  font-family: "Space Grotesk", sans-serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.3px;
+  color: var(--text); background: rgba(125,125,125,0.08); border: 1px solid rgba(125,125,125,0.3);
+  border-radius: 10px; padding: 11px 20px; cursor: pointer; transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+.detail-btn:hover { border-color: var(--hacker-red); color: var(--hacker-red); background: rgba(255,51,51,0.08); transform: translateY(-2px); }
+.detail-btn.primary { background: var(--hacker-red); border-color: var(--hacker-red); color: #fff; }
+.detail-btn.primary:hover { background: transparent; color: var(--hacker-red); }
+.detail-btn.disabled { opacity: 0.4; cursor: default; pointer-events: none; }
+.ask-panel { margin-top: 16px; }
+.ask-panel .cheat-header { display: flex; align-items: center; gap: 6px; }
+.ask-panel .cheat-header .pulse-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--hacker-red); box-shadow: 0 0 6px var(--hacker-red); animation: blink 1.4s ease-in-out infinite; }
+.ask-hint { font-size: 0.75rem; color: var(--muted); margin-bottom: 10px; line-height: 1.4; }
+.ask-chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.ask-chip {
+  font-family: var(--term-font); font-size: 0.72rem; padding: 7px 12px; border-radius: 999px;
+  background: var(--btn-bg); border: var(--card-border); color: var(--text); cursor: pointer;
+  transition: all 0.2s ease; white-space: nowrap;
+}
+.ask-chip:hover { border-color: var(--hacker-red); color: var(--hacker-red); background: rgba(255,51,51,0.08); transform: translateY(-2px); }
+
+/* ---------- Skills marquee ---------- */
+.marquee-wrap { overflow: hidden; margin: 4px 0 10px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.marquee-track { display: flex; gap: 10px; width: max-content; animation: marquee-scroll 24s linear infinite; }
+.marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+.marquee-tag {
+  font-family: var(--term-font); font-size: 0.72rem; font-weight: 700; padding: 6px 14px; border-radius: 20px;
+  background: var(--btn-bg); border: var(--card-border); color: var(--muted); white-space: nowrap;
+}
+@keyframes marquee-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* ---------- Stat callouts ---------- */
+.stat-row { display: flex; gap: 20px; margin: 4px 0 12px; flex-wrap: wrap; }
+.stat-item { display: flex; flex-direction: column; }
+.stat-num { font-size: 2.1rem; font-weight: 700; line-height: 1; color: var(--stat-accent); font-family: var(--term-font); }
+.stat-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-top: 4px; }
+
+/* ---------- Magnetic hover ---------- */
+.magnetic { transition: transform 0.15s ease-out; }
+
+#layout{
+  display:grid; grid-template-columns: 1fr 1.3fr; height:100vh; gap:16px; padding:16px; max-width: 1800px; margin: 0 auto;
+}
+#left{ display:grid; grid-template-rows: 1fr auto; gap:16px; height: 100%; overflow: hidden; }
+.panel{
+  background: var(--card-bg); backdrop-filter: var(--card-blur); -webkit-backdrop-filter: var(--card-blur);
+  border: var(--card-border); box-shadow: var(--premium-shadow); border-radius:20px; padding:22px;
+  display: flex; flex-direction: column; transition: transform 0.3s ease, box-shadow 0.3s ease; min-height: 0;
+}
+.panel-header { flex-shrink: 0; margin-bottom: 12px; border-bottom: 1px solid rgba(125,125,125,0.1); padding-bottom: 10px; }
+.panel-scroll { flex: 1; overflow-y: auto; overflow-x: hidden; padding-right: 0; scrollbar-width: none; -ms-overflow-style: none; }
+.panel-scroll::-webkit-scrollbar { display: none; }
+#name{ font-size:3.5rem; font-weight:700; letter-spacing:-0.03em; line-height:1; margin-bottom: 6px; transform-origin: left center; }
+#subtitle{ font-size:1.1rem; color:var(--muted); margin-bottom:12px; font-weight:500; letter-spacing: 0.05em; text-transform: uppercase; }
+#bio-typewriter {
+    font-family: var(--term-font); font-size: 0.9rem; line-height: 1.55; color: var(--text);
+    margin-bottom: 6px; min-height: 62px; white-space: pre-wrap; opacity: 0.9;
+}
+#bio-typewriter::after { content: '▋'; display: inline-block; animation: blink 1s step-end infinite; color: var(--hacker-red); margin-left: 2px; }
+@keyframes blink { 50% { opacity: 0; } }
+.section { margin-bottom:18px; }
+.section h2{ font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:2px; margin:0 0 8px 0; font-weight:700; opacity: 0.8; }
+.interactive-list { list-style: none; padding: 0; margin: 0; }
+.interactive-item {
+    position: relative; padding: 6px 0 6px 20px; font-size: 1.05rem; font-weight: 500;
+    cursor: pointer; transition: all 0.2s ease; border-radius: 6px;
+}
+.interactive-item:before { content: "•"; position: absolute; left: 0; color: var(--hacker-red); font-weight: bold; transition: color 0.2s; }
+.interactive-item:hover { background: var(--btn-hover); padding-left: 28px; color: var(--text); }
+.interactive-item:hover:before { color: var(--text); left: 8px; }
+.skill-container { margin-bottom: 9px; }
+.skill-info {
+    display: flex; justify-content: space-between; gap: 8px; font-size: 0.85rem; font-weight: 700;
+    font-family: var(--term-font); margin-bottom: 4px; color: var(--muted);
+}
+.skill-info span:first-child { flex: 1 1 auto; min-width: 0; }
+.skill-info span:last-child { flex-shrink: 0; white-space: nowrap; }
+.skill-track { width: 100%; height: 8px; background: var(--skill-track); border-radius: 4px; overflow: hidden; position: relative; }
+.skill-fill {
+    height: 100%; background: var(--skill-fill); border-radius: 4px; width: 0%;
+    transition: width 1.5s cubic-bezier(0.2, 1, 0.3, 1); box-shadow: 0 0 10px var(--hacker-red);
+}
+.cheat-sheet { background: var(--btn-bg); border: var(--card-border); border-radius: 16px; padding: 16px; font-size: 0.8rem; backdrop-filter: blur(10px); }
+.cheat-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.cheat-header {
+    font-weight: 700; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1.5px;
+    font-size: 0.7rem; color: var(--muted); opacity: 0.8; border-bottom: 1px solid rgba(125,125,125,0.2); padding-bottom: 4px;
+}
+.cheat-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dashed rgba(125,125,125,0.15); }
+.cheat-row:last-child { border-bottom: none; }
+.cmd-key { font-family: var(--term-font); font-weight: 700; color: var(--hacker-red); }
+.cmd-desc { color: var(--muted); }
+#right{ display:grid; grid-template-rows: 1fr auto; gap:16px; height: 100%; overflow: hidden; }
+#terminal{
+  background: var(--card-bg); backdrop-filter: var(--card-blur); border: var(--card-border);
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.03), var(--premium-shadow); font-family: var(--term-font); padding: 20px;
+  min-height: 0; display: flex; flex-direction: column; cursor: text;
+}
+#output{
+  flex:1; overflow-y:auto; white-space: pre-wrap; font-size: 0.95rem; line-height: 1.6;
+  color: var(--text); padding-bottom: 12px; text-shadow: 0 0 1px rgba(0,0,0,0.05);
+}
+#output::-webkit-scrollbar { width: 6px; }
+#output::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 4px; }
+#input{ display:flex; margin-top:auto; align-items: center; border-top: 1px solid rgba(125,125,125,0.2); padding-top: 12px; }
+#input span{ margin-right:16px; color:var(--hacker-red); font-weight:bold; }
+input{ border:none; background:transparent; color:var(--text); outline:none; width:100%; font-family: var(--term-font); font-size:1rem; }
+.export-btn {
+    display: inline-block; margin-top: 8px; padding: 8px 16px; background: var(--btn-bg);
+    border: 1px solid var(--accent); color: var(--text); font-family: var(--term-font);
+    font-weight: 600; cursor: pointer; border-radius: 4px; transition: all 0.2s;
+}
+.export-btn:hover { background: var(--accent); color: var(--bg); }
+.contact-panel { background: transparent; border: none; box-shadow: none; padding: 0; backdrop-filter: none; }
+.contact-list{ display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; }
+.contact-item{
+  display:flex; align-items:center; gap:10px; justify-content: center; padding:12px 10px; 
+  background: var(--btn-bg); border: var(--card-border); border-radius:16px; cursor:pointer; 
+  font-size:.85rem; font-weight: 600; color: var(--muted);
+  transition: all .3s cubic-bezier(0.25, 0.8, 0.25, 1); backdrop-filter: blur(5px);
+}
+.contact-item:hover{ background: var(--btn-hover); color: var(--text); transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
+.contact-item .icon { font-size: 1.1rem; color: var(--accent); transition: color 0.3s; }
+.contact-item:hover .icon { color: var(--hacker-red); }
+.status-btn {
+    background: var(--text); color: var(--bg); border: 1px solid var(--accent);
+}
+.status-btn:hover { background: var(--accent); color: var(--bg); }
+
+#music-widget {
+    position: fixed; top: 16px; right: 16px;
+    background: var(--card-bg); border: var(--card-border);
+    padding: 8px 16px; border-radius: 50px;
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    cursor: pointer; display: flex; align-items: center; gap: 12px;
+    box-shadow: var(--premium-shadow); z-index: 1500;
+    transition: all 0.3s ease;
+}
+#music-widget:hover { transform: translateY(2px); border-color: var(--hacker-red); }
+.music-bars { display: flex; align-items: flex-end; gap: 3px; height: 16px; }
+.bar { width: 3px; background: var(--muted); height: 4px; border-radius: 2px; transition: all 0.2s; }
+.playing .bar { background: var(--hacker-red); animation: equalize 0.8s infinite ease-in-out; }
+.playing .bar:nth-child(1) { animation-delay: 0.1s; }
+.playing .bar:nth-child(2) { animation-delay: 0.3s; }
+.playing .bar:nth-child(3) { animation-delay: 0.0s; }
+.playing .bar:nth-child(4) { animation-delay: 0.4s; }
+@keyframes equalize { 0% { height: 4px; } 50% { height: 16px; } 100% { height: 4px; } }
+#music-label { font-family: var(--term-font); font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; color: var(--text); }
+
+@media (max-width: 900px) {
+    html { -webkit-text-size-adjust: 100%; }
+    body { overflow-x: hidden; overflow-y: auto; height: auto; }
+    #layout {
+        display: flex; flex-direction: column; gap: 24px; padding: 16px; height: auto; width: 100%;
+        padding-bottom: calc(28px + env(safe-area-inset-bottom));
+    }
+    #left { order: 1; height: auto; display: block; overflow: visible; min-width: 0; }
+    .panel { height: auto; min-height: auto; margin-bottom: 20px; min-width: 0; padding: 18px; }
+    .panel-scroll { overflow: visible; }
+    #name { font-size: 2.4rem; }
+    #subtitle { font-size: 0.95rem; }
+    #right { order: 2; height: auto; gap: 20px; min-width: 0; }
+    #terminal { height: min(72vh, 480px); min-height: 380px; padding: 16px; }
+    #output { font-size: 0.88rem; }
+    .stat-row { gap: 14px; }
+    .stat-num { font-size: 1.7rem; }
+    .contact-list { grid-template-columns: 1fr 1fr; }
+    .contact-item { font-size: 0.8rem; padding: 12px 8px; }
+    .cheat-cols { grid-template-columns: 1fr; gap: 16px; }
+    .cheat-sheet { padding: 14px; }
+    .ask-chip { white-space: normal; text-align: left; max-width: 100%; padding: 11px 14px; min-height: 44px; display: flex; align-items: center; }
+    .contact-item { min-height: 44px; }
+    #music-widget { min-height: 40px; }
+    #torch { display: none; } 
+    #neural-canvas { display: none; }
+    #music-widget {
+        position: static; width: fit-content; margin: 0 0 4px auto;
+        top: auto; right: auto; bottom: auto; transform: none;
+        padding: 6px 12px;
+    }
+    #music-widget:hover { transform: translateY(-2px); }
+    .aurora-blob { filter: blur(50px); }
+    #modal-overlay { padding: 12px; }
+    #modal-container { max-height: 90vh; border-radius: 16px; }
+    #modal-text { padding: 24px 20px; font-size: 1.05rem; }
+}
+@media (max-width: 480px) {
+    #layout { padding: 12px; padding-bottom: calc(24px + env(safe-area-inset-bottom)); gap: 18px; }
+    .panel { padding: 16px; border-radius: 16px; }
+    #name { font-size: 1.9rem; }
+    #bio-typewriter { font-size: 0.82rem; min-height: 78px; }
+    .bento-card-title { font-size: 0.8rem; }
+    .bento-card-sub { font-size: 0.65rem; }
+    .stat-row { gap: 10px; }
+    .stat-num { font-size: 1.4rem; }
+    .stat-label { font-size: 0.6rem; letter-spacing: 1px; }
+    .marquee-tag { font-size: 0.65rem; padding: 5px 10px; }
+    #terminal { height: min(65vh, 420px); min-height: 340px; padding: 14px; }
+    #output { font-size: 0.82rem; }
+    #input span { margin-right: 10px; font-size: 0.9rem; }
+    .contact-list { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .contact-item { font-size: 0.75rem; padding: 10px 6px; border-radius: 12px; }
+    .ask-hint { font-size: 0.7rem; }
+    .ask-chip { font-size: 0.68rem; padding: 10px 12px; min-height: 42px; }
+    #music-widget .music-bars { height: 12px; }
+    #music-label { font-size: 0.68rem; }
+}
+#torch{
+  position:fixed; width:450px; height:450px; border-radius:50%; pointer-events:none;
+  background:radial-gradient(circle,var(--torch-color),transparent 65%);
+  filter:blur(50px); transform:translate(-50%,-50%); z-index:999; transition: background 0.3s ease;
+}
+#modal-overlay {
+  display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(16px);
+  z-index: 2000; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; padding: 20px; box-sizing: border-box;
+}
+#modal-overlay.active { display: flex; opacity: 1; }
+#modal-container {
+  width: 100%; height: 100%; max-width: 1100px; max-height: 85vh;
+  background: var(--modal-bg); border: var(--card-border); border-radius: 20px; 
+  box-shadow: 0 40px 80px -20px rgba(0,0,0,0.6); display: flex; flex-direction: column; overflow: hidden;
+}
+#modal-header { padding: 12px 20px; border-bottom: 1px solid rgba(125,125,125,0.1); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+#modal-title { font-weight: 700; font-size: 1.1rem; }
+.modal-controls { display: flex; gap: 10px; }
+.modal-btn {
+  background: transparent; border: 1px solid rgba(125,125,125,0.3); color: var(--text);
+  padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600;
+}
+.modal-btn:hover { background: rgba(125,125,125,0.1); }
+#modal-iframe { flex: 1; border: none; background: #fff; }
+#modal-text {
+    flex: 1; display: none; justify-content: center; align-items: center;
+    padding: 40px; text-align: center; font-size: 1.2rem; font-weight: 500;
+    color: var(--text); font-family: "Space Grotesk", sans-serif;
+    overflow-y: auto; white-space: pre-wrap; line-height: 1.5; flex-direction: column;
+}
+</style>
+<script>window.__ROUTE__ = {category:"projects", slug:"portfolio-console"};</script>
+</head>
+<body class="dark">
+<div id="grid-lines"></div>
+<div id="aurora"><div class="aurora-blob b1"></div><div class="aurora-blob b2"></div><div class="aurora-blob b3"></div></div>
+<canvas id="neural-canvas"></canvas>
+
+<svg width="0" height="0" style="position:absolute">
+  <filter id="grain-filter"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+</svg>
+<svg id="grain-overlay" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" filter="url(#grain-filter)"/></svg>
+
+<div id="cursor-ring"></div>
+<div id="cursor-dot"></div>
+
+<div id="torch"></div>
+<audio id="bg-music" src="music.mp3" loop></audio>
+<div id="music-widget" onclick="toggleAudio()">
+    <div class="music-bars" id="visualizer">
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+    <span id="music-label">SONIC FEED: OFF</span>
+</div>
+<div id="modal-overlay">
+  <div id="modal-container">
+    <div id="modal-header">
+      <span id="modal-title">Preview</span>
+      <div class="modal-controls">
+        <button class="modal-btn" id="modal-ext">↗ External</button>
+        <button class="modal-btn" onclick="closeModal()">✕ Close</button>
+      </div>
+    </div>
+    <iframe id="modal-iframe" src=""></iframe>
+    <div id="modal-text"></div>
+  </div>
+</div>
+<div id="layout">
+<div id="left">
+  <div class="panel" style="flex:1; overflow:hidden;">
+    <div class="panel-header">
+      <h1 id="name">Mithun Sidhaarth</h1>
+      <div id="subtitle">AI/ML Engineer & Full-Stack Developer</div>
+      <div class="stat-row" id="stat-row"></div>
+      <div class="marquee-wrap"><div class="marquee-track" id="marquee-track"></div></div>
+      <div id="bio-typewriter"></div>
+    </div>
+    <div class="panel-scroll">
+      <div class="section">
+        <h2>Projects</h2>
+        <ul id="list-projects" class="bento-grid"></ul>
+      </div>
+      <div class="section">
+        <h2>Blogs</h2>
+        <ul id="list-blogs" class="bento-grid"></ul>
+      </div>
+      <div class="section">
+        <h2>Research</h2>
+        <ul id="list-research" class="bento-grid"></ul>
+      </div>
+      <div class="section">
+        <h2>Skills</h2>
+        <div id="list-skills"></div>
+      </div>
+    </div>
+  </div>
+  <div class="cheat-sheet">
+    <div class="cheat-cols">
+      <div class="cheat-col">
+        <div class="cheat-header">Navigation</div>
+        <div class="cheat-row"><span class="cmd-key">ls</span><span class="cmd-desc">See files</span></div>
+        <div class="cheat-row"><span class="cmd-key">cd [dir]</span><span class="cmd-desc">Open folder</span></div>
+        <div class="cheat-row"><span class="cmd-key">cd ..</span><span class="cmd-desc">Go back</span></div>
+        <div class="cheat-row"><span class="cmd-key">open [id]</span><span class="cmd-desc">View item</span></div>
+      </div>
+      <div class="cheat-col">
+        <div class="cheat-header">More</div>
+        <div class="cheat-row"><span class="cmd-key">resume</span><span class="cmd-desc">View PDF</span></div>
+        <div class="cheat-row"><span class="cmd-key">hack</span><span class="cmd-desc">Simulate</span></div>
+        <div class="cheat-row"><span class="cmd-key">music</span><span class="cmd-desc">Play/Pause</span></div>
+        <div class="cheat-row"><span class="cmd-key">theme</span><span class="cmd-desc">L/D Mode</span></div>
+        <div class="cheat-row"><span class="cmd-key">matrix</span><span class="cmd-desc">Matrix Mode</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="cheat-sheet ask-panel">
+    <div class="cheat-header"><span class="pulse-dot"></span>Ask Mithun</div>
+    <div class="ask-hint">Grounded retrieval over the data on this page — no lookup, no hallucination. Click a question or type your own in the terminal.</div>
+    <div class="ask-chip-row" id="ask-chip-row"></div>
+  </div>
+</div>
+<div id="right">
+  <div class="panel" id="terminal">
+    <div id="output"></div>
+    <div id="input"><span id="prompt">➜ ~</span><input id="cmd" autofocus autocomplete="off"></div>
+  </div>
+  <div class="contact-panel">
+    <div class="contact-list">
+      <div class="contact-item" onclick="openLink('mailto:mithunsidhaartham@gmail.com')"><span class="icon">✉</span> Email</div>
+      <div class="contact-item" onclick="openLink('https://www.linkedin.com/in/mithunsidhaarth/')"><span class="icon">in</span> LinkedIn</div>
+      <div class="contact-item" onclick="openLink('https://github.com/MithunSidhaarth')"><span class="icon">🐙</span> GitHub</div>
+      <div class="contact-item" onclick="openLink('https://www.researchgate.net/profile/Mithun-Sidhaarth-Am')"><span class="icon">RG</span> Papers</div>
+      <div class="contact-item" onclick="openLink('https://www.instagram.com/mithunsidhaarth/')"><span class="icon">📷</span> Insta</div>
+      <div class="contact-item" onclick="openLink('https://hashnode.com/@mithunsidhaarth')"><span class="icon">✍</span> Blog</div>
+      <div class="contact-item" onclick="openLink('https://t.me/aceduke')"><span class="icon">✈</span> Telegram</div>
+      <div class="contact-item status-btn" onclick="showStatusModal()"><span class="icon">⚡</span> Status</div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+const canvas = document.getElementById("neural-canvas");
+const ctx = canvas.getContext("2d");
+let particles = [], mouse = { x: null, y: null };
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.addEventListener("resize", resize); resize();
+document.addEventListener("mousemove", (e) => {
+    mouse.x = e.clientX; mouse.y = e.clientY;
+    document.getElementById("torch").style.left = e.clientX + "px";
+    document.getElementById("torch").style.top = e.clientY + "px";
+});
+class Particle {
+    constructor() {
+        this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.5; this.vy = (Math.random() - 0.5) * 0.5;
+        this.size = Math.random() * 2 + 1;
+    }
+    update() {
+        this.x += this.vx; this.y += this.vy;
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        let dx = mouse.x - this.x, dy = mouse.y - this.y;
+        let dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 150) {
+            this.vx -= (dx/dist) * ((150-dist)/150) * 0.5;
+            this.vy -= (dy/dist) * ((150-dist)/150) * 0.5;
+        }
+    }
+    draw() {
+        ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--particle-color').trim();
+        ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill();
+    }
+}
+function initParticles() { particles = []; for (let i = 0; i < (window.innerWidth>900?80:30); i++) particles.push(new Particle()); }
+function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const pColor = getComputedStyle(document.body).getPropertyValue('--particle-color').trim();
+    particles.forEach((p, i) => {
+        p.update(); p.draw();
+        for (let j = i; j < particles.length; j++) {
+            let dx = p.x - particles[j].x, dy = p.y - particles[j].y;
+            if (Math.sqrt(dx*dx+dy*dy) < 150) {
+                ctx.beginPath(); ctx.strokeStyle = pColor; ctx.lineWidth = 0.5;
+                ctx.moveTo(p.x, p.y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
+            }
+        }
+    });
+    requestAnimationFrame(animateParticles);
+}
+initParticles(); animateParticles();
+/* ---------- Kinetic name split ---------- */
+(function initKineticName(){
+  const nameEl = document.getElementById("name");
+  const raw = nameEl.textContent.trim();
+  nameEl.innerHTML = raw.split("").map(ch => ch === " "
+    ? `<span class="letter space"> </span>`
+    : `<span class="letter">${ch}</span>`
+  ).join("");
+  const letters = [...nameEl.querySelectorAll(".letter")];
+
+  /* glitch-in entrance: scramble each letter briefly before settling */
+  const glyphs = "!<>-_\\/[]{}—=+*^?#";
+  letters.forEach((l, idx) => {
+    if (l.classList.contains("space")) return;
+    const final = raw[idx];
+    let ticks = 0;
+    const maxTicks = 6 + Math.floor(Math.random()*6);
+    l.style.opacity = "0.85";
+    const iv = setInterval(() => {
+      ticks++;
+      if (ticks >= maxTicks) {
+        l.textContent = final;
+        clearInterval(iv);
+      } else {
+        l.textContent = glyphs[Math.floor(Math.random()*glyphs.length)];
+      }
+    }, 40 + idx*12);
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    letters.forEach(l => {
+      const r = l.getBoundingClientRect();
+      const cx = r.left + r.width/2, cy = r.top + r.height/2;
+      const dist = Math.hypot(e.clientX-cx, e.clientY-cy);
+      if (dist < 120) {
+        const s = 1 + (120-dist)/120 * 0.5;
+        l.style.transform = `translateY(-${(120-dist)/120*10}px) scale(${s})`;
+      } else {
+        l.style.transform = "";
+      }
+    });
+  });
+})();
+
+/* ---------- Custom cursor ---------- */
+(function initCursor(){
+  const dot = document.getElementById("cursor-dot");
+  const ring = document.getElementById("cursor-ring");
+  if (!dot || !ring) return;
+  let rx = 0, ry = 0, tx = 0, ty = 0;
+  document.addEventListener("mousemove", (e) => {
+    dot.style.left = e.clientX + "px"; dot.style.top = e.clientY + "px";
+    tx = e.clientX; ty = e.clientY;
+  });
+  function loop() {
+    rx += (tx-rx)*0.18; ry += (ty-ry)*0.18;
+    ring.style.left = rx + "px"; ring.style.top = ry + "px";
+    requestAnimationFrame(loop);
+  }
+  loop();
+  document.addEventListener("mouseover", (e) => {
+    if (e.target.closest("a, button, .interactive-item, .bento-card, .contact-item, .cheat-row, input, .export-btn, [onclick]")) {
+      ring.classList.add("active");
+    }
+  });
+  document.addEventListener("mouseout", (e) => {
+    if (e.target.closest("a, button, .interactive-item, .bento-card, .contact-item, .cheat-row, input, .export-btn, [onclick]")) {
+      ring.classList.remove("active");
+    }
+  });
+})();
+
+/* ---------- Magnetic hover ---------- */
+function applyMagnetic(selector, strength=14) {
+  document.querySelectorAll(selector).forEach(el => {
+    el.classList.add("magnetic");
+    el.addEventListener("mousemove", (e) => {
+      const r = el.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width/2), dy = e.clientY - (r.top + r.height/2);
+      el.style.transform = `translate(${dx/r.width*strength}px, ${dy/r.height*strength}px)`;
+    });
+    el.addEventListener("mouseleave", () => { el.style.transform = ""; });
+  });
+}
+setTimeout(() => { applyMagnetic(".contact-item", 10); applyMagnetic(".cheat-row", 6); }, 300);
+
+const bioText = "I’m Mithun Sidhaarth, someone who loves learning across boundaries. I’m deeply interested in computer science, but just as curious about how people think, feel, and decide. Philosophy helps me question, psychology helps me understand, and technology gives me a way to build.";
+const bioElement = document.getElementById("bio-typewriter");
+function typeBio(text, i) { if (i < text.length) { bioElement.textContent += text.charAt(i); setTimeout(() => typeBio(text, i + 1), 15); } }
+setTimeout(() => typeBio(bioText, 0), 500);
+let data={
+  currentStatus: "Figuring out what to learn next w a bottle of omr",
+  projects:[
+    {title:"NeuraSpace", demo:"https://neuraspace.online", blog:"https://methxd.hashnode.dev/neuraspace-engineering-a-living-computational-interface", desc:"An experiment in making the interface itself feel alive, a spatial, particle-driven environment built with a component-driven React layer and a dedicated motion/rendering system, where pointer movement, depth, and interpolation communicate state instead of static UI elements. The long-term goal is to host an AI presence inside this environment rather than a conventional chat window."},
+    {title:"Eden", demo:"https://edenconsole.netlify.app", blog:"https://methxd.hashnode.dev/eden-building-an-ai-assistant-for-my-everyday-life", desc:"A still-in-progress AI assistant meant to go beyond a chatbot, it's built as an agent that picks from a set of tools (tasks, reminders, calendar, weather) which the app validates and executes, aiming to eventually summarize 'what actually matters today' rather than dumping every task on the user."},
+    {title:"Nirvah", demo:"https://nirvah.cc.cd", blog:"https://methxd.hashnode.dev/nirvah-building-a-technology-layer-for-giving", desc:"A technology layer connecting donors and NGOs through a fully tracked donation lifecycle (claimed, accepted, delivered, acknowledged), built on a React frontend with a Node/Express backend, JWT auth, and a planned 'Giving Vault' that auto-organizes receipts and impact documentation."},
+    {title:"Portfolio Console", demo:"https://mithunsidhaarth.in", blog:"https://methsole.hashnode.dev/building-my-portfolio-os-a-personal-system-for-thinking-creating-and-growing?showSharer=true", desc:"A terminal-styled personal portfolio built as an interactive system rather than a static page, command-line style navigation, a modal reading system for content, and theme controls, designed around structure and interaction over decoration."},
+    {title:"Aeris", demo:"http://aeris.de5.net", blog:"https://methxd.hashnode.dev/building-aeris-from-satellite-imagery-to-an-earth-observation-intelligence-platform", desc:"An earth observation intelligence platform that turns raw satellite imagery into usable insight, bridging remote sensing data with an accessible analysis layer for tracking and understanding change on the ground."},
+    {title:"OutreachOS", demo:"https://outreach.de5.net", blog:"", desc:"A self-hosted CRM for founder and internship outreach, with Gmail-native sending, AI-personalized drafts, contact discovery, reply classification, and cooldown-aware pacing."}
+  ],
+blogs:[
+  {
+    title:"entry - 15/7/2026",
+    link:"https://mithunsidhaarth.substack.com/p/entry-1572026",
+    desc:"A short diary-style entry about a daily conversation with god and a laugh that keeps bringing a lost person back for a few unguarded seconds before morning takes her away again."
+  },
+  {
+    title:"before i forgive god (part I)",
+    link:"https://mithunsidhaarth.substack.com/p/before-i-forgive-god-part-i",
+    desc:"The opening piece in an ongoing series questioning why every goodbye feels like theft even when nothing was ever promised, a reflection on grief, faith, and impermanence, written as a search for God rather than a claim to have found him."
+  },
+  {
+    title:"i thought i had more time..",
+    link:"https://mithunsidhaarth.substack.com/p/i-thought-i-had-more-time",
+    desc:"A meditation on losing love, faith, and purpose so gradually it looks like nothing is happening, disguised as a string of ordinary, uneventful days."
+  },
+  {
+    title:"Did I Love Her Once Before ?",
+    link:"https://mithunsidhaarth.substack.com/p/did-i-love-her-once-before",
+    desc:"A reflection on an old loss, wondering whether some connections go back further than this life, and the quiet fear of one day forgetting the person who changed everything."
+  },
+  {
+    title:"God, Tobacco and Ash",
+    link:"https://mithunsidhaarth.substack.com/p/god-tobacco-and-ash",
+    desc:"A short philosophical piece asking whether prayer and addiction come from the same place, the human need to escape the weight of simply existing."
+  },
+  {
+    title:"Just One More Day...",
+    link:"https://mithunsidhaarth.substack.com/p/just-one-more-day",
+    desc:"A short story following one hard day in a young man's life, and how grief and worry ripple outward through the family trying to hold on to him."
+  },
+  {
+    title:"Push Me To The Sidewalk",
+    link:"https://mithunsidhaarth.substack.com/p/push-me-to-the-sidewalk",
+    desc:"A raw, diary-style piece sitting with grief and helplessness in the moment, in the same reflective voice as the rest of the collection."
+  },
+  {
+    title:"What If God Is Forgetting Us?",
+    link:"https://mithunsidhaarth.substack.com/p/what-if-god-is-forgetting-us",
+    desc:"An essay on the slow ache of being forgotten rather than abandoned, and the fear that even memory itself, human or divine, eventually runs out."
+  },
+  {
+    title:"On Lighthouses.",
+    link:"https://mithunsidhaarth.substack.com/p/on-lighthouses",
+    desc:"A meditation on being the lighthouse in other people's lives, always there to help someone else through their storm, rarely the harbor they choose to stay in."
+  },
+  {
+    title:"The Bus Never Came Again",
+    link:"https://mithunsidhaarth.substack.com/p/the-bus-never-came-again",
+    desc:"A heartbreak poem about mourning a relationship that ended slowly rather than all at once, and learning to live with a memory more vivid than the person it's based on."
+  },
+  {
+    title:"Fed On Time",
+    link:"https://mithunsidhaarth.substack.com/p/fed-on-time",
+    desc:"A piece told from the perspective of a family dog left waiting on the terrace, using its quiet loneliness to explore what it feels like to be kept but never truly chosen."
+  },
+  {
+    title:"Grief Is Just Perfume",
+    link:"https://mithunsidhaarth.substack.com/p/grief-is-just-perfume",
+    desc:"A raw, unfiltered poem about heartbreak and obsession, capturing how grief can wear the shape of the person who caused it."
+  },
+  {
+    title:"after becoming everyone",
+    link:"https://mithunsidhaarth.substack.com/p/after-becoming-everyone?r=3b1yo4&utm_campaign=post-expanded-share&utm_medium=web",
+    desc:""
+  }
+],
+  research:[
+    {title:"A Survey of Malware Detection Using Deep Learning", link:"https://methxd.hashnode.dev/a-survey-of-malware-detection-using-deep-learning-explained-with-reflections", desc:"A reflective breakdown of the survey paper by Bensaouda, Kalita, and Bensaouda, covering how deep learning is applied to malware detection, treating malware as images and as language, feature engineering, explainability, and the ongoing arms race with adversarial evasion."}
+  ],
+  skills:[
+    {name: "Full Stack Development", level: 88},
+    {name: "AI & Agentic Systems", level: 84},
+    {name: "UI/UX & Creative Development", level: 92},
+    {name: "Entrepreneurship & Product Building", level: 86},
+    {name: "Cloud & DevOps", level: 78},
+    {name: "Python & Machine Learning", level: 82},
+    {name: "Business & Financial Strategy", level: 76},
+    {name: "Systems Thinking", level: 91}
+  ],
+  commands: ["help","ask","projects","blogs","research","skills","contact","status","theme","clear","resume","search","hack","matrix","ls","cd","open","login","export","new","music"]
+};
+
+/* ================= ASK MITHUN — client-side grounded assistant =================
+   Retrieval over this page's own `data` object (projects/blogs/research/skills/bio).
+   No API key, no server, no network call — every answer is traceable back to a
+   field already rendered on this page. Ships as an MVP for "Ask about Mithun";
+   a serverless RAG+LLM version is the natural v2 on top of the same corpus. */
+const ASK_CONCEPTS = {
+  backend: ["backend","node","node.js","express","server","api","jwt","auth","authentication","database"],
+  frontend: ["frontend","react","ui","ux","interface","design","component","motion","animation"],
+  ai: ["ai","ml","machine","learning","deep","agent","agentic","llm","nlp","transformer","chatbot","neural"],
+  cloud: ["cloud","devops","deployment","docker","hosting","infra","infrastructure"],
+  security: ["security","malware","cyber","detection","classification","hack"],
+  business: ["business","product","entrepreneurship","startup","strategy","financial"],
+  writing: ["writing","writer","blog","essay","poem","philosophy","reflection","grief","substack","hashnode"],
+  systems: ["systems","architecture","structure","console","terminal","portfolio","build","builder","built","ship","shipped"]
+};
+const ASK_STOPWORDS = new Set(["a","an","the","is","are","was","were","does","do","did","has","have","had","he","his","him","of","to","in","on","for","with","and","or","about","what","whats","tell","me","you","your","can","could","would","i","it","that","this","any","some","much","how","many"]);
+function askTokenize(str){ return str.toLowerCase().replace(/[^a-z0-9\s]/g," ").split(/\s+/).filter(Boolean); }
+function askExpand(tokens){
+  const set = new Set(tokens);
+  tokens.forEach(t => {
+    for(const key in ASK_CONCEPTS){
+      const group = ASK_CONCEPTS[key];
+      if(t===key || group.includes(t)){ set.add(key); group.forEach(g=>set.add(g)); }
+    }
+  });
+  return set;
+}
+function askBuildCorpus(){
+  const c = [];
+  c.push({cat:"about", title:"Mithun Sidhaarth", text: bioText, url:null});
+  data.projects.forEach((p,i)=> c.push({cat:"projects", idx:i, title:p.title, text:`${p.title}. ${p.desc||""}`, url:p.demo||p.blog}));
+  data.blogs.forEach((b,i)=> c.push({cat:"blogs", idx:i, title:b.title, text:`${b.title}. ${b.desc||""}`, url:b.link}));
+  data.research.forEach((r,i)=> c.push({cat:"research", idx:i, title:r.title, text:`${r.title}. ${r.desc||""}`, url:r.link}));
+  data.skills.forEach(s=> c.push({cat:"skills", title:s.name, text:`${s.name}`, url:null, level:s.level}));
+  return c;
+}
+function askScore(item, expanded, rawTokens){
+  const hay = item.text.toLowerCase(), titleHay = item.title.toLowerCase();
+  let score = 0;
+  expanded.forEach(term => { if(term.length<2) return; if(titleHay.includes(term)) score += 3; if(hay.includes(term)) score += 1; });
+  rawTokens.forEach(t => { if(t.length>2 && hay.includes(t)) score += 0.5; });
+  return score;
+}
+const ASK_TAGS = {projects:"PROJECT", blogs:"BLOG", research:"RESEARCH", skills:"SKILL", about:"BIO"};
+function askAssistant(question){
+  const rawTokens = askTokenize(question).filter(t=>!ASK_STOPWORDS.has(t));
+  if(rawTokens.length===0) return `Ask something like: "ask does he have backend experience" or "ask what's his AI work".`;
+  const expanded = askExpand(rawTokens);
+  const scored = askBuildCorpus().map(item=>({item, score: askScore(item, expanded, rawTokens)}))
+                                  .filter(x=>x.score>0).sort((a,b)=>b.score-a.score);
+  if(scored.length===0){
+    return `No direct match in Mithun's site data for that.\nTry: 'ask what has he built', 'ask his stack', or browse 'projects' / 'skills'.`;
+  }
+  const top = scored.slice(0,3).map(x=>x.item);
+  const skillHits = scored.filter(x=>x.item.cat==="skills").slice(0,3).map(x=>x.item);
+  const lines = [`> query: "${question}"`, `> ${top.length} relevant source(s) found in on-page data:`, ""];
+  top.forEach(item=>{
+    const tag = ASK_TAGS[item.cat] || item.cat.toUpperCase();
+    let head = `[${tag}] ${item.title}`;
+    if(item.level!==undefined) head += ` — ${item.level}%`;
+    lines.push(head);
+    if(item.cat!=="skills"){
+      const body = item.text.replace(item.title, "").replace(/^[.\s]+/, "").trim();
+      if(body) lines.push(`  ${body}`);
+    }
+    if(item.url) lines.push(`  \u21b3 ${item.url}`);
+    lines.push("");
+  });
+  if(skillHits.length && top[0].cat!=="skills") lines.push(`Related skill signal: ${skillHits.map(s=>`${s.title} (${s.level}%)`).join(", ")}`);
+  lines.push(`This is a grounded answer, not a generated one — every line above traces to a field on this page.`);
+  return lines.join("\n");
+}
+const ASK_SAMPLES = [
+  "does he have backend experience?",
+  "what's his AI work?",
+  "walk me through Nirvah",
+  "what's his tech stack?",
+  "is he more builder or writer?"
+];
+function catTag(cat) {
+    return { projects: "PROJ", blogs: "BLOG", research: "RSCH" }[cat] || cat.slice(0,4).toUpperCase();
+}
+function renderLeftPanel() {
+    const createList = (id, cat) => {
+        const ul = document.getElementById(id);
+        ul.innerHTML = data[cat].map((item, i) => {
+            const tag = `${catTag(cat)}_${String(i+1).padStart(2,'0')}`;
+            const sub = item.desc ? `<div class="bento-card-sub">${item.desc}</div>` : '';
+            return `<li class="bento-card" onclick="openDetailModal('${cat}', ${i})">
+                <div>
+                    <div class="bento-topline"><span class="bento-tag">${tag}</span><span class="bento-icon">➜</span></div>
+                    <div class="bento-card-title">${item.title}</div>
+                </div>
+                ${sub}
+            </li>`;
+        }).join('');
+    };
+    createList('list-projects', 'projects');
+    createList('list-blogs', 'blogs');
+    createList('list-research', 'research');
+    const skillContainer = document.getElementById('list-skills');
+    skillContainer.innerHTML = data.skills.map(skill => `
+        <div class="skill-container">
+            <div class="skill-info"><span>${skill.name}</span><span>${skill.level}%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width: 0%" data-width="${skill.level}%"></div></div>
+        </div>
+    `).join('');
+    setTimeout(() => {
+        document.querySelectorAll('.skill-fill').forEach(bar => { bar.style.width = bar.getAttribute('data-width'); });
+    }, 500);
+    renderStats();
+    renderMarquee();
+}
+function renderStats() {
+    const row = document.getElementById('stat-row');
+    if (!row) return;
+    const avgSkill = Math.round(data.skills.reduce((a,s) => a+s.level, 0) / (data.skills.length || 1));
+    const stats = [
+        { n: data.projects.length, l: "Projects" },
+        { n: data.blogs.length, l: "Blogs" },
+        { n: data.research.length, l: "Research" },
+        { n: avgSkill + "%", l: "Avg Skill" }
+    ];
+    row.innerHTML = stats.map(s => `<div class="stat-item"><span class="stat-num">${s.n}</span><span class="stat-label">${s.l}</span></div>`).join('');
+}
+function renderMarquee() {
+    const track = document.getElementById('marquee-track');
+    if (!track) return;
+    const tags = data.skills.map(s => s.name);
+    const doubled = tags.concat(tags);
+    track.innerHTML = doubled.map(t => `<span class="marquee-tag">${t}</span>`).join('');
+}
+renderLeftPanel();
+function renderAskChips(){
+    const row = document.getElementById('ask-chip-row');
+    if(!row) return;
+    row.innerHTML = ASK_SAMPLES.map(q => `<button class="ask-chip" onclick="runAsk('${q.replace(/'/g,"\\'")}')">${q}</button>`).join('');
+}
+renderAskChips();
+function runAsk(question){
+    if(input.disabled) return;
+    input.value = question;
+    print(`\u2794 ${currentPath} ${question}`, true);
+    handle(question.toLowerCase());
+    input.value = "";
+    input.focus();
+}
+/* ================= ROUTING — per-item shareable/indexable URLs =================
+   Static hosting has no server routes, so this pairs with scripts/generate-routes.js,
+   which pre-builds /projects/<slug>/, /blogs/<slug>/, /research/<slug>/ index.html files
+   (each a copy of this page with per-item <title>/meta/OG/canonical/JSON-LD baked in,
+   plus a window.__ROUTE__ hint) at deploy time. This runtime code handles: computing
+   the same slugs client-side, updating the URL + meta tags when a modal opens (so
+   copy-link/share-while-open works), restoring them on close, browser back/forward
+   via popstate, and auto-opening the right modal if the page loads on a deep route
+   (either from the generated static file's __ROUTE__ hint, or a direct /category/slug
+   hit that fell through to this same index.html). */
+function slugify(str) {
+    return (str || "").toString().toLowerCase().trim()
+        .replace(/['’]/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+}
+function routePath(category, index) {
+    const item = data[category] && data[category][index];
+    if (!item) return "/";
+    return `/${category}/${slugify(item.title)}/`;
+}
+function findByRoute(category, slug) {
+    const list = data[category];
+    if (!list) return -1;
+    return list.findIndex(it => slugify(it.title) === slug);
+}
+const DEFAULT_META = {
+    title: document.title,
+    description: document.querySelector('meta[name="description"]')?.getAttribute("content") || "",
+    ogTitle: document.querySelector('meta[property="og:title"]')?.getAttribute("content") || "",
+    ogDescription: document.querySelector('meta[property="og:description"]')?.getAttribute("content") || "",
+    ogUrl: document.querySelector('meta[property="og:url"]')?.getAttribute("content") || "",
+    canonical: document.querySelector('link[rel="canonical"]')?.getAttribute("href") || ""
+};
+function setMeta(selector, attr, value) {
+    const el = document.querySelector(selector);
+    if (el) el.setAttribute(attr, value);
+}
+function applyItemMeta(item, category, index) {
+    const kicker = { projects: "Project", blogs: "Blog post", research: "Research" }[category] || category;
+    const desc = item.desc || `${kicker}: ${item.title} — by Mithun Sidhaarth.`;
+    const title = `${item.title} — Mithun Sidhaarth`;
+    const url = location.origin + routePath(category, index);
+    document.title = title;
+    setMeta('meta[name="description"]', "content", desc);
+    setMeta('meta[property="og:title"]', "content", title);
+    setMeta('meta[property="og:description"]', "content", desc);
+    setMeta('meta[property="og:url"]', "content", url);
+    setMeta('meta[name="twitter:title"]', "content", title);
+    setMeta('meta[name="twitter:description"]', "content", desc);
+    setMeta('link[rel="canonical"]', "href", url);
+}
+function resetMeta() {
+    document.title = DEFAULT_META.title;
+    setMeta('meta[name="description"]', "content", DEFAULT_META.description);
+    setMeta('meta[property="og:title"]', "content", DEFAULT_META.ogTitle);
+    setMeta('meta[property="og:description"]', "content", DEFAULT_META.ogDescription);
+    setMeta('meta[property="og:url"]', "content", DEFAULT_META.ogUrl);
+    setMeta('meta[name="twitter:title"]', "content", DEFAULT_META.ogTitle);
+    setMeta('meta[name="twitter:description"]', "content", DEFAULT_META.ogDescription);
+    setMeta('link[rel="canonical"]', "href", DEFAULT_META.canonical);
+}
+function openDetailModal(category, index, pushUrl = true) {
+    const item = data[category][index];
+    if(!item) return;
+    modalFrame.style.display = "none";
+    modalExtBtn.style.display = "none";
+    modalText.style.display = "flex";
+    modalText.className = "detail-panel";
+    modalTitle.innerText = item.title;
+
+    const kicker = { projects: "PROJECT", blogs: "BLOG POST", research: "RESEARCH" }[category] || category.toUpperCase();
+    const intro = item.desc ? `<p class="detail-intro">${item.desc}</p>` : '';
+
+    let actions = '';
+    if (category === 'projects') {
+        const hasDemo = item.demo && item.demo !== '#';
+        const hasBlog = item.blog && item.blog !== '#';
+        actions = `
+            ${hasDemo ? `<button class="detail-btn primary" onclick="window.open('${item.demo}','_blank')">Visit Project ↗</button>` : `<button class="detail-btn disabled">Coming Soon</button>`}
+            ${hasBlog ? `<button class="detail-btn" onclick="window.open('${item.blog}','_blank')">Read the Blog ↗</button>` : `<button class="detail-btn disabled">Blog Coming Soon</button>`}
+        `;
+    } else {
+        const url = item.link || item.blog;
+        actions = url ? `<button class="detail-btn primary" onclick="window.open('${url}','_blank')">Read Full Post ↗</button>` : '';
+    }
+
+    modalText.innerHTML = `<div class="detail-kicker">${kicker}</div>${intro}<div class="detail-actions">${actions}</div>`;
+    modalOverlay.style.display = "flex"; setTimeout(() => modalOverlay.classList.add("active"), 10);
+    print(`> Opening ${item.title}...`);
+
+    if (pushUrl) {
+        const path = routePath(category, index);
+        if (location.pathname !== path) history.pushState({ category, index }, "", path);
+        applyItemMeta(item, category, index);
+    }
+}
+let currentPath = "~";
+let currentDirectory = "root"; 
+let selectedItem = null;
+let isAdmin = false;
+let inputState = null;
+let tempItem = {}; 
+let cmdHistory=[], historyIndex=-1, isTyping=false;
+const output=document.getElementById("output"), input=document.getElementById("cmd"), promptSpan=document.getElementById("prompt");
+const terminalPanel=document.getElementById("terminal");
+terminalPanel.addEventListener("click", () => { if(!input.disabled) input.focus(); });
+input.focus();
+const modalOverlay=document.getElementById("modal-overlay"), modalTitle=document.getElementById("modal-title"), modalFrame=document.getElementById("modal-iframe");
+const modalText = document.getElementById("modal-text");
+const modalExtBtn = document.getElementById("modal-ext");
+function typeWriter(text, i, fn) {
+  if (i < text.length) { output.textContent += text.charAt(i); output.scrollTop = output.scrollHeight; setTimeout(() => typeWriter(text, i + 1, fn), 2); } 
+  else if (typeof fn == 'function') fn();
+}
+function print(t, instant=false){
+  if(instant){ output.textContent += t + "\n\n"; output.scrollTop = output.scrollHeight; return; }
+  isTyping = true; input.disabled = true; typeWriter(t + "\n\n", 0, function(){ isTyping = false; input.disabled = false; input.focus(); });
+}
+print("MithunOS v29.0 [Online].\nType 'help' for commands, or just ask a question — e.g. \"does he have backend experience?\"");
+function openModal(title, url) {
+    modalText.style.display = "none";
+    modalText.className = "";
+    modalFrame.style.display = "block";
+    modalExtBtn.style.display = "block";
+    if (url.includes("hashnode.dev") || url.includes("substack.com") || url.includes("github.com") || url.includes("linkedin.com")) {
+        modalFrame.style.display = "none";
+        modalText.style.display = "flex";
+        modalText.innerHTML = `
+            <div style="text-align:center">
+                <p style="font-size:2rem; margin-bottom:10px">⚠️</p>
+                <p>Security Protocol: Embed Denied</p>
+                <p style="font-size:0.9rem; color:var(--muted); margin-bottom:20px">${url}</p>
+                <button class="export-btn" onclick="window.open('${url}', '_blank')">OPEN IN NEW TAB ↗</button>
+            </div>
+        `;
+        modalTitle.innerText = "Security Alert";
+    } else {
+        if(!url || url === "#") return print("Error: Invalid Link.");
+        modalTitle.innerText = title; 
+        modalFrame.src = url; 
+        modalExtBtn.onclick = () => window.open(url, "_blank");
+    }
+    modalOverlay.style.display = "flex"; setTimeout(() => modalOverlay.classList.add("active"), 10);
+}
+function showStatusModal() {
+    modalFrame.style.display = "none";
+    modalExtBtn.style.display = "none";
+    modalText.style.display = "flex";
+    modalText.className = "";
+    modalText.innerHTML = data.currentStatus;
+    modalTitle.innerText = "Current Status";
+    modalOverlay.style.display = "flex"; setTimeout(() => modalOverlay.classList.add("active"), 10);
+}
+function closeModal(pushUrl = true) {
+    modalOverlay.classList.remove("active");
+    setTimeout(() => { modalOverlay.style.display = "none"; modalFrame.src = ""; }, 300);
+    if (pushUrl && location.pathname !== "/" && location.pathname !== "/index.html") {
+        history.pushState({}, "", "/");
+    }
+    resetMeta();
+}
+document.addEventListener("keydown", e => { if (e.key === "Escape" && modalOverlay.classList.contains("active")) closeModal(); });
+window.addEventListener("popstate", (e) => {
+    const state = e.state;
+    if (state && state.category && typeof state.index === "number") {
+        openDetailModal(state.category, state.index, false);
+        applyItemMeta(data[state.category][state.index], state.category, state.index);
+    } else {
+        closeModal(false);
+    }
+});
+/* Auto-open on load: either a pre-generated static route file sets
+   window.__ROUTE__ directly, or a direct hit on /category/slug/ that fell
+   through to this same index.html (e.g. local testing, or a host without
+   the per-route static files) — both resolve to the same modal state. */
+(function openFromInitialUrl() {
+    let category, slug;
+    if (window.__ROUTE__ && window.__ROUTE__.category) {
+        category = window.__ROUTE__.category;
+        slug = window.__ROUTE__.slug;
+    } else {
+        const parts = location.pathname.split("/").filter(Boolean);
+        if (parts.length >= 2 && ["projects", "blogs", "research"].includes(parts[0])) {
+            category = parts[0];
+            slug = parts[1];
+        }
+    }
+    if (!category || !slug) return;
+    const index = findByRoute(category, slug);
+    if (index === -1) return;
+    history.replaceState({ category, index }, "", routePath(category, index));
+    openDetailModal(category, index, false);
+    applyItemMeta(data[category][index], category, index);
+})();
+const audioPlayer = document.getElementById("bg-music");
+const musicWidget = document.getElementById("music-widget");
+const musicLabel = document.getElementById("music-label");
+const visualizer = document.getElementById("visualizer");
+audioPlayer.volume = 0.5;
+function toggleAudio() {
+    if(audioPlayer.paused) {
+        audioPlayer.play().then(() => {
+            musicLabel.innerText = "SONIC FEED: LIVE";
+            visualizer.classList.add("playing");
+        }).catch(e => print("Error: Interaction required to play music."));
+    } else {
+        audioPlayer.pause();
+        musicLabel.innerText = "SONIC FEED: OFF";
+        visualizer.classList.remove("playing");
+    }
+}
+function handle(cmd){
+  if(inputState === 'login') {
+      if(btoa(cmd) === 'ZGNzdWNrczEyMy8t') {
+          isAdmin = true;
+          inputState = null;
+          document.body.classList.add('admin-mode');
+          return print("Access Granted. Welcome, Admin.\nNew commands unlocked:\n- new project | blog | paper\n- set status\n- set skill [name] [value]\n- export");
+      } else {
+          inputState = null;
+          return print("Access Denied.");
+      }
+  }
+  if(inputState && inputState.startsWith('new-')) {
+      if(cmd === 'cancel') { inputState = null; return print("Operation cancelled."); }
+      if(inputState === 'new-title') {
+          tempItem.title = cmd;
+          inputState = 'new-link';
+          return print("Enter Link/Demo URL:");
+      }
+      if(inputState === 'new-link') {
+          tempItem.demo = cmd; 
+          tempItem.link = cmd;
+          const cat = tempItem.category;
+          data[cat].push(tempItem);
+          renderLeftPanel(); 
+          inputState = null;
+          return print(`Success! Added "${tempItem.title}" to ${cat}.\nType 'export' to save.`);
+      }
+  }
+  if(inputState === 'set-status') {
+      data.currentStatus = cmd;
+      inputState = null;
+      return print("Status updated. Type 'export' to save.");
+  }
+  if(cmd && cmd !== cmdHistory[cmdHistory.length-1]){ cmdHistory.push(cmd); historyIndex = cmdHistory.length; }
+  const p = (str) => str.padEnd(12, ' ');
+  if(cmd==="help") return print(`COMMANDS\n--------\n${p("ls")} List files\n${p("cd [dir]")} Change dir\n${p("open [id]")} Open item\n${p("ask [q]")} Ask about Mithun (grounded, on-page data)\n${p("resume")} PDF Resume\n${p("hack")} Simulation\n${p("music")} Play/Pause\n${p("matrix")} Matrix Mode\n${p("theme")} Light/Dark`);
+  if(cmd==="ask") return print(`Usage: ask [question]\ne.g. ask does he have backend experience`);
+  if(cmd.startsWith("ask ")) return print(askAssistant(cmd.slice(4).trim()));
+  if(cmd==="sudo login") {
+      inputState = 'login';
+      return print("Enter Password:");
+  }
+  if(cmd==="export") {
+      if(!isAdmin) return print("Permission denied.");
+      const btn = document.createElement("button");
+      btn.innerText = "Copy Data";
+      btn.className = "export-btn";
+      btn.onclick = function() {
+          navigator.clipboard.writeText(JSON.stringify(data, null, 2));
+          this.innerText = "Copied!";
+          this.style.background = "#28a745";
+          this.style.color = "#fff";
+      };
+      print("Export generated:", true);
+      output.appendChild(btn);
+      output.scrollTop = output.scrollHeight;
+      return;
+  }
+  if(cmd==="set status") {
+      if(!isAdmin) return print("Permission denied.");
+      inputState = 'set-status';
+      return print("Enter new status message:");
+  }
+  if(cmd.startsWith("set skill ")) {
+      if(!isAdmin) return print("Permission denied.");
+      const parts = cmd.split(" ");
+      if(parts.length < 4) return print("Usage: set skill [name] [level]");
+      const level = parseInt(parts.pop());
+      const name = parts.slice(2).join(" ");
+      const skill = data.skills.find(s => s.name.toLowerCase() === name.toLowerCase());
+      if(skill) {
+          skill.level = level;
+          renderLeftPanel();
+          return print(`Skill '${skill.name}' updated to ${level}%.`);
+      }
+      return print("Skill not found.");
+  }
+  if(cmd.startsWith("new ")) {
+      if(!isAdmin) return print("Permission denied.");
+      const type = cmd.replace("new ", "").trim();
+      let category = "";
+      if(type === "project") category = "projects";
+      else if(type === "blog") category = "blogs";
+      else if(type === "paper" || type === "research") category = "research";
+      if(category) {
+          inputState = 'new-title';
+          tempItem = { category: category };
+          return print(`Creating new ${type}...\nEnter Title:`);
+      }
+      return print("Invalid type.");
+  }
+  if(cmd.startsWith("cd")){
+      const target = cmd.replace("cd", "").trim();
+      if(!target || target === "~") { currentPath = "~"; currentDirectory = "root"; }
+      else if(target === "..") { currentPath = "~"; currentDirectory = "root"; }
+      else if(["projects","blogs","research"].includes(target)) { currentPath = `~/${target}`; currentDirectory = target; }
+      else return print(`cd: no such directory: ${target}`);
+      promptSpan.innerText = `➜ ${currentPath}`; selectedItem = null; return print("");
+  }
+  if(cmd === "ls") {
+      if(currentDirectory === "root") return print("drwx------ projects/\ndrwx------ blogs/\ndrwx------ research/\n-r--r--r-- resume.pdf");
+      return print(data[currentDirectory].map((item, i) => `[${i+1}] ${item.title}`).join("\n"));
+  }
+  if(cmd.startsWith("open")){
+    const i=parseInt(cmd.split(" ")[1])-1;
+    if(isNaN(i)) return print("Usage: open [number]");
+    if(currentDirectory === "root") return print("Error: Enter a directory first.");
+    if(data[currentDirectory][i]) {
+        selectedItem = data[currentDirectory][i];
+        return print(`Selected: ${selectedItem.title}\nType 'demo', 'blog', or 'read' to view.`);
+    } else return print("File not found.");
+  }
+  if(cmd==="demo" && selectedItem?.demo) return openModal(selectedItem.title, selectedItem.demo);
+  if(cmd==="blog" && selectedItem?.blog) return openModal(selectedItem.title, selectedItem.blog);
+  if(cmd==="code" && selectedItem?.code) return openModal(selectedItem.title, selectedItem.code);
+  if(cmd==="read" && selectedItem?.link) return openModal(selectedItem.title, selectedItem.link);
+  if(cmd==="resume") return openModal("Resume", "resume.pdf");
+  if(cmd==="theme"){ document.body.classList.toggle("dark"); return print("Theme switched."); }
+  if(cmd==="clear"){ output.textContent=""; return; }
+  if(cmd==="hack") {
+      const lines=["Accessing Mainframe...","Bypassing Firewall...","Downloading Data...","Access Granted."];
+      let i=0; input.disabled=true;
+      function run(){ if(i<lines.length){ output.textContent+=`> ${lines[i++]}\n`; output.scrollTop=output.scrollHeight; setTimeout(run, 400); } else { input.disabled=false; input.focus(); } }
+      run(); return;
+  }
+  if(cmd==="matrix"){ document.body.classList.toggle("matrix-mode"); return print("Matrix Mode."); }
+  if(cmd==="music" || cmd==="music play") {
+      if(audioPlayer.paused) { toggleAudio(); return print("Music started."); }
+      else { toggleAudio(); return print("Music paused."); }
+  }
+  if(cmd==="music pause" || cmd==="music stop") {
+      if(!audioPlayer.paused) toggleAudio();
+      return print("Music stopped.");
+  }
+  if(cmd.split(" ").length > 1 || cmd.includes("?")) return print(askAssistant(cmd));
+  print(`Command not found: '${cmd}'. Try 'ask ${cmd}' or type 'help'.`);
+}
+input.addEventListener("keydown",e=>{
+  if(isTyping) { e.preventDefault(); return; }
+  if(e.key==="Tab"){ e.preventDefault(); const m=data.commands.find(c=>c.startsWith(input.value)); if(m) input.value=m; }
+  if(e.key==="ArrowUp" && historyIndex>0) input.value=cmdHistory[--historyIndex];
+  if(e.key==="ArrowDown") input.value = historyIndex<cmdHistory.length-1 ? cmdHistory[++historyIndex] : "";
+  if(e.key==="Enter"){ 
+      const c=input.value.trim().toLowerCase(); 
+      if(inputState === 'login') { print("➜ [HIDDEN]", true); handle(c); } 
+      else if(c){ print(`➜ ${currentPath} ${c}`, true); handle(c); }
+      input.value=""; 
+  }
+});
+function openLink(url){ window.open(url,"_blank"); }
+</script>
+</body>
+</html>

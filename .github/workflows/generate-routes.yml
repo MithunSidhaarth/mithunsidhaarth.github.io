@@ -1,0 +1,35 @@
+name: Generate per-item routes
+
+# Runs on every push to main. Regenerates /projects/<slug>/, /blogs/<slug>/,
+# and /research/<slug>/ from the `data` object in index.html, then commits
+# the result straight back to main so the site (served from main root by
+# GitHub Pages) picks it up on the next Pages build — no manual step needed.
+#
+# Safe against infinite loops: commits made with the default GITHUB_TOKEN
+# do not themselves trigger another workflow run.
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Generate route pages + sitemap
+        run: node scripts/generate-routes.js
+
+      - name: Commit generated routes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: regenerate per-item routes + sitemap"
+          file_pattern: "projects/** blogs/** research/** sitemap.xml"

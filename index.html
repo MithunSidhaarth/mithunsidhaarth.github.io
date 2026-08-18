@@ -486,8 +486,8 @@ input{ border:none; background:transparent; color:var(--text); outline:none; wid
 <div id="left">
   <div class="panel" style="flex:1; overflow:hidden;">
     <div class="panel-header">
-      <h1 id="name"></h1>
-      <div id="subtitle">Tech Enthusiast</div>
+      <h1 id="name">Mithun Sidhaarth</h1>
+      <div id="subtitle">AI/ML Engineer & Full-Stack Developer</div>
       <div class="stat-row" id="stat-row"></div>
       <div class="marquee-wrap"><div class="marquee-track" id="marquee-track"></div></div>
       <div id="bio-typewriter"></div>
@@ -608,7 +608,7 @@ initParticles(); animateParticles();
 /* ---------- Kinetic name split ---------- */
 (function initKineticName(){
   const nameEl = document.getElementById("name");
-  const raw = "Mithun Sidhaarth";
+  const raw = nameEl.textContent.trim();
   nameEl.innerHTML = raw.split("").map(ch => ch === " "
     ? `<span class="letter space"> </span>`
     : `<span class="letter">${ch}</span>`
@@ -701,7 +701,7 @@ let data={
     {title:"NeuraSpace", demo:"https://neuraspace.online", blog:"https://methxd.hashnode.dev/neuraspace-engineering-a-living-computational-interface", desc:"An experiment in making the interface itself feel alive, a spatial, particle-driven environment built with a component-driven React layer and a dedicated motion/rendering system, where pointer movement, depth, and interpolation communicate state instead of static UI elements. The long-term goal is to host an AI presence inside this environment rather than a conventional chat window."},
     {title:"Eden", demo:"https://edenconsole.netlify.app", blog:"https://methxd.hashnode.dev/eden-building-an-ai-assistant-for-my-everyday-life", desc:"A still-in-progress AI assistant meant to go beyond a chatbot, it's built as an agent that picks from a set of tools (tasks, reminders, calendar, weather) which the app validates and executes, aiming to eventually summarize 'what actually matters today' rather than dumping every task on the user."},
     {title:"Nirvah", demo:"https://nirvah.cc.cd", blog:"https://methxd.hashnode.dev/nirvah-building-a-technology-layer-for-giving", desc:"A technology layer connecting donors and NGOs through a fully tracked donation lifecycle (claimed, accepted, delivered, acknowledged), built on a React frontend with a Node/Express backend, JWT auth, and a planned 'Giving Vault' that auto-organizes receipts and impact documentation."},
-    {title:"Portfolio Console", demo:"https://mithunsidhaarth.in", blog:"https://methsole.hashnode.dev/building-my-portfolio-os-a-personal-system-for-thinking-creating-and-growing?showSharer=true", desc:"A terminal-styled personal portfolio built as an interactive system rather than a static page, command-line style navigation, a modal reading system for content, and theme controls, designed around structure and interaction over decoration."},
+    {title:"Portfolio Console", demo:"https://mithunsidhaarth.in", blog:"https://methxd.hashnode.dev/building-my-portfolio-os-a-personal-system-for-thinking-creating-and-growing", desc:"A terminal-styled personal portfolio built as an interactive system rather than a static page, command-line style navigation, a modal reading system for content, and theme controls, designed around structure and interaction over decoration."},
     {title:"Aeris", demo:"http://aeris.de5.net", blog:"https://methxd.hashnode.dev/building-aeris-from-satellite-imagery-to-an-earth-observation-intelligence-platform", desc:"An earth observation intelligence platform that turns raw satellite imagery into usable insight, bridging remote sensing data with an accessible analysis layer for tracking and understanding change on the ground."},
     {title:"OutreachOS", demo:"https://outreach.de5.net", blog:"", desc:"A self-hosted CRM for founder and internship outreach, with Gmail-native sending, AI-personalized drafts, contact discovery, reply classification, and cooldown-aware pacing."}
   ],
@@ -935,7 +935,69 @@ function runAsk(question){
     input.value = "";
     input.focus();
 }
-function openDetailModal(category, index) {
+/* ================= ROUTING — per-item shareable/indexable URLs =================
+   Static hosting has no server routes, so this pairs with scripts/generate-routes.js,
+   which pre-builds /projects/<slug>/, /blogs/<slug>/, /research/<slug>/ index.html files
+   (each a copy of this page with per-item <title>/meta/OG/canonical/JSON-LD baked in,
+   plus a window.__ROUTE__ hint) at deploy time. This runtime code handles: computing
+   the same slugs client-side, updating the URL + meta tags when a modal opens (so
+   copy-link/share-while-open works), restoring them on close, browser back/forward
+   via popstate, and auto-opening the right modal if the page loads on a deep route
+   (either from the generated static file's __ROUTE__ hint, or a direct /category/slug
+   hit that fell through to this same index.html). */
+function slugify(str) {
+    return (str || "").toString().toLowerCase().trim()
+        .replace(/['’]/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+}
+function routePath(category, index) {
+    const item = data[category] && data[category][index];
+    if (!item) return "/";
+    return `/${category}/${slugify(item.title)}/`;
+}
+function findByRoute(category, slug) {
+    const list = data[category];
+    if (!list) return -1;
+    return list.findIndex(it => slugify(it.title) === slug);
+}
+const DEFAULT_META = {
+    title: document.title,
+    description: document.querySelector('meta[name="description"]')?.getAttribute("content") || "",
+    ogTitle: document.querySelector('meta[property="og:title"]')?.getAttribute("content") || "",
+    ogDescription: document.querySelector('meta[property="og:description"]')?.getAttribute("content") || "",
+    ogUrl: document.querySelector('meta[property="og:url"]')?.getAttribute("content") || "",
+    canonical: document.querySelector('link[rel="canonical"]')?.getAttribute("href") || ""
+};
+function setMeta(selector, attr, value) {
+    const el = document.querySelector(selector);
+    if (el) el.setAttribute(attr, value);
+}
+function applyItemMeta(item, category, index) {
+    const kicker = { projects: "Project", blogs: "Blog post", research: "Research" }[category] || category;
+    const desc = item.desc || `${kicker}: ${item.title} — by Mithun Sidhaarth.`;
+    const title = `${item.title} — Mithun Sidhaarth`;
+    const url = location.origin + routePath(category, index);
+    document.title = title;
+    setMeta('meta[name="description"]', "content", desc);
+    setMeta('meta[property="og:title"]', "content", title);
+    setMeta('meta[property="og:description"]', "content", desc);
+    setMeta('meta[property="og:url"]', "content", url);
+    setMeta('meta[name="twitter:title"]', "content", title);
+    setMeta('meta[name="twitter:description"]', "content", desc);
+    setMeta('link[rel="canonical"]', "href", url);
+}
+function resetMeta() {
+    document.title = DEFAULT_META.title;
+    setMeta('meta[name="description"]', "content", DEFAULT_META.description);
+    setMeta('meta[property="og:title"]', "content", DEFAULT_META.ogTitle);
+    setMeta('meta[property="og:description"]', "content", DEFAULT_META.ogDescription);
+    setMeta('meta[property="og:url"]', "content", DEFAULT_META.ogUrl);
+    setMeta('meta[name="twitter:title"]', "content", DEFAULT_META.ogTitle);
+    setMeta('meta[name="twitter:description"]', "content", DEFAULT_META.ogDescription);
+    setMeta('link[rel="canonical"]', "href", DEFAULT_META.canonical);
+}
+function openDetailModal(category, index, pushUrl = true) {
     const item = data[category][index];
     if(!item) return;
     modalFrame.style.display = "none";
@@ -963,6 +1025,12 @@ function openDetailModal(category, index) {
     modalText.innerHTML = `<div class="detail-kicker">${kicker}</div>${intro}<div class="detail-actions">${actions}</div>`;
     modalOverlay.style.display = "flex"; setTimeout(() => modalOverlay.classList.add("active"), 10);
     print(`> Opening ${item.title}...`);
+
+    if (pushUrl) {
+        const path = routePath(category, index);
+        if (location.pathname !== path) history.pushState({ category, index }, "", path);
+        applyItemMeta(item, category, index);
+    }
 }
 let currentPath = "~";
 let currentDirectory = "root"; 
@@ -1021,8 +1089,47 @@ function showStatusModal() {
     modalTitle.innerText = "Current Status";
     modalOverlay.style.display = "flex"; setTimeout(() => modalOverlay.classList.add("active"), 10);
 }
-function closeModal() { modalOverlay.classList.remove("active"); setTimeout(() => { modalOverlay.style.display = "none"; modalFrame.src = ""; }, 300); }
+function closeModal(pushUrl = true) {
+    modalOverlay.classList.remove("active");
+    setTimeout(() => { modalOverlay.style.display = "none"; modalFrame.src = ""; }, 300);
+    if (pushUrl && location.pathname !== "/" && location.pathname !== "/index.html") {
+        history.pushState({}, "", "/");
+    }
+    resetMeta();
+}
 document.addEventListener("keydown", e => { if (e.key === "Escape" && modalOverlay.classList.contains("active")) closeModal(); });
+window.addEventListener("popstate", (e) => {
+    const state = e.state;
+    if (state && state.category && typeof state.index === "number") {
+        openDetailModal(state.category, state.index, false);
+        applyItemMeta(data[state.category][state.index], state.category, state.index);
+    } else {
+        closeModal(false);
+    }
+});
+/* Auto-open on load: either a pre-generated static route file sets
+   window.__ROUTE__ directly, or a direct hit on /category/slug/ that fell
+   through to this same index.html (e.g. local testing, or a host without
+   the per-route static files) — both resolve to the same modal state. */
+(function openFromInitialUrl() {
+    let category, slug;
+    if (window.__ROUTE__ && window.__ROUTE__.category) {
+        category = window.__ROUTE__.category;
+        slug = window.__ROUTE__.slug;
+    } else {
+        const parts = location.pathname.split("/").filter(Boolean);
+        if (parts.length >= 2 && ["projects", "blogs", "research"].includes(parts[0])) {
+            category = parts[0];
+            slug = parts[1];
+        }
+    }
+    if (!category || !slug) return;
+    const index = findByRoute(category, slug);
+    if (index === -1) return;
+    history.replaceState({ category, index }, "", routePath(category, index));
+    openDetailModal(category, index, false);
+    applyItemMeta(data[category][index], category, index);
+})();
 const audioPlayer = document.getElementById("bg-music");
 const musicWidget = document.getElementById("music-widget");
 const musicLabel = document.getElementById("music-label");
