@@ -2,8 +2,46 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Mithun Sidhaarth | Tech Enthusiast</title>
+<title>Mithun Sidhaarth — AI/ML Engineer & Full-Stack Developer</title>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Portfolio of Mithun Sidhaarth, an AI/ML engineering student at BMS College of Engineering and full-stack developer building AI-powered apps, production platforms, and client websites.">
+<link rel="canonical" href="https://mithunsidhaarth.in/">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Mithun Sidhaarth">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mithun Sidhaarth — AI/ML Engineer & Full-Stack Developer">
+<meta property="og:description" content="AI-powered apps, full-stack platforms, and client websites. See the projects and writing.">
+<meta property="og:url" content="https://mithunsidhaarth.in/">
+<meta property="og:image" content="https://mithunsidhaarth.in/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mithun Sidhaarth — AI/ML Engineer & Full-Stack Developer">
+<meta name="twitter:description" content="AI-powered apps, full-stack platforms, and client websites. See the projects and writing.">
+<meta name="twitter:image" content="https://mithunsidhaarth.in/og-image.png">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Mithun Sidhaarth",
+  "url": "https://mithunsidhaarth.in",
+  "jobTitle": "AI/ML Engineer",
+  "description": "AI/ML engineering student and full-stack developer building AI-powered apps, full-stack platforms, and client websites.",
+  "sameAs": [
+    "https://github.com/mithunsidhaarth",
+    "https://www.linkedin.com/in/mithunsidhaarth/",
+    "https://mithunsidhaarth.substack.com"
+  ]
+}
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -231,7 +269,7 @@ body { cursor: none; }
 #bio-typewriter::after { content: '▋'; display: inline-block; animation: blink 1s step-end infinite; color: var(--hacker-red); margin-left: 2px; }
 @keyframes blink { 50% { opacity: 0; } }
 .section { margin-bottom:18px; }
-.section h3{ font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:2px; margin:0 0 8px 0; font-weight:700; opacity: 0.8; }
+.section h2{ font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:2px; margin:0 0 8px 0; font-weight:700; opacity: 0.8; }
 .interactive-list { list-style: none; padding: 0; margin: 0; }
 .interactive-item {
     position: relative; padding: 6px 0 6px 20px; font-size: 1.05rem; font-weight: 500;
@@ -448,7 +486,7 @@ input{ border:none; background:transparent; color:var(--text); outline:none; wid
 <div id="left">
   <div class="panel" style="flex:1; overflow:hidden;">
     <div class="panel-header">
-      <div id="name"></div>
+      <h1 id="name"></h1>
       <div id="subtitle">Tech Enthusiast</div>
       <div class="stat-row" id="stat-row"></div>
       <div class="marquee-wrap"><div class="marquee-track" id="marquee-track"></div></div>
@@ -456,19 +494,19 @@ input{ border:none; background:transparent; color:var(--text); outline:none; wid
     </div>
     <div class="panel-scroll">
       <div class="section">
-        <h3>Projects</h3>
+        <h2>Projects</h2>
         <ul id="list-projects" class="bento-grid"></ul>
       </div>
       <div class="section">
-        <h3>Blogs</h3>
+        <h2>Blogs</h2>
         <ul id="list-blogs" class="bento-grid"></ul>
       </div>
       <div class="section">
-        <h3>Research</h3>
+        <h2>Research</h2>
         <ul id="list-research" class="bento-grid"></ul>
       </div>
       <div class="section">
-        <h3>Skills</h3>
+        <h2>Skills</h2>
         <div id="list-skills"></div>
       </div>
     </div>
@@ -664,7 +702,8 @@ let data={
     {title:"Eden", demo:"https://edenconsole.netlify.app", blog:"https://methxd.hashnode.dev/eden-building-an-ai-assistant-for-my-everyday-life", desc:"A still-in-progress AI assistant meant to go beyond a chatbot, it's built as an agent that picks from a set of tools (tasks, reminders, calendar, weather) which the app validates and executes, aiming to eventually summarize 'what actually matters today' rather than dumping every task on the user."},
     {title:"Nirvah", demo:"https://nirvah.cc.cd", blog:"https://methxd.hashnode.dev/nirvah-building-a-technology-layer-for-giving", desc:"A technology layer connecting donors and NGOs through a fully tracked donation lifecycle (claimed, accepted, delivered, acknowledged), built on a React frontend with a Node/Express backend, JWT auth, and a planned 'Giving Vault' that auto-organizes receipts and impact documentation."},
     {title:"Portfolio Console", demo:"https://mithunsidhaarth.in", blog:"https://methsole.hashnode.dev/building-my-portfolio-os-a-personal-system-for-thinking-creating-and-growing?showSharer=true", desc:"A terminal-styled personal portfolio built as an interactive system rather than a static page, command-line style navigation, a modal reading system for content, and theme controls, designed around structure and interaction over decoration."},
-    {title:"Aeris", demo:"http://aeris.de5.net", blog:"https://methxd.hashnode.dev/building-aeris-from-satellite-imagery-to-an-earth-observation-intelligence-platform", desc:"An earth observation intelligence platform that turns raw satellite imagery into usable insight, bridging remote sensing data with an accessible analysis layer for tracking and understanding change on the ground."}
+    {title:"Aeris", demo:"http://aeris.de5.net", blog:"https://methxd.hashnode.dev/building-aeris-from-satellite-imagery-to-an-earth-observation-intelligence-platform", desc:"An earth observation intelligence platform that turns raw satellite imagery into usable insight, bridging remote sensing data with an accessible analysis layer for tracking and understanding change on the ground."},
+    {title:"OutreachOS", demo:"https://outreach.de5.net", blog:"", desc:"A self-hosted CRM for founder and internship outreach, with Gmail-native sending, AI-personalized drafts, contact discovery, reply classification, and cooldown-aware pacing."}
   ],
 blogs:[
   {
@@ -726,6 +765,11 @@ blogs:[
     title:"Grief Is Just Perfume",
     link:"https://mithunsidhaarth.substack.com/p/grief-is-just-perfume",
     desc:"A raw, unfiltered poem about heartbreak and obsession, capturing how grief can wear the shape of the person who caused it."
+  },
+  {
+    title:"after becoming everyone",
+    link:"https://mithunsidhaarth.substack.com/p/after-becoming-everyone?r=3b1yo4&utm_campaign=post-expanded-share&utm_medium=web",
+    desc:""
   }
 ],
   research:[
@@ -909,7 +953,7 @@ function openDetailModal(category, index) {
         const hasBlog = item.blog && item.blog !== '#';
         actions = `
             ${hasDemo ? `<button class="detail-btn primary" onclick="window.open('${item.demo}','_blank')">Visit Project ↗</button>` : `<button class="detail-btn disabled">Coming Soon</button>`}
-            ${hasBlog ? `<button class="detail-btn" onclick="window.open('${item.blog}','_blank')">Read the Blog ↗</button>` : ''}
+            ${hasBlog ? `<button class="detail-btn" onclick="window.open('${item.blog}','_blank')">Read the Blog ↗</button>` : `<button class="detail-btn disabled">Blog Coming Soon</button>`}
         `;
     } else {
         const url = item.link || item.blog;
