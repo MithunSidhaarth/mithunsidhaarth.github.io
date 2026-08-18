@@ -42,6 +42,32 @@
   }
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://mithunsidhaarth.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blogs",
+      "item": "https://mithunsidhaarth.in/#blogs"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "i thought i had more time..",
+      "item": "https://mithunsidhaarth.in/blogs/i-thought-i-had-more-time/"
+    }
+  ]
+}
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -175,8 +201,11 @@ body { cursor: none; }
   position: relative; border-radius: 10px; overflow: hidden; cursor: pointer; min-height: 80px;
   background: linear-gradient(155deg, rgba(255,255,255,0.045), rgba(255,255,255,0.01)), var(--card-bg);
   border: 1px solid rgba(125,125,125,0.18); border-left: 2px solid var(--hacker-red);
-  display: flex; flex-direction: column; justify-content: space-between; padding: 10px 12px;
   transition: transform 0.25s cubic-bezier(0.2,1,0.3,1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.bento-card-link {
+  display: flex; flex-direction: column; justify-content: space-between; height: 100%;
+  padding: 10px 12px; text-decoration: none; color: inherit;
 }
 .bento-card::before {
   content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.5;
@@ -207,6 +236,7 @@ body { cursor: none; }
 #modal-text.detail-panel { flex: 1; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; padding: 20px 24px; overflow-y: auto; text-align: left; white-space: normal; }
 .detail-kicker { font-family: var(--term-font); font-size: 0.68rem; font-weight: 700; letter-spacing: 1.5px; color: var(--hacker-red); text-transform: uppercase; opacity: 0.85; margin-bottom: 8px; }
 .detail-intro { font-size: 0.98rem; line-height: 1.6; color: var(--text); font-family: "Space Grotesk", sans-serif; margin: 0 0 16px 0; white-space: pre-wrap; }
+.detail-title { font-size: 1.1rem; font-weight: 700; margin: 0 0 10px 0; color: var(--text); font-family: "Space Grotesk", sans-serif; }
 .detail-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; }
 .detail-btn {
   font-family: "Space Grotesk", sans-serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.3px;
@@ -877,12 +907,15 @@ function renderLeftPanel() {
         ul.innerHTML = data[cat].map((item, i) => {
             const tag = `${catTag(cat)}_${String(i+1).padStart(2,'0')}`;
             const sub = item.desc ? `<div class="bento-card-sub">${item.desc}</div>` : '';
-            return `<li class="bento-card" onclick="openDetailModal('${cat}', ${i})">
+            const href = routePath(cat, i);
+            return `<li class="bento-card">
+                <a class="bento-card-link" href="${href}" onclick="return handleCardClick(event,'${cat}',${i})" aria-label="${item.title}">
                 <div>
                     <div class="bento-topline"><span class="bento-tag">${tag}</span><span class="bento-icon">➜</span></div>
                     <div class="bento-card-title">${item.title}</div>
                 </div>
                 ${sub}
+                </a>
             </li>`;
         }).join('');
     };
@@ -962,6 +995,14 @@ function findByRoute(category, slug) {
     if (!list) return -1;
     return list.findIndex(it => slugify(it.title) === slug);
 }
+function handleCardClick(e, category, index) {
+    // Let modifier-clicks / middle-click behave like a normal link (open in new tab, etc.)
+    // — the href is a real route, so this works correctly without any JS at all.
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1) return true;
+    e.preventDefault();
+    openDetailModal(category, index);
+    return false;
+}
 const DEFAULT_META = {
     title: document.title,
     description: document.querySelector('meta[name="description"]')?.getAttribute("content") || "",
@@ -1023,7 +1064,7 @@ function openDetailModal(category, index, pushUrl = true) {
         actions = url ? `<button class="detail-btn primary" onclick="window.open('${url}','_blank')">Read Full Post ↗</button>` : '';
     }
 
-    modalText.innerHTML = `<div class="detail-kicker">${kicker}</div>${intro}<div class="detail-actions">${actions}</div>`;
+    modalText.innerHTML = `<div class="detail-kicker">${kicker}</div><h2 class="detail-title">${item.title}</h2>${intro}<div class="detail-actions">${actions}</div>`;
     modalOverlay.style.display = "flex"; setTimeout(() => modalOverlay.classList.add("active"), 10);
     print(`> Opening ${item.title}...`);
 

@@ -75,6 +75,19 @@ function extractDataObject(html) {
 
 const KICKER = { projects: "Project", blogs: "Blog post", research: "Research" };
 
+function breadcrumbLd(category, item, url) {
+  const categoryLabel = { projects: "Projects", blogs: "Blogs", research: "Research" }[category] || category;
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+      { "@type": "ListItem", position: 2, name: categoryLabel, item: `${SITE_URL}/#${category}` },
+      { "@type": "ListItem", position: 3, name: item.title, item: url }
+    ]
+  };
+}
+
 function jsonLdFor(category, item, url) {
   if (category === "projects") {
     return {
@@ -131,12 +144,14 @@ function buildPage(template, category, item, index, siteImage) {
   html = setMetaTag(html, /(<meta name="twitter:title" content=")[^"]*("\s*>)/, "content", title);
   html = setMetaTag(html, /(<meta name="twitter:description" content=")[^"]*("\s*>)/, "content", description);
 
-  // Swap the homepage's Person JSON-LD for an item-specific block (Person schema
-  // still belongs on the homepage only — one Person entity per site is enough).
+  // Swap the homepage's Person JSON-LD for item-specific blocks: the item's own
+  // schema plus a BreadcrumbList (Person schema stays homepage-only — one Person
+  // entity per site is enough).
   const itemLd = JSON.stringify(jsonLdFor(category, item, url), null, 2);
+  const breadcrumbLdJson = JSON.stringify(breadcrumbLd(category, item, url), null, 2);
   html = html.replace(
     /<script type="application\/ld\+json">[\s\S]*?<\/script>/,
-    `<script type="application/ld+json">\n${itemLd}\n</script>`
+    `<script type="application/ld+json">\n${itemLd}\n</script>\n<script type="application/ld+json">\n${breadcrumbLdJson}\n</script>`
   );
 
   // Tell the routing JS which item to auto-open. Inserted right before </head> —
@@ -155,6 +170,7 @@ function main() {
   const template = readIndexHtml();
   const data = extractDataObject(template);
 
+  const today = new Date().toISOString().slice(0, 10);
   const routes = [{ loc: `${SITE_URL}/`, priority: "1.0" }];
   let written = 0;
 
@@ -187,7 +203,7 @@ function main() {
   const sitemap =
     `<?xml version="1.0" encoding="UTF-8"?>\n` +
     `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-    routes.map(r => `  <url>\n    <loc>${r.loc}</loc>\n    <priority>${r.priority}</priority>\n  </url>`).join("\n") +
+    routes.map(r => `  <url>\n    <loc>${r.loc}</loc>\n    <lastmod>${today}</lastmod>\n    <priority>${r.priority}</priority>\n  </url>`).join("\n") +
     `\n</urlset>\n`;
   fs.writeFileSync(path.join(ROOT, "sitemap.xml"), sitemap, "utf8");
 
