@@ -949,32 +949,45 @@ html.lenis, html.lenis body { height: auto; }
 
 .contact-big { transform-origin: left bottom; will-change: transform; }
 
-/* manifesto: words light up, then the camera dives through SYSTEMS into the work */
-#manifesto { position: relative; margin: 0 calc(-1 * clamp(16px, 4vw, 48px)); }
-.mf-sticky { position: relative; min-height: 70vh; display: flex; flex-direction: column; justify-content: center; padding: 120px clamp(16px, 6vw, 96px); overflow: hidden; }
-.mf-kicker { font: 500 0.8rem var(--term-font); color: var(--muted); margin-bottom: 26px; }
-.mf-line { font: 700 clamp(2.1rem, 5.4vw, 5.6rem)/1.02 "Space Grotesk", sans-serif; letter-spacing: -0.045em; margin: 0; max-width: 18ch; position: relative; z-index: 2; }
-.mf-line .mw { opacity: 0.12; transition: opacity 0.3s ease, color 0.3s ease; }
-.mf-line .mw.lit { opacity: 1; }
-.mf-line em { font-style: normal; }
-.mf-line em .mw.lit { color: var(--hacker-red); }
-.mf-zoom, .mf-flood { display: none; }
-@media (min-width: 901px) {
-  #manifesto.pinned { height: 320vh; }
-  #manifesto.pinned .mf-sticky { position: sticky; top: 0; height: 100vh; min-height: 0; }
-  #manifesto.pinned .mf-zoom { display: block; position: absolute; left: 50%; top: 50%; z-index: 1; pointer-events: none; white-space: nowrap;
-    font: 700 22vw/0.8 "Space Grotesk", sans-serif; letter-spacing: -0.05em; color: transparent; -webkit-text-stroke: 2px var(--hacker-red);
-    transform: translate(-50%, -50%) scale(0.6); opacity: 0; will-change: transform, opacity; }
-  #manifesto.pinned .mf-flood { display: block; position: absolute; inset: 0; z-index: 3; background: var(--hacker-red); opacity: 0; pointer-events: none; }
-}
-
-/* essay previews that follow the cursor */
+/* essay previews that follow the cursor *//* essay previews that follow the cursor */
 #essay-peek { position: fixed; left: 0; top: 0; z-index: 60; width: 380px; aspect-ratio: 1200 / 630; pointer-events: none; border-radius: 10px; overflow: hidden;
   opacity: 0; transform: translate3d(-9999px, 0, 0); transition: opacity 0.25s ease; box-shadow: 0 30px 70px -20px rgba(0,0,0,0.85), 0 0 0 1px rgba(255,51,51,0.3); }
 #essay-peek.on { opacity: 1; }
 #essay-peek img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.06); transition: transform 0.5s cubic-bezier(.16,1,.3,1); }
 #essay-peek.on img { transform: scale(1); }
 @media (hover: none), (max-width: 900px) { #essay-peek { display: none; } }
+
+/* Rewire: a website's wireframe is taken apart and rewired into a system as you scroll */
+#rewire { position: relative; }
+.rw-sticky { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.25fr); gap: clamp(24px, 4vw, 64px); align-items: center; min-height: 80vh; padding: 110px 0 60px; }
+.rw-cmd { font: 500 0.8rem var(--term-font); color: var(--muted); margin-bottom: 22px; }
+.rw-cmd b { color: var(--hacker-red); font-weight: 500; }
+.rw-head { font: 700 clamp(2.4rem, 4.6vw, 4.9rem)/0.98 "Space Grotesk", sans-serif; letter-spacing: -0.045em; margin: 0 0 22px; min-height: 2em; }
+.rw-head .hot { color: var(--hacker-red); }
+.rw-head .scr { color: var(--hacker-red); opacity: 0.75; }
+.rw-sub { font: 500 clamp(1rem, 1.35vw, 1.3rem)/1.5 var(--term-font); color: var(--text); opacity: 0.85; min-height: 3em; margin: 0 0 30px; max-width: 34ch; }
+.rw-sub::after { content: ""; display: inline-block; width: 0.55em; height: 1.05em; margin-left: 3px; vertical-align: -0.15em; background: var(--hacker-red); animation: blink 1s step-end infinite; }
+.rw-status { display: flex; align-items: center; gap: 14px; font: 500 0.7rem var(--term-font); letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+.rw-bar { flex: 0 0 140px; height: 2px; background: rgba(125,125,125,0.25); position: relative; }
+.rw-bar i { position: absolute; inset: 0; background: var(--hacker-red); transform: scaleX(0); transform-origin: left; box-shadow: 0 0 8px var(--hacker-red); }
+#rw-pct { color: var(--text); }
+.rw-svg { width: 100%; height: auto; overflow: visible; }
+.rw-svg .frame { fill: none; stroke: rgba(238,233,223,0.22); stroke-width: 1.5; }
+.rw-svg .frame-bar { fill: rgba(238,233,223,0.06); }
+.rw-svg .blk { stroke-width: 1.5; }
+.rw-svg .ph { stroke: rgba(238,233,223,0.18); stroke-width: 6; stroke-linecap: round; }
+.rw-svg .edge { fill: none; stroke: rgba(255,51,51,0.55); stroke-width: 1.6; }
+.rw-svg .lbl { font: 600 15px "JetBrains Mono", monospace; letter-spacing: 2px; fill: #f1ece6; text-anchor: middle; dominant-baseline: middle; }
+.rw-svg .sub { font: 500 11px "JetBrains Mono", monospace; letter-spacing: 1px; fill: #8a8580; text-anchor: middle; }
+.rw-svg .pulse { fill: #ffd9d4; filter: drop-shadow(0 0 6px #ff3333); }
+@media (min-width: 901px) {
+  #rewire.pinned { height: 300vh; }
+  #rewire.pinned .rw-sticky { position: sticky; top: 0; height: 100vh; min-height: 0; padding: 70px 0 0; }
+}
+@media (max-width: 900px) {
+  .rw-sticky { grid-template-columns: 1fr; padding-top: 80px; gap: 10px; }
+  .rw-head { min-height: 0; }
+}
 </style>
 <script>window.__ROUTE__ = {category:"blogs", slug:"did-i-love-her-once-before"};</script>
 </head>
@@ -1109,12 +1122,15 @@ html.lenis, html.lenis body { height: auto; }
   </div>
 </section>
 <main id="layout">
-  <section id="manifesto" aria-label="Manifesto">
-    <div class="mf-sticky">
-      <div class="mf-kicker">~/mithun $ cat manifesto.txt</div>
-      <p class="mf-line" id="mf-line">Most people build websites. I build <em>systems.</em> From agentic backends to interfaces that feel alive.</p>
-      <div class="mf-zoom" id="mf-zoom" aria-hidden="true">SYSTEMS</div>
-      <div class="mf-flood" id="mf-flood" aria-hidden="true"></div>
+  <section id="rewire" aria-label="Most people build websites. I build systems.">
+    <div class="rw-sticky">
+      <div class="rw-copy">
+        <div class="rw-cmd">~/mithun $ ./compile website <b>--as=system</b></div>
+        <h2 class="rw-head" id="rw-head" aria-live="off">Most people build websites.</h2>
+        <p class="rw-sub" id="rw-sub"></p>
+        <div class="rw-status"><span id="rw-state">compiling: website</span><span class="rw-bar"><i id="rw-fill"></i></span><span id="rw-pct">000%</span></div>
+      </div>
+      <svg class="rw-svg" id="rw-svg" viewBox="0 0 1200 760" aria-hidden="true"></svg>
     </div>
   </section>
 
@@ -1845,21 +1861,7 @@ function goTo(el) { if (lenis) lenis.scrollTo(el, { duration: 1.4 }); else el.sc
     (document.fonts ? document.fonts.ready : Promise.resolve()).then(measure);
     window.__remeasureScroll = measure;
 
-    // manifesto: split into words; pin it on desktop
-    const mf = document.getElementById("manifesto"), mfZoom = document.getElementById("mf-zoom"), mfFlood = document.getElementById("mf-flood");
-    const mfLine = document.getElementById("mf-line");
-    const mfKick = document.querySelector(".mf-kicker");
-    mfLine.querySelectorAll("em").forEach(em => { em.innerHTML = em.textContent.split(" ").map(w => `<span class="mw">${w}</span>`).join(" "); });
-    [...mfLine.childNodes].forEach(n => {
-        if (n.nodeType !== 3 || !n.textContent.trim()) return;
-        const sp = document.createElement("span");
-        sp.innerHTML = n.textContent.split(/(\s+)/).map(w => w.trim() ? `<span class="mw">${w}</span>` : w).join("");
-        n.replaceWith(sp);
-    });
-    const mWords = [...mfLine.querySelectorAll(".mw")];
-    let mLit = -1;
-    if (wide() && MOTION) mf.classList.add("pinned"); else mWords.forEach(w => w.classList.add("lit"));
-    // essay peek
+    // essay peek    // essay peek
     const peek = document.getElementById("essay-peek"), peekImg = peek.querySelector("img");
     let px = innerWidth / 2, py = innerHeight / 2, tx = px, ty = py, pvx = 0, peekOn = false;
     addEventListener("pointermove", e => { tx = e.clientX; ty = e.clientY; }, { passive: true });
@@ -1878,22 +1880,6 @@ function goTo(el) { if (lenis) lenis.scrollTo(el, { duration: 1.4 }); else el.sc
             const nx = px + (tx - px) * 0.16, ny = py + (ty - py) * 0.16;
             pvx += ((nx - px) - pvx) * 0.3; px = nx; py = ny;
             peek.style.transform = `translate3d(${px + 28}px,${py - 120}px,0) rotate(${Math.max(-12, Math.min(12, pvx * 0.6)).toFixed(2)}deg)`;
-        }
-        if (mf.classList.contains("pinned")) {
-            const r = mf.getBoundingClientRect(), span = r.height - H;
-            const p = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
-            const k1 = Math.min(1, p / 0.42);                         // words light up
-            const n = Math.floor(k1 * mWords.length + (p > 0 ? 0.5 : 0));
-            if (n !== mLit) { mWords.forEach((w, i) => w.classList.toggle("lit", i < n)); mLit = n; }
-            const k2 = Math.min(1, Math.max(0, (p - 0.45) / 0.5));     // dive through SYSTEMS
-            const sc = 0.6 * Math.pow(90, k2 * k2);
-            mfZoom.style.opacity = String(Math.min(1, k2 * 4) * (1 - Math.max(0, (k2 - 0.85) / 0.15)));
-            mfZoom.style.transform = `translate(-50%,-50%) scale(${sc.toFixed(3)})`;
-            mfZoom.style.color = k2 > 0.55 ? `rgba(255,51,51,${Math.min(1, (k2 - 0.55) * 3).toFixed(2)})` : "transparent";
-            mfLine.style.opacity = String(1 - Math.min(1, Math.max(0, (k2 - 0.05) / 0.3)));
-            mfKick.style.opacity = mfLine.style.opacity;
-            mfLine.style.transform = `translate3d(0,${(-k2 * 80).toFixed(1)}px,0) scale(${(1 - k2 * 0.08).toFixed(3)})`;
-            mfFlood.style.opacity = String(Math.max(0, Math.min(1, (k2 - 0.8) / 0.12)) * (1 - Math.max(0, (p - 0.97) / 0.03)));
         }
         vel += ((y - lastY) - vel) * 0.2; lastY = y;
         // ---- reads ----
@@ -1953,6 +1939,123 @@ function goTo(el) { if (lenis) lenis.scrollTo(el, { duration: 1.4 }); else el.sc
         requestAnimationFrame(frame);
     }
     requestAnimationFrame(frame);
+})();
+
+/* ---------- Rewire scene ----------
+   A website wireframe (nav, hero, image, three cards) is pulled apart and rewired into a system:
+   each block flies to a node, edges draw in, labels appear, and pulses keep travelling the edges.
+   Scroll scrubs it on desktop; phones get the finished, live system. SVG attributes only. */
+(function rewire() {
+    const sec = document.getElementById("rewire"), svg = document.getElementById("rw-svg");
+    const head = document.getElementById("rw-head"), sub = document.getElementById("rw-sub");
+    const fill = document.getElementById("rw-fill"), pct = document.getElementById("rw-pct"), state = document.getElementById("rw-state");
+    const NS = "http://www.w3.org/2000/svg";
+    const el = (tag, attrs, parent = svg) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+    // [website box] -> [system node], label, sublabel
+    const B = [
+        { a: [70, 80, 1060, 56], b: [70, 92, 250, 74], name: "INTERFACE", sub: "what you touch" },
+        { a: [70, 160, 640, 250], b: [455, 318, 290, 96], name: "AGENT", sub: "plans, decides, acts" },
+        { a: [730, 160, 400, 250], b: [880, 92, 250, 74], name: "MODEL", sub: "reasons" },
+        { a: [70, 430, 340, 230], b: [70, 600, 250, 74], name: "TOOLS", sub: "calendar, mail, web" },
+        { a: [430, 430, 340, 230], b: [475, 640, 250, 74], name: "MEMORY", sub: "remembers context" },
+        { a: [790, 430, 340, 230], b: [880, 600, 250, 74], name: "DATA", sub: "signals in, insight out" },
+    ];
+    const C = i => { const b = B[i].b; return [b[0] + b[2] / 2, b[1] + b[3] / 2]; };
+    const EDGES = [[1, 0], [1, 2], [1, 3], [1, 4], [1, 5], [0, 2], [3, 5]];
+    const frame = el("rect", { class: "frame", x: 50, y: 30, width: 1100, height: 650, rx: 16 });
+    const fbar = el("rect", { class: "frame-bar", x: 50, y: 30, width: 1100, height: 34, rx: 16 });
+    const gEdges = el("g", {}), gBlocks = el("g", {}), gPulses = el("g", {});
+    const edges = EDGES.map(([a, b]) => {
+        const [x1, y1] = C(a), [x2, y2] = C(b), mx = (x1 + x2) / 2;
+        const path = el("path", { class: "edge", d: `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}` }, gEdges);
+        const len = path.getTotalLength(); path.style.strokeDasharray = len; path.style.strokeDashoffset = len;
+        return { path, len, dot: el("circle", { class: "pulse", r: 4.5, opacity: 0 }, gPulses), seed: Math.random() };
+    });
+    const blocks = B.map((d, i) => {
+        const g = el("g", {}, gBlocks);
+        const r = el("rect", { class: "blk" }, g);
+        const ph = [0, 1, 2].map(k => el("line", { class: "ph" }, g));
+        const lbl = el("text", { class: "lbl" }, g); lbl.textContent = d.name;
+        const sl = el("text", { class: "sub" }, g); sl.textContent = d.sub;
+        return { d, g, r, ph, lbl, sl };
+    });
+    const lerp = (a, b, k) => a + (b - a) * k, clamp = v => Math.max(0, Math.min(1, v));
+    const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    const A_TXT = "Most people build websites.", B_TXT = "I build systems.", SUB = "From agentic backends to interfaces that feel alive.";
+    const GL = "01<>/\\{}[]=+*#%@$&";
+    let lastHead = "", lastSub = -1, p = 0;
+
+    function setHead(k) {
+        // 0..1: "Most people build websites." scrambles and resolves into "I build systems."
+        let html;
+        if (k <= 0) html = A_TXT;
+        else if (k >= 1) html = `I build <span class="hot">systems.</span>`;
+        else {
+            const n = Math.max(A_TXT.length, B_TXT.length), out = [];
+            for (let i = 0; i < n; i++) {
+                const settle = i / n;
+                if (k > settle + 0.35) out.push(B_TXT[i] ?? "");
+                else if (k > settle - 0.1) out.push(`<span class="scr">${GL[(i * 7 + ((performance.now() / 60) | 0)) % GL.length]}</span>`);
+                else out.push(A_TXT[i] ?? "");
+            }
+            html = out.join("");
+        }
+        if (html !== lastHead) { head.innerHTML = html; lastHead = html; }
+    }
+    function draw(k, now) {
+        // k: 0..1 scene progress
+        const rw = ease(clamp((k - 0.12) / 0.45));          // blocks fly
+        const ed = clamp((k - 0.45) / 0.25);                 // edges draw
+        const lb = clamp((k - 0.55) / 0.2);                  // labels in
+        frame.setAttribute("opacity", (1 - clamp(rw * 1.6)).toFixed(3));
+        fbar.setAttribute("opacity", (1 - clamp(rw * 2)).toFixed(3));
+        blocks.forEach((o, i) => {
+            const a = o.d.a, b = o.d.b, w = lerp(a[2], b[2], rw), h = lerp(a[3], b[3], rw), x = lerp(a[0], b[0], rw), y = lerp(a[1], b[1], rw);
+            // a little arc in the flight path so blocks don't just slide
+            const lift = Math.sin(rw * Math.PI) * (i % 2 ? -40 : 40);
+            o.r.setAttribute("x", x); o.r.setAttribute("y", y + lift); o.r.setAttribute("width", w); o.r.setAttribute("height", h);
+            o.r.setAttribute("rx", lerp(8, b[3] / 2, rw));
+            o.r.setAttribute("fill", `rgba(${Math.round(lerp(26, 22, rw))},${Math.round(lerp(26, 10, rw))},${Math.round(lerp(29, 10, rw))},${lerp(0.9, 0.96, rw)})`);
+            o.r.setAttribute("stroke", i === 1 ? `rgba(255,51,51,${lerp(0.25, 0.95, rw)})` : `rgba(${Math.round(lerp(238, 255, rw))},${Math.round(lerp(233, 51, rw))},${Math.round(lerp(223, 51, rw))},${lerp(0.22, 0.6, rw)})`);
+            o.ph.forEach((l, j) => {
+                const px = x + 22, py = y + lift + 26 + j * 18, len = Math.max(0, (w - 44) * [0.7, 0.9, 0.5][j]) * (1 - rw);
+                l.setAttribute("x1", px); l.setAttribute("y1", py); l.setAttribute("x2", px + len); l.setAttribute("y2", py);
+                l.setAttribute("opacity", ((1 - rw) * (h > 70 ? 1 : 0)).toFixed(3));
+            });
+            o.lbl.setAttribute("x", x + w / 2); o.lbl.setAttribute("y", y + lift + h / 2 - (lb > 0 ? 7 : 0));
+            o.sl.setAttribute("x", x + w / 2); o.sl.setAttribute("y", y + lift + h / 2 + 16);
+            o.lbl.setAttribute("opacity", lb.toFixed(3)); o.sl.setAttribute("opacity", (lb * 0.9).toFixed(3));
+        });
+        edges.forEach((e, i) => {
+            const k2 = clamp(ed * 1.4 - i * 0.06);
+            e.path.style.strokeDashoffset = (e.len * (1 - k2)).toFixed(1);
+            if (k2 >= 1) {   // signals travel the finished edges
+                const u = ((now / 1600 + e.seed) % 1), pt = e.path.getPointAtLength(u * e.len);
+                e.dot.setAttribute("cx", pt.x.toFixed(1)); e.dot.setAttribute("cy", pt.y.toFixed(1));
+                e.dot.setAttribute("opacity", Math.sin(u * Math.PI).toFixed(2));
+            } else e.dot.setAttribute("opacity", 0);
+        });
+        setHead(clamp((k - 0.3) / 0.3));
+        const n = Math.round(clamp((k - 0.62) / 0.28) * SUB.length);
+        if (n !== lastSub) { sub.textContent = SUB.slice(0, n); lastSub = n; }
+        const pc = Math.round(clamp(k / 0.9) * 100);
+        fill.style.transform = `scaleX(${pc / 100})`;
+        pct.textContent = String(pc).padStart(3, "0") + "%";
+        state.textContent = pc >= 100 ? "build ok: system online" : pc > 45 ? "rewiring: website > system" : "compiling: website";
+    }
+    const pinned = innerWidth > 900 && MOTION;
+    if (pinned) sec.classList.add("pinned");
+    let visible = false;
+    new IntersectionObserver(es => { visible = es[0].isIntersecting; }, { rootMargin: "200px" }).observe(sec);
+    (function loop(now) {
+        requestAnimationFrame(loop);
+        if (!visible || document.hidden) return;
+        if (pinned) {
+            const r = sec.getBoundingClientRect(), span = r.height - innerHeight;
+            p = span > 0 ? clamp(-r.top / span) : 0;
+        } else p = 1;   // phones and reduced motion: the finished system, still alive
+        draw(p, now);
+    })(performance.now());
 })();
 /* ---------- Scroll reveals ---------- */
 let revealIO = null;
