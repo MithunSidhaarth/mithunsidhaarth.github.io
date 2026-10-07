@@ -1111,7 +1111,10 @@ const SFX = (() => {
 })();
 window.SFX = SFX;
 // everything below waits for the preloader to wipe away
-const T0 = MOTION ? 1700 : 0;
+// phones get a shorter boot: a quicker counter and wipe
+const PHONE = matchMedia("(max-width: 900px)").matches;
+const BOOT = PHONE ? 650 : 1400, WIPE = PHONE ? 450 : 800;
+const T0 = MOTION ? BOOT + WIPE - 500 : 0;
 let lastPX = innerWidth / 2, lastPY = innerHeight / 2;
 document.addEventListener("pointerdown", e => { lastPX = e.clientX; lastPY = e.clientY; }, true);
 (function preloader() {
@@ -1119,10 +1122,10 @@ document.addEventListener("pointerdown", e => { lastPX = e.clientX; lastPY = e.c
   if (!MOTION) { pl.remove(); return; }
   const count = document.getElementById("pl-count"), o = { n: 0 };
   anime.timeline({ easing: "easeInOutQuart" })
-    .add({ targets: o, n: 100, round: 1, duration: 1400, update: () => { count.textContent = String(o.n).padStart(3, "0"); } })
-    .add({ targets: "#pl-bar", scaleX: [0, 1], duration: 1400 }, 0)
-    .add({ targets: ".pl-line", opacity: [0, 1], translateX: [-16, 0], delay: anime.stagger(260), duration: 400, easing: "easeOutExpo" }, 0)
-    .add({ targets: pl, clipPath: ["inset(0% 0% 0% 0%)", "inset(0% 0% 100% 0%)"], duration: 800, complete: () => pl.remove() });
+    .add({ targets: o, n: 100, round: 1, duration: BOOT, update: () => { count.textContent = String(o.n).padStart(3, "0"); } })
+    .add({ targets: "#pl-bar", scaleX: [0, 1], duration: BOOT }, 0)
+    .add({ targets: ".pl-line", opacity: [0, 1], translateX: [-16, 0], delay: anime.stagger(PHONE ? 110 : 260), duration: 400, easing: "easeOutExpo" }, 0)
+    .add({ targets: pl, clipPath: ["inset(0% 0% 0% 0%)", "inset(0% 0% 100% 0%)"], duration: WIPE, complete: () => pl.remove() });
 })();
 if (MOTION) {
   window.addEventListener("DOMContentLoaded", () => motionIn("#nav, .hero-top, .desk-icon, .hb-left, .hb-center, .hb-right", { translateY: [30, 0], duration: 1100, delay: anime.stagger(110, { start: T0 + 900 }) }));
@@ -2294,6 +2297,7 @@ function run(THREE, RoundedBoxGeometry, RoomEnvironment) {
 
   // ---- input ----
   let target = 0, cur = 0, done = false, touchY = 0, last = performance.now(), lidHeard = false, humHeard = false, frameN = 0;
+  const phone = innerWidth <= 900;
   const clamp = v => Math.min(1, Math.max(0, v));
   const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
   const easeOut = t => 1 - Math.pow(1 - t, 3);
@@ -2301,7 +2305,7 @@ function run(THREE, RoundedBoxGeometry, RoomEnvironment) {
   const nudge = d => { if (ready()) target = clamp(target + d); };
   const onWheel = e => { if (done) return; e.preventDefault(); const d = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY; nudge(Math.max(-400, Math.min(400, d)) / 1700); };
   const onTouchStart = e => { touchY = e.touches[0].clientY; };
-  const onTouchMove = e => { if (done) return; e.preventDefault(); const y = e.touches[0].clientY; nudge((touchY - y) / (innerHeight * 1.6)); touchY = y; };
+  const onTouchMove = e => { if (done) return; e.preventDefault(); const y = e.touches[0].clientY; nudge((touchY - y) / (innerHeight * (innerWidth <= 900 ? 0.55 : 1.6))); touchY = y; };
   const onKey = e => {
     if (done) return;
     const d = { ArrowDown: 0.12, PageDown: 0.25, " ": 0.25, Enter: 1, ArrowUp: -0.12, PageUp: -0.25 }[e.key];
@@ -2338,8 +2342,8 @@ function run(THREE, RoundedBoxGeometry, RoomEnvironment) {
 
   renderer.setAnimationLoop((now) => {
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
-    if (target > 0.9) target = 1;                          // past the point of no return: finish the dive
-    cur += (target - cur) * (1 - Math.exp(-dt * 4.2));     // critically damped glide
+    if (target > (phone ? 0.55 : 0.9)) target = 1;         // past the point of no return: finish the dive (sooner on phones)
+    cur += (target - cur) * (1 - Math.exp(-dt * (phone ? 5.5 : 4.2)));   // critically damped glide
     const p1 = ease(clamp(cur / 0.5)), p2 = ease(clamp((cur - 0.5) / 0.5));
     const idle = Math.sin(now / 1500) * (1 - p1);
 
