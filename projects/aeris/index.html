@@ -906,6 +906,77 @@ html.reveal-on .work-card.in .work-media { clip-path: inset(0 0 0 0 round 14px);
   .term-foot .ask-chip-row { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
   .term-foot .ask-chip { white-space: nowrap; }
 }
+
+/* =================== Scroll-driven motion =================== */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+#nav-progress { position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%; background: var(--hacker-red); box-shadow: 0 0 10px var(--hacker-red); transform: scaleX(0); transform-origin: left; pointer-events: none; }
+
+/* Selected work: pinned, vertical scroll slides the cards sideways (desktop) */
+.work-hud { display: none; }
+@media (min-width: 901px) {
+  .work-pin.pinned { padding: 0; position: relative; }
+  .work-pin.pinned .work-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; padding-top: 56px; }
+  .work-pin.pinned .sec-head { margin-bottom: 26px; }
+  .work-pin.pinned .work-grid { display: flex; flex-wrap: nowrap; gap: 4vw; width: max-content; padding: 0 max(6vw, calc((100vw - 1320px) / 2)); will-change: transform; }
+  .work-pin.pinned .work-card { width: min(56vw, 900px); flex: none; will-change: transform, opacity; transform-origin: center 40%; }
+  .work-pin.pinned .work-card.featured { grid-column: auto; }
+  .work-pin.pinned .work-card.featured .work-media, .work-pin.pinned .work-media { aspect-ratio: 16 / 9.4; }
+  .work-pin.pinned .work-media img { transform: translate3d(var(--px, 0px), 0, 0) scale(1.14); transition: filter 0.6s ease; }
+  .work-pin.pinned .work-card:hover .work-media img { transform: translate3d(var(--px, 0px), 0, 0) scale(1.18); }
+  .work-pin.pinned .work-hud { display: flex; align-items: center; gap: 22px; margin: 0 0 22px; font: 500 0.78rem var(--term-font); color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; }
+  .wh-count b { font: 700 2.6rem/1 "Space Grotesk", sans-serif; color: var(--text); letter-spacing: -0.04em; }
+  .wh-bar { flex: 0 0 min(320px, 24vw); height: 1px; background: rgba(125,125,125,0.3); position: relative; }
+  .wh-bar i { position: absolute; inset: 0; background: var(--hacker-red); transform: scaleX(0); transform-origin: left; box-shadow: 0 0 8px var(--hacker-red); }
+  .wh-title { color: var(--text); }
+  /* the card reveal clip would never trigger on cards that live off to the side */
+  html.reveal-on .work-pin.pinned .work-card .work-media { clip-path: none; }
+  html.reveal-on .work-pin.pinned [data-reveal]:not(.in) { opacity: 1; transform: none; }
+}
+
+/* scroll-velocity marquees between sections */
+.vmarq { overflow: hidden; padding: 34px 0; margin: 40px 0 0; border-top: 1px solid rgba(125,125,125,0.14); border-bottom: 1px solid rgba(125,125,125,0.14);
+  margin-left: calc(-1 * clamp(16px, 4vw, 48px)); margin-right: calc(-1 * clamp(16px, 4vw, 48px)); }
+.vm-track { display: flex; width: max-content; will-change: transform; }
+.vm-track span { font: 700 clamp(3rem, 8.5vw, 8.5rem)/1 "Space Grotesk", sans-serif; letter-spacing: -0.04em; text-transform: uppercase; white-space: nowrap; padding-right: 0.5em;
+  color: transparent; -webkit-text-stroke: 1.2px rgba(238,233,223,0.32); }
+.vm-track span:nth-child(3n+2) { color: var(--hacker-red); -webkit-text-stroke: 0; }
+.vm-track span::after { content: "\2726"; font-size: 0.35em; vertical-align: 0.6em; margin-left: 0.5em; color: var(--hacker-red); -webkit-text-stroke: 0; }
+
+/* About: the bio lights up word by word as it scrolls past */
+.about-bio .bw { opacity: 0.16; transition: opacity 0.35s ease, color 0.35s ease; }
+.about-bio .bw.lit { opacity: 1; }
+.about-bio .bw.hot { color: var(--hacker-red); }
+
+.contact-big { transform-origin: left bottom; will-change: transform; }
+
+/* manifesto: words light up, then the camera dives through SYSTEMS into the work */
+#manifesto { position: relative; margin: 0 calc(-1 * clamp(16px, 4vw, 48px)); }
+.mf-sticky { position: relative; min-height: 70vh; display: flex; flex-direction: column; justify-content: center; padding: 120px clamp(16px, 6vw, 96px); overflow: hidden; }
+.mf-kicker { font: 500 0.8rem var(--term-font); color: var(--muted); margin-bottom: 26px; }
+.mf-line { font: 700 clamp(2.1rem, 5.4vw, 5.6rem)/1.02 "Space Grotesk", sans-serif; letter-spacing: -0.045em; margin: 0; max-width: 18ch; position: relative; z-index: 2; }
+.mf-line .mw { opacity: 0.12; transition: opacity 0.3s ease, color 0.3s ease; }
+.mf-line .mw.lit { opacity: 1; }
+.mf-line em { font-style: normal; }
+.mf-line em .mw.lit { color: var(--hacker-red); }
+.mf-zoom, .mf-flood { display: none; }
+@media (min-width: 901px) {
+  #manifesto.pinned { height: 320vh; }
+  #manifesto.pinned .mf-sticky { position: sticky; top: 0; height: 100vh; min-height: 0; }
+  #manifesto.pinned .mf-zoom { display: block; position: absolute; left: 50%; top: 50%; z-index: 1; pointer-events: none; white-space: nowrap;
+    font: 700 22vw/0.8 "Space Grotesk", sans-serif; letter-spacing: -0.05em; color: transparent; -webkit-text-stroke: 2px var(--hacker-red);
+    transform: translate(-50%, -50%) scale(0.6); opacity: 0; will-change: transform, opacity; }
+  #manifesto.pinned .mf-flood { display: block; position: absolute; inset: 0; z-index: 3; background: var(--hacker-red); opacity: 0; pointer-events: none; }
+}
+
+/* essay previews that follow the cursor */
+#essay-peek { position: fixed; left: 0; top: 0; z-index: 60; width: 380px; aspect-ratio: 1200 / 630; pointer-events: none; border-radius: 10px; overflow: hidden;
+  opacity: 0; transform: translate3d(-9999px, 0, 0); transition: opacity 0.25s ease; box-shadow: 0 30px 70px -20px rgba(0,0,0,0.85), 0 0 0 1px rgba(255,51,51,0.3); }
+#essay-peek.on { opacity: 1; }
+#essay-peek img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.06); transition: transform 0.5s cubic-bezier(.16,1,.3,1); }
+#essay-peek.on img { transform: scale(1); }
+@media (hover: none), (max-width: 900px) { #essay-peek { display: none; } }
 </style>
 <script>window.__ROUTE__ = {category:"projects", slug:"aeris"};</script>
 </head>
@@ -959,7 +1030,8 @@ html.reveal-on .work-card.in .work-media { clip-path: inset(0 0 0 0 round 14px);
 
 <div id="torch"></div>
 <audio id="bg-music" src="music.mp3" loop preload="none"></audio>
-<div id="modal-overlay">
+<div id="essay-peek" aria-hidden="true"><img alt=""></div>
+<div id="modal-overlay" data-lenis-prevent>
   <div id="modal-container">
     <div id="modal-header">
       <span id="modal-title">Preview</span>
@@ -972,7 +1044,7 @@ html.reveal-on .work-card.in .work-media { clip-path: inset(0 0 0 0 round 14px);
     <div id="modal-text"></div>
   </div>
 </div>
-<header id="nav">
+<header id="nav"><i id="nav-progress" aria-hidden="true"></i>
   <a class="nav-logo" href="#hero" aria-label="Back to top">M/</a>
   <span class="nav-os">MithunOS</span>
   <nav class="nav-links" aria-label="Sections">
@@ -1027,7 +1099,7 @@ html.reveal-on .work-card.in .work-media { clip-path: inset(0 0 0 0 round 14px);
       <a class="scroll-cue" href="#work">scroll <span>&darr;</span></a>
     </div>
   </div>
-  <div id="term-drawer" aria-hidden="true">
+  <div id="term-drawer" aria-hidden="true" data-lenis-prevent>
     <div class="panel win" id="terminal">
       <div id="term-bar"><span class="tdot" data-close title="Close console"></span><span class="tdot"></span><span class="tdot"></span><span class="term-title">mithun@os: ~</span><button class="drawer-min" data-close aria-label="Close console">esc</button></div>
       <div id="output"></div>
@@ -1039,10 +1111,23 @@ html.reveal-on .work-card.in .work-media { clip-path: inset(0 0 0 0 round 14px);
   </div>
 </section>
 <main id="layout">
-  <section id="work" class="sec">
-    <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">01</span> ~/mithun $ <span class="typed" style="--n:23">ls ./work --sort=newest</span></span><h2>Selected work</h2><span class="sec-meta" id="work-count"></span></div>
-    <ul id="list-projects" class="work-grid"></ul>
+  <section id="manifesto" aria-label="Manifesto">
+    <div class="mf-sticky">
+      <div class="mf-kicker">~/mithun $ cat manifesto.txt</div>
+      <p class="mf-line" id="mf-line">Most people build websites. I build <em>systems.</em> From agentic backends to interfaces that feel alive.</p>
+      <div class="mf-zoom" id="mf-zoom" aria-hidden="true">SYSTEMS</div>
+      <div class="mf-flood" id="mf-flood" aria-hidden="true"></div>
+    </div>
   </section>
+
+  <section id="work" class="sec work-pin">
+   <div class="work-sticky">
+    <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">01</span> ~/mithun $ <span class="typed" style="--n:23">ls ./work --sort=newest</span></span><h2>Selected work</h2><span class="sec-meta" id="work-count"></span></div>
+    <div class="work-hud" aria-hidden="true"><span class="wh-count"><b id="wh-cur">07</b><span> / </span><span id="wh-tot">07</span></span><span class="wh-bar"><i id="wh-fill"></i></span><span class="wh-title" id="wh-title"></span></div>
+    <ul id="list-projects" class="work-grid"></ul>
+   </div>
+  </section>
+  <div class="vmarq" id="vm1" data-dir="-1" aria-hidden="true"></div>
 
   <section id="writing" class="sec">
     <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">02</span> ~/mithun $ <span class="typed" style="--n:18">cat ./writing/*.md</span></span><h2>Writing</h2><a class="sec-meta" href="https://mithunsidhaarth.substack.com" target="_blank" rel="noopener">Substack &nearr;</a></div>
@@ -1051,6 +1136,7 @@ html.reveal-on .work-card.in .work-media { clip-path: inset(0 0 0 0 round 14px);
     <ul id="list-research" class="row-list"></ul>
   </section>
 
+  <div class="vmarq" id="vm2" data-dir="1" aria-hidden="true"></div>
   <section id="about" class="sec">
     <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">03</span> ~/mithun $ <span class="typed" style="--n:6">whoami</span></span><h2>About</h2></div>
     <div class="about-grid" data-reveal>
@@ -1078,6 +1164,7 @@ html.reveal-on .work-card.in .work-media { clip-path: inset(0 0 0 0 round 14px);
   </section>
 </main>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
 <script>
 /* ---------- Motion (anime.js) ---------- */
 const EMBED = location.search.includes("embed");
@@ -1553,6 +1640,7 @@ function renderLeftPanel() {
     renderStats();
     renderMarquee();
     observeReveals();
+    if (window.__remeasureScroll) window.__remeasureScroll();
 }
 
 /* ---------- The name: a living ASCII field ----------
@@ -1714,6 +1802,159 @@ function renderLeftPanel() {
         if (EMBED) { start = -1e9; lx = 0.9; ly = -0.7; draw(performance.now()); return; }
         requestAnimationFrame(loop);
     });
+})();
+
+/* ---------- Scroll-driven motion ----------
+   One rAF loop: Lenis inertia (desktop), the pinned horizontal work gallery, velocity marquees,
+   the word-by-word bio and the contact scale. Reads first, then writes; transforms only. */
+let lenis = null;
+function goTo(el) { if (lenis) lenis.scrollTo(el, { duration: 1.4 }); else el.scrollIntoView({ behavior: "smooth" }); }
+(function scrollFX() {
+    const fine = matchMedia("(min-width: 901px) and (pointer: fine)").matches;
+    const wide = () => innerWidth > 900;
+    if (fine && window.Lenis && MOTION && !EMBED) {
+        lenis = new Lenis({ lerp: 0.09, smoothWheel: true, anchors: { offset: -40 }, prevent: n => !!(n.closest && n.closest("[data-lenis-prevent]")) });
+    }
+    const pin = document.getElementById("work"), track = document.getElementById("list-projects");
+    const cur = document.getElementById("wh-cur"), tot = document.getElementById("wh-tot"), fill = document.getElementById("wh-fill"), wtitle = document.getElementById("wh-title");
+    const navP = document.getElementById("nav-progress"), big = document.querySelector(".contact-big");
+    let cards = [], trackW = 0, lastIdx = -1, lastY = scrollY, vel = 0;
+
+    function measurePin() {
+        cards = [...track.querySelectorAll(".work-card")];
+        if (!wide() || !MOTION) { pin.classList.remove("pinned"); pin.style.height = ""; track.style.transform = ""; return; }
+        pin.classList.add("pinned");
+        cards.forEach(c => c.classList.add("in"));
+        trackW = track.scrollWidth;
+        pin.style.height = Math.max(innerHeight, trackW - innerWidth + innerHeight) + "px";   // 1px of scroll = 1px of slide
+        tot.textContent = String(cards.length).padStart(2, "0");
+    }
+    // marquees: fill each with real words, doubled for a seamless loop
+    const fillMarq = (el, words) => { el.innerHTML = `<div class="vm-track">${[...words, ...words].map(w => `<span>${w}</span>`).join("")}</div>`; };
+    fillMarq(document.getElementById("vm1"), ["Systems", "Agents", "Interfaces", "Machine learning", "Full stack", "Motion", "Products"]);
+    fillMarq(document.getElementById("vm2"), data.blogs.slice(0, 8).map(b => b.title.replace(/[.?!]+$/, "")));
+    const marqs = [...document.querySelectorAll(".vmarq")].map(el => ({ el, tr: el.firstElementChild, dir: +el.dataset.dir || 1, half: 0 }));
+    const measureMarq = () => marqs.forEach(m => { m.half = m.tr.scrollWidth / 2; });
+    // bio: one span per word
+    const bio = document.getElementById("bio-typewriter");
+    const HOT = new Set(["question,", "understand,", "build."]);
+    bio.innerHTML = bioText.split(" ").map(w => `<span class="bw${HOT.has(w) ? " hotword" : ""}">${w}</span>`).join(" ");
+    const words = [...bio.querySelectorAll(".bw")];
+    let lit = -1;
+
+    const measure = () => { measurePin(); measureMarq(); };
+    let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(measure, 150); });
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(measure);
+    window.__remeasureScroll = measure;
+
+    // manifesto: split into words; pin it on desktop
+    const mf = document.getElementById("manifesto"), mfZoom = document.getElementById("mf-zoom"), mfFlood = document.getElementById("mf-flood");
+    const mfLine = document.getElementById("mf-line");
+    const mfKick = document.querySelector(".mf-kicker");
+    mfLine.querySelectorAll("em").forEach(em => { em.innerHTML = em.textContent.split(" ").map(w => `<span class="mw">${w}</span>`).join(" "); });
+    [...mfLine.childNodes].forEach(n => {
+        if (n.nodeType !== 3 || !n.textContent.trim()) return;
+        const sp = document.createElement("span");
+        sp.innerHTML = n.textContent.split(/(\s+)/).map(w => w.trim() ? `<span class="mw">${w}</span>` : w).join("");
+        n.replaceWith(sp);
+    });
+    const mWords = [...mfLine.querySelectorAll(".mw")];
+    let mLit = -1;
+    if (wide() && MOTION) mf.classList.add("pinned"); else mWords.forEach(w => w.classList.add("lit"));
+    // essay peek
+    const peek = document.getElementById("essay-peek"), peekImg = peek.querySelector("img");
+    let px = innerWidth / 2, py = innerHeight / 2, tx = px, ty = py, pvx = 0, peekOn = false;
+    addEventListener("pointermove", e => { tx = e.clientX; ty = e.clientY; }, { passive: true });
+    document.addEventListener("mouseover", e => {
+        const a = e.target.closest && e.target.closest("#list-blogs .row-item a, #list-research .row-item a");
+        if (a) {
+            const m = a.getAttribute("href").match(/^\/(blogs|research)\/([^/]+)\//);
+            if (m) { const src = `/assets/og/${m[1]}-${m[2]}.jpg`; if (!peekImg.src.endsWith(src)) peekImg.src = src; }
+            peek.classList.add("on"); peekOn = true;
+        } else if (peekOn && !(e.target.closest && e.target.closest(".row-item"))) { peek.classList.remove("on"); peekOn = false; }
+    });
+
+    function update() {
+        const y = scrollY, H = innerHeight;
+        if (peekOn || peek.classList.contains("on")) {
+            const nx = px + (tx - px) * 0.16, ny = py + (ty - py) * 0.16;
+            pvx += ((nx - px) - pvx) * 0.3; px = nx; py = ny;
+            peek.style.transform = `translate3d(${px + 28}px,${py - 120}px,0) rotate(${Math.max(-12, Math.min(12, pvx * 0.6)).toFixed(2)}deg)`;
+        }
+        if (mf.classList.contains("pinned")) {
+            const r = mf.getBoundingClientRect(), span = r.height - H;
+            const p = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
+            const k1 = Math.min(1, p / 0.42);                         // words light up
+            const n = Math.floor(k1 * mWords.length + (p > 0 ? 0.5 : 0));
+            if (n !== mLit) { mWords.forEach((w, i) => w.classList.toggle("lit", i < n)); mLit = n; }
+            const k2 = Math.min(1, Math.max(0, (p - 0.45) / 0.5));     // dive through SYSTEMS
+            const sc = 0.6 * Math.pow(90, k2 * k2);
+            mfZoom.style.opacity = String(Math.min(1, k2 * 4) * (1 - Math.max(0, (k2 - 0.85) / 0.15)));
+            mfZoom.style.transform = `translate(-50%,-50%) scale(${sc.toFixed(3)})`;
+            mfZoom.style.color = k2 > 0.55 ? `rgba(255,51,51,${Math.min(1, (k2 - 0.55) * 3).toFixed(2)})` : "transparent";
+            mfLine.style.opacity = String(1 - Math.min(1, Math.max(0, (k2 - 0.05) / 0.3)));
+            mfKick.style.opacity = mfLine.style.opacity;
+            mfLine.style.transform = `translate3d(0,${(-k2 * 80).toFixed(1)}px,0) scale(${(1 - k2 * 0.08).toFixed(3)})`;
+            mfFlood.style.opacity = String(Math.max(0, Math.min(1, (k2 - 0.8) / 0.12)) * (1 - Math.max(0, (p - 0.97) / 0.03)));
+        }
+        vel += ((y - lastY) - vel) * 0.2; lastY = y;
+        // ---- reads ----
+        const docMax = document.documentElement.scrollHeight - H;
+        const pr = pin.classList.contains("pinned") ? pin.getBoundingClientRect() : null;
+        const marqR = marqs.map(m => m.el.getBoundingClientRect());
+        const br = bio.getBoundingClientRect(), cr = big.getBoundingClientRect();
+        // ---- writes ----
+        navP.style.transform = `scaleX(${docMax > 0 ? Math.min(1, y / docMax) : 0})`;
+        if (pr) {
+            const span = pr.height - H, p = span > 0 ? Math.min(1, Math.max(0, -pr.top / span)) : 0;
+            const x = -p * (trackW - innerWidth);
+            track.style.transform = `translate3d(${x}px,0,0)`;
+            fill.style.transform = `scaleX(${p})`;
+            let best = 0, bestD = 1e9;
+            cards.forEach((c, i) => {
+                const cx = c.offsetLeft + c.offsetWidth / 2 + x, d = (cx - innerWidth / 2) / innerWidth;
+                const ad = Math.abs(d);
+                c.style.transform = `scale(${1 - Math.min(0.14, ad * 0.2)})`;
+                c.style.opacity = String(1 - Math.min(0.6, ad * 0.85));
+                c.style.setProperty("--px", `${(-d * 70).toFixed(1)}px`);
+                if (ad < bestD) { bestD = ad; best = i; }
+            });
+            if (best !== lastIdx && cards[best]) {
+                lastIdx = best;
+                cur.textContent = cards[best].querySelector(".work-num").textContent;
+                wtitle.textContent = cards[best].querySelector(".work-title").textContent;
+            }
+        }
+        const skew = Math.max(-10, Math.min(10, vel * 0.25));
+        marqs.forEach((m, i) => {
+            const r = marqR[i]; if (r.bottom < -50 || r.top > H + 50 || !m.half) return;
+            const off = ((y * 0.45 * m.dir) % m.half + m.half) % m.half;
+            m.tr.style.transform = `translate3d(${-off}px,0,0) skewX(${(-skew * m.dir).toFixed(2)}deg)`;
+        });
+        if (br.top < H && br.bottom > 0) {
+            const k = Math.min(1, Math.max(0, (H * 0.82 - br.top) / (br.height + H * 0.3)));
+            const n = Math.floor(k * words.length);
+            if (n !== lit) {
+                words.forEach((w, i) => { w.classList.toggle("lit", i < n); w.classList.toggle("hot", i < n && w.classList.contains("hotword")); });
+                lit = n;
+            }
+        }
+        if (cr.top < H && cr.bottom > 0) {
+            const k = Math.min(1, Math.max(0, (H - cr.top) / (H * 0.75)));
+            const e = 1 - Math.pow(1 - k, 3);
+            big.style.transform = `translate3d(0,${(1 - e) * 60}px,0) scale(${0.86 + 0.14 * e})`;
+        }
+    }
+    function frame(t) {
+        if (lenis) {
+            const hold = document.body.classList.contains("intro-on") || modalOverlay.classList.contains("active");
+            if (hold && !lenis.isStopped) lenis.stop(); else if (!hold && lenis.isStopped) lenis.start();
+            lenis.raf(t);
+        }
+        update();
+        requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
 })();
 /* ---------- Scroll reveals ---------- */
 let revealIO = null;
@@ -2112,7 +2353,7 @@ function handle(cmd){
       return print(data[currentDirectory].map((item, i) => `[${i+1}] ${item.title}`).join("\n"));
   }
   const JUMP = { work: "work", projects: "work", writing: "writing", blogs: "writing", research: "writing", about: "about", contact: "contact", mail: "contact" };
-  if(JUMP[cmd]) { closeConsole(); setTimeout(() => document.getElementById(JUMP[cmd]).scrollIntoView({ behavior: "smooth" }), 250); return print(`> cd ./${JUMP[cmd]}`); }
+  if(JUMP[cmd]) { closeConsole(); setTimeout(() => goTo(document.getElementById(JUMP[cmd])), 250); return print(`> cd ./${JUMP[cmd]}`); }
   if(cmd === "whoami") return print(bioText);
   if(cmd.startsWith("open")){
     const i=parseInt(cmd.split(" ")[1])-1;
