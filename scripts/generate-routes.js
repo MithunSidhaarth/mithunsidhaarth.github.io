@@ -144,6 +144,13 @@ function buildPage(template, category, item, index, siteImage) {
   html = setMetaTag(html, /(<meta name="twitter:title" content=")[^"]*("\s*>)/, "content", title);
   html = setMetaTag(html, /(<meta name="twitter:description" content=")[^"]*("\s*>)/, "content", description);
 
+  // Per-item share card (rendered into assets/og/<category>-<slug>.jpg), if one exists.
+  const ogFile = `assets/og/${category}-${slug}.jpg`;
+  if (fs.existsSync(path.join(ROOT, ogFile))) {
+    html = setMetaTag(html, /(<meta property="og:image" content=")[^"]*("\s*>)/, "content", `${SITE_URL}/${ogFile}`);
+    html = setMetaTag(html, /(<meta name="twitter:image" content=")[^"]*("\s*>)/, "content", `${SITE_URL}/${ogFile}`);
+  }
+
   // Swap the homepage's Person JSON-LD for item-specific blocks: the item's own
   // schema plus a BreadcrumbList (Person schema stays homepage-only — one Person
   // entity per site is enough).
