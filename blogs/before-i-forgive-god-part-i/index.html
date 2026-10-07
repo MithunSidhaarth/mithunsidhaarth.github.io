@@ -913,7 +913,7 @@ html.lenis, html.lenis body { height: auto; }
 
 /* Selected work: pinned, vertical scroll slides the cards sideways (desktop) */
 .work-hud { display: none; }
-@media (min-width: 901px) {
+@media all {
   .work-pin.pinned { padding: 0; position: relative; }
   .work-pin.pinned .work-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; padding-top: 56px; }
   .work-pin.pinned .sec-head { margin-bottom: 26px; }
@@ -980,7 +980,7 @@ html.lenis, html.lenis body { height: auto; }
 .rw-svg .lbl { font: 600 15px "JetBrains Mono", monospace; letter-spacing: 2px; fill: #f1ece6; text-anchor: middle; dominant-baseline: middle; }
 .rw-svg .sub { font: 500 11px "JetBrains Mono", monospace; letter-spacing: 1px; fill: #8a8580; text-anchor: middle; }
 .rw-svg .pulse { fill: #ffd9d4; filter: drop-shadow(0 0 6px #ff3333); }
-@media (min-width: 901px) {
+@media all {
   #rewire.pinned { height: 300vh; }
   #rewire.pinned .rw-sticky { position: sticky; top: 0; height: 100vh; min-height: 0; padding: 70px 0 0; }
 }
@@ -1023,6 +1023,22 @@ html.lenis, html.lenis body { height: auto; }
 @keyframes ml-fly { 0% { transform: translate(-90px, 50px) rotate(-14deg) scale(0.6); opacity: 0; } 60% { opacity: 1; } 100% { transform: none; opacity: 1; } }
 @media (max-width: 900px) {
   .contact-grid { grid-template-columns: 1fr; gap: 28px; }
+}
+
+/* phones: same pinned gallery and rewire scrub as desktop, sized for a narrow screen */
+@media (max-width: 900px) {
+  .work-pin.pinned .work-sticky { height: 100svh; padding-top: 64px; }
+  .work-pin.pinned .work-grid { gap: 5vw; padding: 0 7vw; }
+  .work-pin.pinned .work-card { width: 84vw; }
+  .work-pin.pinned .work-hud { gap: 14px; margin-bottom: 16px; font-size: 0.66rem; }
+  .work-pin.pinned .wh-count b { font-size: 1.9rem; }
+  .work-pin.pinned .wh-bar { flex: 0 0 22vw; }
+  .work-pin.pinned .wh-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+  #rewire.pinned { height: 240vh; }
+  #rewire.pinned .rw-sticky { height: 100svh; padding: 72px 0 0; align-content: center; gap: 18px; }
+  .rw-sub { min-height: 3em; margin-bottom: 14px; }
+  #intro-hint { bottom: 150px; }
+  .site-foot { flex-direction: column; align-items: center; text-align: center; gap: 10px; }
 }
 </style>
 <script>window.__ROUTE__ = {category:"blogs", slug:"before-i-forgive-god-part-i"};</script>
@@ -1292,7 +1308,7 @@ window.SFX = SFX;
 // everything below waits for the preloader to wipe away
 // phones get a shorter boot: a quicker counter and wipe
 const PHONE = matchMedia("(max-width: 900px)").matches;
-const BOOT = PHONE ? 650 : 1400, WIPE = PHONE ? 450 : 800;
+const BOOT = PHONE ? 950 : 1400, WIPE = PHONE ? 550 : 800;
 const T0 = MOTION ? BOOT + WIPE - 500 : 0;
 let lastPX = innerWidth / 2, lastPY = innerHeight / 2;
 document.addEventListener("pointerdown", e => { lastPX = e.clientX; lastPY = e.clientY; }, true);
@@ -1905,7 +1921,7 @@ function goTo(el) { if (lenis) lenis.scrollTo(el, { duration: 1.4 }); else el.sc
 
     function measurePin() {
         cards = [...track.querySelectorAll(".work-card")];
-        if (!wide() || !MOTION) { pin.classList.remove("pinned"); pin.style.height = ""; track.style.transform = ""; return; }
+        if (!MOTION) { pin.classList.remove("pinned"); pin.style.height = ""; track.style.transform = ""; return; }
         pin.classList.add("pinned");
         cards.forEach(c => c.classList.add("in"));
         trackW = track.scrollWidth;
@@ -2119,7 +2135,7 @@ function goTo(el) { if (lenis) lenis.scrollTo(el, { duration: 1.4 }); else el.sc
         pct.textContent = String(pc).padStart(3, "0") + "%";
         state.textContent = pc >= 100 ? "build ok: system online" : pc > 45 ? "rewiring: website > system" : "compiling: website";
     }
-    const pinned = innerWidth > 900 && MOTION;
+    const pinned = MOTION;
     if (pinned) sec.classList.add("pinned");
     let visible = false;
     new IntersectionObserver(es => { visible = es[0].isIntersecting; }, { rootMargin: "200px" }).observe(sec);
@@ -2129,7 +2145,7 @@ function goTo(el) { if (lenis) lenis.scrollTo(el, { duration: 1.4 }); else el.sc
         if (pinned) {
             const r = sec.getBoundingClientRect(), span = r.height - innerHeight;
             p = span > 0 ? clamp(-r.top / span) : 0;
-        } else p = 1;   // phones and reduced motion: the finished system, still alive
+        } else p = 1;   // reduced motion: the finished system, still alive
         draw(p, now);
     })(performance.now());
 })();
