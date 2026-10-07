@@ -858,12 +858,14 @@ html.reveal-on .work-card.in .work-media { clip-path: inset(0 0 0 0 round 14px);
   #hero.ascii-hero { height: auto; min-height: 100svh; display: flex; flex-direction: column; gap: 14px; padding: 54px 16px 26px; overflow: visible; }
   #hero.ascii-hero .hero-top, .ascii-hero .desk-icons, .ascii-hero .hero-bottom { position: static; }
   #hero.ascii-hero .hero-top .ht-extra { display: none; }
-  #hero.ascii-hero .desk-icons { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(64px, 1fr); grid-template-columns: none; gap: 2px; overflow-x: auto; scrollbar-width: none; margin: 0 -6px; }
+  #hero.ascii-hero .desk-icons { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); grid-template-columns: none; gap: 2px; overflow-x: auto; scrollbar-width: none; margin: 0 -6px; }
   #hero.ascii-hero .desk-icons::-webkit-scrollbar { display: none; }
   #hero.ascii-hero .desk-icon { padding: 6px 2px; }
-  #hero.ascii-hero .di-label { font-size: 0.6rem; }
+  #hero.ascii-hero .di-label { font-size: 0.5rem; letter-spacing: 0; white-space: nowrap; }
+  #hero.ascii-hero .hb-right .hero-status { justify-content: flex-start; max-width: none; }
   #hero.ascii-hero #ascii { position: relative; left: auto; top: auto; bottom: auto; width: 100%; height: min(66vw, 44svh); flex-shrink: 0; margin: 4px 0; }
-  #hero.ascii-hero .hero-bottom { display: flex; flex-direction: column; gap: 22px; margin-top: auto; }
+  #hero.ascii-hero .hero-bottom { display: flex; flex-direction: column; align-items: stretch; gap: 22px; margin-top: auto; }
+  #hero.ascii-hero .hb-center .console-hints { justify-content: center; flex-wrap: wrap; row-gap: 8px; }
   #hero.ascii-hero .hb-center { order: -1; }
   #hero.ascii-hero .hero-top { order: 0; }
   #hero.ascii-hero .desk-icons { order: 1; }
