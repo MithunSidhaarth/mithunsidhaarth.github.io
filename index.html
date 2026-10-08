@@ -569,8 +569,14 @@ a.sec-meta:hover { color: var(--hacker-red); }
 /* claude section */
 .claude-lede { max-width: 62ch; color: var(--muted); font-size: 1rem; line-height: 1.55; margin: 0 0 8px; }
 .claude-meta { font: 500 0.72rem var(--term-font); letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin: 0 0 22px; }
-.ctag { display: inline-block; margin-right: 12px; padding: 3px 7px; border: 1px solid var(--hacker-red); color: var(--hacker-red); font: 700 0.62rem var(--term-font); letter-spacing: 1.5px; text-transform: uppercase; vertical-align: 0.2em; }
+.ctag { display: inline-block; overflow: visible; text-overflow: clip; max-width: none; margin-right: 12px; padding: 3px 7px; border: 1px solid var(--hacker-red); color: var(--hacker-red); font: 700 0.62rem var(--term-font); letter-spacing: 1.5px; text-transform: uppercase; vertical-align: 0.2em; }
 .claude-list .row-desc { -webkit-line-clamp: 3; }
+.vid-hint { margin-left: 14px; font: 500 0.62rem var(--term-font); letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); vertical-align: 0.25em; white-space: nowrap; }
+#vidpeek { position: fixed; left: 0; top: 0; width: min(420px, 70vw); aspect-ratio: 16 / 9; z-index: 60; pointer-events: none; opacity: 0; border: 1px solid var(--hacker-red); background: #000; box-shadow: 0 24px 60px rgba(0,0,0,0.55); transition: opacity 0.25s ease; }
+#vidpeek.on { opacity: 1; }
+#vidpeek video { display: block; width: 100%; height: 100%; object-fit: cover; }
+#vidpeek span { position: absolute; left: 8px; top: 8px; padding: 3px 6px; background: var(--hacker-red); color: #fff; font: 700 0.6rem var(--term-font); letter-spacing: 1.5px; }
+@media (hover: none) { #vidpeek, .vid-hint { display: none; } }
 
 /* about */
 .about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 64px; align-items: start; }
@@ -1502,7 +1508,7 @@ bioElement.textContent = bioText;
 let data={
   currentStatus: "Figuring out what to learn next w a bottle of omr",
   claude: [
-    { kind: "skill", title: "Rapid Skill Sprint", desc: "Learn any skill to functional competence in 2 hours, inside Claude. Coach Sprint plans the sprint, finds verified best-of YouTube videos and real certifications, drills you with feedback, tracks it on a live dashboard and talks back through ElevenLabs. A sub-skill only counts as learned after you pass it twice.", url: "https://github.com/MithunSidhaarth/rapid-skill-sprint", license: "MIT" }
+    { kind: "skill", title: "Rapid Skill Sprint", desc: "Learn any skill to functional competence in 2 hours, inside Claude. Coach Sprint plans the sprint, finds verified best-of YouTube videos and real certifications, drills you with feedback, tracks it on a live dashboard and talks back through ElevenLabs. A sub-skill only counts as learned after you pass it twice.", url: "https://github.com/MithunSidhaarth/rapid-skill-sprint", license: "MIT", video: "/assets/claude/rapid-skill-sprint.mp4" }
   ],
   projects:[
     {title:"NeuraSpace", img:"/assets/projects/neuraspace.webp", tags:["React","Motion system","Particle rendering"], demo:"https://neuraspace.online", blog:"https://methxd.hashnode.dev/neuraspace-engineering-a-living-computational-interface", desc:"An experiment in making the interface itself feel alive, a spatial, particle-driven environment built with a component-driven React layer and a dedicated motion/rendering system, where pointer movement, depth, and interpolation communicate state instead of static UI elements. The long-term goal is to host an AI presence inside this environment rather than a conventional chat window."},
@@ -1707,10 +1713,10 @@ function renderLeftPanel() {
               ${it.desc ? `<span class="row-desc">${it.desc}</span>` : ''}
             </a></li>`).join('');
     };
-    document.getElementById('list-claude').innerHTML = data.claude.map((it, i) => `<li class="row-item" data-reveal>
+    document.getElementById('list-claude').innerHTML = data.claude.map((it, i) => `<li class="row-item"${it.video ? ` data-video="${it.video}"` : ''} data-reveal>
             <a href="${it.url}" target="_blank" rel="noopener">
               <span class="row-num">${String(i + 1).padStart(2, '0')}</span>
-              <span class="row-title"><span class="ctag">${it.kind}</span>${it.title}</span>
+              <span class="row-title"><span class="ctag">${it.kind}</span>${it.title}${it.video ? '<span class="vid-hint">&#9654; hover to preview</span>' : ''}</span>
               <span class="row-arrow">&nearr;</span>
               <span class="row-desc">${it.desc}</span>
             </a></li>`).join('') + `<li class="row-item" data-reveal><a href="https://github.com/MithunSidhaarth?tab=repositories&q=claude" target="_blank" rel="noopener">
@@ -2230,6 +2236,36 @@ function renderMarquee() {
     const doubled = tags.concat(tags);
     track.innerHTML = doubled.map(t => `<span class="marquee-tag">${t}</span>`).join('');
 }
+/* hover a Claude skill and its video plays beside the cursor (data-video on the row) */
+(function claudePeek() {
+    const list = document.getElementById("list-claude");
+    if (!list || !matchMedia("(hover: hover)").matches || (typeof MOTION !== "undefined" && !MOTION)) return;
+    const box = document.createElement("div"); box.id = "vidpeek"; box.setAttribute("aria-hidden", "true");
+    const v = document.createElement("video"); v.muted = true; v.loop = true; v.playsInline = true; v.preload = "none";
+    const tag = document.createElement("span"); tag.textContent = "PREVIEW";
+    box.append(v, tag); document.body.append(box);
+    let cur = null;
+    const place = e => {
+        const w = box.offsetWidth, h = box.offsetHeight;
+        let x = e.clientX + 28, y = e.clientY + 24;
+        if (x + w > innerWidth - 16) x = e.clientX - w - 28;
+        if (y + h > innerHeight - 16) y = innerHeight - h - 16;
+        box.style.transform = `translate3d(${Math.max(8, x)}px,${Math.max(8, y)}px,0)`;
+    };
+    list.addEventListener("pointerover", e => {
+        const li = e.target.closest("[data-video]");
+        if (!li || li === cur) return;
+        cur = li;
+        if (v.getAttribute("src") !== li.dataset.video) v.src = li.dataset.video;
+        v.currentTime = 0; v.play().catch(() => {});
+        box.classList.add("on"); place(e);
+    });
+    list.addEventListener("pointermove", e => { if (cur) place(e); });
+    list.addEventListener("pointerout", e => {
+        if (!cur || (e.relatedTarget && cur.contains(e.relatedTarget))) return;
+        cur = null; box.classList.remove("on"); v.pause();
+    });
+})();
 renderLeftPanel();
 function renderAskChips(){
     const row = document.getElementById('ask-chip-row');
