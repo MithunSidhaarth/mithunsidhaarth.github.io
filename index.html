@@ -566,6 +566,12 @@ a.sec-meta:hover { color: var(--hacker-red); }
 .row-arrow { grid-row: 1; grid-column: 3; font-family: var(--term-font); color: var(--muted); transition: transform 0.4s ease, color 0.2s; }
 .row-item a:hover .row-arrow { color: var(--hacker-red); transform: translateX(4px); }
 
+/* claude section */
+.claude-lede { max-width: 62ch; color: var(--muted); font-size: 1rem; line-height: 1.55; margin: 0 0 8px; }
+.claude-meta { font: 500 0.72rem var(--term-font); letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin: 0 0 22px; }
+.ctag { display: inline-block; margin-right: 12px; padding: 3px 7px; border: 1px solid var(--hacker-red); color: var(--hacker-red); font: 700 0.62rem var(--term-font); letter-spacing: 1.5px; text-transform: uppercase; vertical-align: 0.2em; }
+.claude-list .row-desc { -webkit-line-clamp: 3; }
+
 /* about */
 .about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 64px; align-items: start; }
 .about-bio { font-size: clamp(1.25rem, 2vw, 1.75rem); line-height: 1.45; letter-spacing: -0.01em; margin: 0; }
@@ -1087,6 +1093,7 @@ html.lenis, html.lenis body { height: auto; }
   <span class="nav-os">MithunOS</span>
   <nav class="nav-links" aria-label="Sections">
     <a href="#work">Work</a>
+    <a href="#claude">Claude</a>
     <a href="#writing">Writing</a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
@@ -1105,11 +1112,12 @@ html.lenis, html.lenis body { height: auto; }
   <h1 id="name" class="sr-only">Mithun Sidhaarth</h1>
   <nav class="desk-icons" aria-label="Desktop">
     <a class="desk-icon" href="#work"><span class="di-num">01</span><span class="di-glyph folder" aria-hidden="true"></span><span class="di-label">work/</span></a>
-    <a class="desk-icon" href="#writing"><span class="di-num">02</span><span class="di-glyph folder" aria-hidden="true"></span><span class="di-label">writing/</span></a>
-    <a class="desk-icon" href="#about"><span class="di-num">03</span><span class="di-glyph file" aria-hidden="true"></span><span class="di-label">about.txt</span></a>
-    <a class="desk-icon" href="#contact"><span class="di-num">04</span><span class="di-glyph file" aria-hidden="true"></span><span class="di-label">contact.sh</span></a>
-    <a class="desk-icon" href="/resume.pdf" data-resume><span class="di-num">05</span><span class="di-glyph file pdf" aria-hidden="true"></span><span class="di-label">resume.pdf</span></a>
-    <a class="desk-icon" href="#hero" data-open-console><span class="di-num">06</span><span class="di-glyph app" aria-hidden="true"></span><span class="di-label">terminal.app</span></a>
+    <a class="desk-icon" href="#claude"><span class="di-num">02</span><span class="di-glyph folder" aria-hidden="true"></span><span class="di-label">claude/</span></a>
+    <a class="desk-icon" href="#writing"><span class="di-num">03</span><span class="di-glyph folder" aria-hidden="true"></span><span class="di-label">writing/</span></a>
+    <a class="desk-icon" href="#about"><span class="di-num">04</span><span class="di-glyph file" aria-hidden="true"></span><span class="di-label">about.txt</span></a>
+    <a class="desk-icon" href="#contact"><span class="di-num">05</span><span class="di-glyph file" aria-hidden="true"></span><span class="di-label">contact.sh</span></a>
+    <a class="desk-icon" href="/resume.pdf" data-resume><span class="di-num">06</span><span class="di-glyph file pdf" aria-hidden="true"></span><span class="di-label">resume.pdf</span></a>
+    <a class="desk-icon" href="#hero" data-open-console><span class="di-num">07</span><span class="di-glyph app" aria-hidden="true"></span><span class="di-label">terminal.app</span></a>
   </nav>
   <div class="hero-top">
     <span><b>(00)</b> MithunOS v30<span class="ht-extra"> &nbsp;/ &nbsp;interactive portfolio</span></span>
@@ -1170,8 +1178,15 @@ html.lenis, html.lenis body { height: auto; }
   </section>
   <div class="vmarq" id="vm1" data-dir="-1" aria-hidden="true"></div>
 
+  <section id="claude" class="sec">
+    <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">02</span> ~/mithun $ <span class="typed" style="--n:25">ls ./claude --open-source</span></span><h2>Claude</h2><a class="sec-meta" href="https://github.com/MithunSidhaarth" target="_blank" rel="noopener">GitHub &nearr;</a></div>
+    <p class="claude-lede" data-reveal>Skills, plugins and connectors I build for Claude and release as open source. Giving back to the community that taught me.</p>
+    <p class="claude-meta" id="claude-meta" data-reveal></p>
+    <ul id="list-claude" class="row-list claude-list"></ul>
+  </section>
+
   <section id="writing" class="sec">
-    <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">02</span> ~/mithun $ <span class="typed" style="--n:18">cat ./writing/*.md</span></span><h2>Writing</h2><a class="sec-meta" href="https://mithunsidhaarth.substack.com" target="_blank" rel="noopener">Substack &nearr;</a></div>
+    <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">03</span> ~/mithun $ <span class="typed" style="--n:18">cat ./writing/*.md</span></span><h2>Writing</h2><a class="sec-meta" href="https://mithunsidhaarth.substack.com" target="_blank" rel="noopener">Substack &nearr;</a></div>
     <ul id="list-blogs" class="row-list"></ul>
     <div class="sub-head" data-reveal>Research</div>
     <ul id="list-research" class="row-list"></ul>
@@ -1179,7 +1194,7 @@ html.lenis, html.lenis body { height: auto; }
 
   <div class="vmarq" id="vm2" data-dir="1" aria-hidden="true"></div>
   <section id="about" class="sec">
-    <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">03</span> ~/mithun $ <span class="typed" style="--n:6">whoami</span></span><h2>About</h2></div>
+    <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">04</span> ~/mithun $ <span class="typed" style="--n:6">whoami</span></span><h2>About</h2></div>
     <div class="about-grid" data-reveal>
       <p class="about-bio" id="bio-typewriter"></p>
       <div><div class="sub-head" style="margin-top:0">Works across</div><ul id="list-skills" class="stack-list"></ul></div>
@@ -1187,7 +1202,7 @@ html.lenis, html.lenis body { height: auto; }
   </section>
 
   <section id="contact" class="sec">
-    <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">04</span> ~/mithun $ <span class="typed" style="--n:11">mail mithun</span></span><h2>Contact</h2></div>
+    <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">05</span> ~/mithun $ <span class="typed" style="--n:11">mail mithun</span></span><h2>Contact</h2></div>
     <div class="contact-grid">
       <a class="contact-big" href="mailto:mithunsidhaartham@gmail.com" aria-label="Let's build something real. Email Mithun">Let's build<br>something <em>real.</em></a>
       <form class="mailer panel win" id="mailer" novalidate>
@@ -1486,6 +1501,9 @@ const bioElement = document.getElementById("bio-typewriter");
 bioElement.textContent = bioText;
 let data={
   currentStatus: "Figuring out what to learn next w a bottle of omr",
+  claude: [
+    { kind: "skill", title: "Rapid Skill Sprint", desc: "Learn any skill to functional competence in 2 hours, inside Claude. Coach Sprint plans the sprint, finds verified best-of YouTube videos and real certifications, drills you with feedback, tracks it on a live dashboard and talks back through ElevenLabs. A sub-skill only counts as learned after you pass it twice.", url: "https://github.com/MithunSidhaarth/rapid-skill-sprint", license: "MIT" }
+  ],
   projects:[
     {title:"NeuraSpace", img:"/assets/projects/neuraspace.webp", tags:["React","Motion system","Particle rendering"], demo:"https://neuraspace.online", blog:"https://methxd.hashnode.dev/neuraspace-engineering-a-living-computational-interface", desc:"An experiment in making the interface itself feel alive, a spatial, particle-driven environment built with a component-driven React layer and a dedicated motion/rendering system, where pointer movement, depth, and interpolation communicate state instead of static UI elements. The long-term goal is to host an AI presence inside this environment rather than a conventional chat window."},
     {title:"Eden", img:"/assets/projects/eden.webp", tags:["AI agent","Tool calling","Tasks + calendar"], demo:"https://edenconsole.netlify.app", blog:"https://methxd.hashnode.dev/eden-building-an-ai-assistant-for-my-everyday-life", desc:"A still-in-progress AI assistant meant to go beyond a chatbot, it's built as an agent that picks from a set of tools (tasks, reminders, calendar, weather) which the app validates and executes, aiming to eventually summarize 'what actually matters today' rather than dumping every task on the user."},
@@ -1575,7 +1593,7 @@ blogs:[
     {name: "Business & Financial Strategy", level: 76},
     {name: "Systems Thinking", level: 91}
   ],
-  commands: ["help","ask","work","writing","about","whoami","contact","theme","clear","resume","hack","matrix","ls","cd","open","music","demo","blog","read"]
+  commands: ["help","ask","work","claude","writing","about","whoami","contact","theme","clear","resume","hack","matrix","ls","cd","open","music","demo","blog","read"]
 };
 
 /* ================= ASK MITHUN — client-side grounded assistant =================
@@ -1611,6 +1629,7 @@ function askBuildCorpus(){
   data.projects.forEach((p,i)=> c.push({cat:"projects", idx:i, title:p.title, text:`${p.title}. ${p.desc||""}`, url:p.demo||p.blog}));
   data.blogs.forEach((b,i)=> c.push({cat:"blogs", idx:i, title:b.title, text:`${b.title}. ${b.desc||""}`, url:b.link}));
   data.research.forEach((r,i)=> c.push({cat:"research", idx:i, title:r.title, text:`${r.title}. ${r.desc||""}`, url:r.link}));
+  data.claude.forEach((x,i)=> c.push({cat:"claude", idx:i, title:x.title, text:`${x.title}. Claude ${x.kind}, open source. ${x.desc||""}`, url:x.url}));
   data.skills.forEach(s=> c.push({cat:"skills", title:s.name, text:`${s.name}`, url:null, level:s.level}));
   return c;
 }
@@ -1657,7 +1676,7 @@ const ASK_SAMPLES = [
   "is he more builder or writer?"
 ];
 function catTag(cat) {
-    return { projects: "PROJ", blogs: "BLOG", research: "RSCH" }[cat] || cat.slice(0,4).toUpperCase();
+    return { projects: "PROJ", blogs: "BLOG", research: "RSCH", claude: "CLDE" }[cat] || cat.slice(0,4).toUpperCase();
 }
 function firstSentence(t) { const m = (t || "").match(/^.*?[.!?](\s|$)/); return m ? m[0].trim() : (t || ""); }
 function renderLeftPanel() {
@@ -1688,6 +1707,17 @@ function renderLeftPanel() {
               ${it.desc ? `<span class="row-desc">${it.desc}</span>` : ''}
             </a></li>`).join('');
     };
+    document.getElementById('list-claude').innerHTML = data.claude.map((it, i) => `<li class="row-item" data-reveal>
+            <a href="${it.url}" target="_blank" rel="noopener">
+              <span class="row-num">${String(i + 1).padStart(2, '0')}</span>
+              <span class="row-title"><span class="ctag">${it.kind}</span>${it.title}</span>
+              <span class="row-arrow">&nearr;</span>
+              <span class="row-desc">${it.desc}</span>
+            </a></li>`).join('') + `<li class="row-item" data-reveal><a href="https://github.com/MithunSidhaarth?tab=repositories&q=claude" target="_blank" rel="noopener">
+              <span class="row-num">&middot;&middot;</span><span class="row-title">More on the way</span><span class="row-arrow">&nearr;</span>
+              <span class="row-desc">Plugins and connectors land here as I ship them. Watch GitHub.</span></a></li>`;
+    const kinds = ['skill', 'plugin', 'connector'], cnt = k => data.claude.filter(x => x.kind === k).length;
+    document.getElementById('claude-meta').textContent = kinds.filter(cnt).map(k => `${cnt(k)} ${k}${cnt(k) > 1 ? 's' : ''}`).join(' · ') + ' · all open source';
     rows('list-blogs', 'blogs');
     rows('list-research', 'research');
     document.getElementById('list-skills').innerHTML = data.skills.map((sk, i) => `<li>${sk.name}<span>${String(i + 1).padStart(2, '0')}</span></li>`).join('');
@@ -2528,7 +2558,8 @@ function toggleAudio() {
 function handle(cmd){
   if(cmd && cmd !== cmdHistory[cmdHistory.length-1]){ cmdHistory.push(cmd); historyIndex = cmdHistory.length; }
   const p = (str) => str.padEnd(12, ' ');
-  if(cmd==="help") return print(`COMMANDS\n--------\n${p("work")} Jump to projects\n${p("writing")} Jump to essays\n${p("whoami")} About me\n${p("contact")} Get in touch\n${p("ls")} List files\n${p("cd [dir]")} Change dir\n${p("open [id]")} Open a case study (projects by default)\n${p("ask [q]")} Ask about Mithun (grounded, on-page data)\n${p("resume")} PDF Resume\n${p("hack")} Simulation\n${p("music")} Play/Pause\n${p("matrix")} Matrix Mode\n${p("theme")} Light/Dark`);
+  if(cmd==="help") return print(`COMMANDS\n--------\n${p("work")} Jump to projects\n${p("claude")} Open-source Claude skills
+${p("writing")} Jump to essays\n${p("whoami")} About me\n${p("contact")} Get in touch\n${p("ls")} List files\n${p("cd [dir]")} Change dir\n${p("open [id]")} Open a case study (projects by default)\n${p("ask [q]")} Ask about Mithun (grounded, on-page data)\n${p("resume")} PDF Resume\n${p("hack")} Simulation\n${p("music")} Play/Pause\n${p("matrix")} Matrix Mode\n${p("theme")} Light/Dark`);
   if(cmd==="ask") return print(`Usage: ask [question]\ne.g. ask does he have backend experience`);
   if(cmd.startsWith("ask ")) return print(askAssistant(cmd.slice(4).trim()));
   if(cmd.startsWith("cd")){
@@ -2543,7 +2574,7 @@ function handle(cmd){
       if(currentDirectory === "root") return print("drwx------ projects/\ndrwx------ blogs/\ndrwx------ research/\n-r--r--r-- resume.pdf");
       return print(data[currentDirectory].map((item, i) => `[${i+1}] ${item.title}`).join("\n"));
   }
-  const JUMP = { work: "work", projects: "work", writing: "writing", blogs: "writing", research: "writing", about: "about", contact: "contact", mail: "contact" };
+  const JUMP = { work: "work", projects: "work", claude: "claude", skills: "claude", plugins: "claude", connectors: "claude", writing: "writing", blogs: "writing", research: "writing", about: "about", contact: "contact", mail: "contact" };
   if(JUMP[cmd]) { closeConsole(); setTimeout(() => goTo(document.getElementById(JUMP[cmd])), 250); return print(`> cd ./${JUMP[cmd]}`); }
   if(cmd === "whoami") return print(bioText);
   if(cmd.startsWith("open")){
