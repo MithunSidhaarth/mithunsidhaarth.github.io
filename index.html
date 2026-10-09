@@ -1508,7 +1508,8 @@ bioElement.textContent = bioText;
 let data={
   currentStatus: "Figuring out what to learn next w a bottle of omr",
   claude: [
-    { kind: "skill", title: "Rapid Skill Sprint", desc: "Learn any skill to functional competence in 2 hours, inside Claude. Coach Sprint plans the sprint, finds verified best-of YouTube videos and real certifications, drills you with feedback, tracks it on a live dashboard and talks back through ElevenLabs. A sub-skill only counts as learned after you pass it twice.", url: "https://github.com/MithunSidhaarth/rapid-skill-sprint", license: "MIT", video: "/assets/claude/rapid-skill-sprint.mp4" }
+    { kind: "skill", title: "Rapid Skill Sprint", desc: "Learn any skill to functional competence in 2 hours, inside Claude. Coach Sprint plans the sprint, finds verified best-of YouTube videos and real certifications, drills you with feedback, tracks it on a live dashboard and talks back through ElevenLabs. A sub-skill only counts as learned after you pass it twice.", url: "https://github.com/MithunSidhaarth/rapid-skill-sprint", license: "MIT", video: "/assets/claude/rapid-skill-sprint.mp4" },
+    { kind: "skill", title: "motionspec", desc: "Describe a video in JSON, get an MP4. The skill asks four questions, writes and checks the spec, shows a preview of every scene, then renders every shape (9:16, 4:5, 1:1, 16:9) with generated music, ElevenLabs or local narration and scenes that land on the spoken words. It critiques the cut before rendering and never publishes without your approval. Python engine, 20 scene types, themes, content-rule checks. Source is public; an open-source licence is coming.", url: "https://github.com/MithunSidhaarth/motionspec", license: "All rights reserved (source-available)", video: "/assets/claude/motionspec.mp4" }
   ],
   projects:[
     {title:"NeuraSpace", img:"/assets/projects/neuraspace.webp", tags:["React","Motion system","Particle rendering"], demo:"https://neuraspace.online", blog:"https://methxd.hashnode.dev/neuraspace-engineering-a-living-computational-interface", desc:"An experiment in making the interface itself feel alive, a spatial, particle-driven environment built with a component-driven React layer and a dedicated motion/rendering system, where pointer movement, depth, and interpolation communicate state instead of static UI elements. The long-term goal is to host an AI presence inside this environment rather than a conventional chat window."},
@@ -1723,7 +1724,8 @@ function renderLeftPanel() {
               <span class="row-num">&middot;&middot;</span><span class="row-title">More on the way</span><span class="row-arrow">&nearr;</span>
               <span class="row-desc">Plugins and connectors land here as I ship them. Watch GitHub.</span></a></li>`;
     const kinds = ['skill', 'plugin', 'connector'], cnt = k => data.claude.filter(x => x.kind === k).length;
-    document.getElementById('claude-meta').textContent = kinds.filter(cnt).map(k => `${cnt(k)} ${k}${cnt(k) > 1 ? 's' : ''}`).join(' · ') + ' · all open source';
+    const openSrc = data.claude.filter(x => /^(MIT|Apache|BSD|GPL|MPL)/i.test(x.license || '')).length, total = data.claude.length;
+    document.getElementById('claude-meta').textContent = kinds.filter(cnt).map(k => `${cnt(k)} ${k}${cnt(k) > 1 ? 's' : ''}`).join(' · ') + (openSrc === total ? ' · all open source' : ` · ${openSrc} open source · ${total - openSrc} source-available`);
     rows('list-blogs', 'blogs');
     rows('list-research', 'research');
     document.getElementById('list-skills').innerHTML = data.skills.map((sk, i) => `<li>${sk.name}<span>${String(i + 1).padStart(2, '0')}</span></li>`).join('');
