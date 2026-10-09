@@ -1100,6 +1100,7 @@ html.lenis, html.lenis body { height: auto; }
   <nav class="nav-links" aria-label="Sections">
     <a href="#work">Work</a>
     <a href="#claude">Claude</a>
+    <a href="#contributions">Contributions</a>
     <a href="#writing">Writing</a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
@@ -1119,11 +1120,12 @@ html.lenis, html.lenis body { height: auto; }
   <nav class="desk-icons" aria-label="Desktop">
     <a class="desk-icon" href="#work"><span class="di-num">01</span><span class="di-glyph folder" aria-hidden="true"></span><span class="di-label">work/</span></a>
     <a class="desk-icon" href="#claude"><span class="di-num">02</span><span class="di-glyph folder" aria-hidden="true"></span><span class="di-label">claude/</span></a>
-    <a class="desk-icon" href="#writing"><span class="di-num">03</span><span class="di-glyph folder" aria-hidden="true"></span><span class="di-label">writing/</span></a>
-    <a class="desk-icon" href="#about"><span class="di-num">04</span><span class="di-glyph file" aria-hidden="true"></span><span class="di-label">about.txt</span></a>
-    <a class="desk-icon" href="#contact"><span class="di-num">05</span><span class="di-glyph file" aria-hidden="true"></span><span class="di-label">contact.sh</span></a>
-    <a class="desk-icon" href="/resume.pdf" data-resume><span class="di-num">06</span><span class="di-glyph file pdf" aria-hidden="true"></span><span class="di-label">resume.pdf</span></a>
-    <a class="desk-icon" href="#hero" data-open-console><span class="di-num">07</span><span class="di-glyph app" aria-hidden="true"></span><span class="di-label">terminal.app</span></a>
+    <a class="desk-icon" href="#contributions"><span class="di-num">03</span><span class="di-glyph folder" aria-hidden="true"></span><span class="di-label">contributions/</span></a>
+    <a class="desk-icon" href="#writing"><span class="di-num">04</span><span class="di-glyph folder" aria-hidden="true"></span><span class="di-label">writing/</span></a>
+    <a class="desk-icon" href="#about"><span class="di-num">05</span><span class="di-glyph file" aria-hidden="true"></span><span class="di-label">about.txt</span></a>
+    <a class="desk-icon" href="#contact"><span class="di-num">06</span><span class="di-glyph file" aria-hidden="true"></span><span class="di-label">contact.sh</span></a>
+    <a class="desk-icon" href="/resume.pdf" data-resume><span class="di-num">07</span><span class="di-glyph file pdf" aria-hidden="true"></span><span class="di-label">resume.pdf</span></a>
+    <a class="desk-icon" href="#hero" data-open-console><span class="di-num">08</span><span class="di-glyph app" aria-hidden="true"></span><span class="di-label">terminal.app</span></a>
   </nav>
   <div class="hero-top">
     <span><b>(00)</b> MithunOS v30<span class="ht-extra"> &nbsp;/ &nbsp;interactive portfolio</span></span>
@@ -1191,8 +1193,14 @@ html.lenis, html.lenis body { height: auto; }
     <ul id="list-claude" class="row-list claude-list"></ul>
   </section>
 
+  <section id="contributions" class="sec">
+    <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">03</span> ~/mithun $ <span class="typed" style="--n:28">git log --author=mithun --oss</span></span><h2>Contributions</h2><a class="sec-meta" href="https://github.com/MithunSidhaarth" target="_blank" rel="noopener">GitHub &nearr;</a></div>
+    <p class="claude-lede" data-reveal>Pull requests to open-source projects I use and love.</p>
+    <ul id="list-contrib" class="row-list claude-list"></ul>
+  </section>
+
   <section id="writing" class="sec">
-    <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">03</span> ~/mithun $ <span class="typed" style="--n:18">cat ./writing/*.md</span></span><h2>Writing</h2><a class="sec-meta" href="https://mithunsidhaarth.substack.com" target="_blank" rel="noopener">Substack &nearr;</a></div>
+    <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">04</span> ~/mithun $ <span class="typed" style="--n:18">cat ./writing/*.md</span></span><h2>Writing</h2><a class="sec-meta" href="https://mithunsidhaarth.substack.com" target="_blank" rel="noopener">Substack &nearr;</a></div>
     <ul id="list-blogs" class="row-list"></ul>
     <div class="sub-head" data-reveal>Research</div>
     <ul id="list-research" class="row-list"></ul>
@@ -1200,7 +1208,7 @@ html.lenis, html.lenis body { height: auto; }
 
   <div class="vmarq" id="vm2" data-dir="1" aria-hidden="true"></div>
   <section id="about" class="sec">
-    <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">04</span> ~/mithun $ <span class="typed" style="--n:6">whoami</span></span><h2>About</h2></div>
+    <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">05</span> ~/mithun $ <span class="typed" style="--n:6">whoami</span></span><h2>About</h2></div>
     <div class="about-grid" data-reveal>
       <p class="about-bio" id="bio-typewriter"></p>
       <div><div class="sub-head" style="margin-top:0">Works across</div><ul id="list-skills" class="stack-list"></ul></div>
@@ -1208,7 +1216,7 @@ html.lenis, html.lenis body { height: auto; }
   </section>
 
   <section id="contact" class="sec">
-    <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">05</span> ~/mithun $ <span class="typed" style="--n:11">mail mithun</span></span><h2>Contact</h2></div>
+    <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">06</span> ~/mithun $ <span class="typed" style="--n:11">mail mithun</span></span><h2>Contact</h2></div>
     <div class="contact-grid">
       <a class="contact-big" href="mailto:mithunsidhaartham@gmail.com" aria-label="Let's build something real. Email Mithun">Let's build<br>something <em>real.</em></a>
       <form class="mailer panel win" id="mailer" novalidate>
@@ -1507,6 +1515,9 @@ const bioElement = document.getElementById("bio-typewriter");
 bioElement.textContent = bioText;
 let data={
   currentStatus: "Figuring out what to learn next w a bottle of omr",
+  contributions: [
+    { kind: "PR", title: "Coucou for Windows", repo: "Louis-CFM/coucou", desc: "Took Louis Raill\u00e9's open-source notch companion further on Windows: Apple Music, Spotify and any-player pills from the system media controls, volume, brightness and battery live activities in the island, chatting with a Claude Pro plan through the Claude Code CLI with no API key, a calendar pill from any iCal link, and an island that stays on top. Event-driven Rust + TypeScript, tested and translated into 10 languages.", url: "https://github.com/Louis-CFM/coucou/pull/418", video: "/assets/contributions/coucou-mochi.mp4" }
+  ],
   claude: [
     { kind: "skill", title: "Rapid Skill Sprint", desc: "Learn any skill to functional competence in 2 hours, inside Claude. Coach Sprint plans the sprint, finds verified best-of YouTube videos and real certifications, drills you with feedback, tracks it on a live dashboard and talks back through ElevenLabs. A sub-skill only counts as learned after you pass it twice.", url: "https://github.com/MithunSidhaarth/rapid-skill-sprint", license: "MIT", video: "/assets/claude/rapid-skill-sprint.mp4" },
     { kind: "skill", title: "motionspec", desc: "Describe a video in JSON, get an MP4. The skill asks four questions, writes and checks the spec, shows a preview of every scene, then renders every shape (9:16, 4:5, 1:1, 16:9) with generated music, ElevenLabs or local narration and scenes that land on the spoken words. It critiques the cut before rendering and never publishes without your approval. Python engine, 20 scene types, themes, content-rule checks. Open source under MIT.", url: "https://github.com/MithunSidhaarth/motionspec", license: "MIT", video: "/assets/claude/motionspec.mp4" }
@@ -1636,6 +1647,7 @@ function askBuildCorpus(){
   data.projects.forEach((p,i)=> c.push({cat:"projects", idx:i, title:p.title, text:`${p.title}. ${p.desc||""}`, url:p.demo||p.blog}));
   data.blogs.forEach((b,i)=> c.push({cat:"blogs", idx:i, title:b.title, text:`${b.title}. ${b.desc||""}`, url:b.link}));
   data.research.forEach((r,i)=> c.push({cat:"research", idx:i, title:r.title, text:`${r.title}. ${r.desc||""}`, url:r.link}));
+  data.contributions.forEach((x,i)=> c.push({cat:"contributions", idx:i, title:x.title, text:`${x.title}. Open-source contribution to ${x.repo}. ${x.desc||""}`, url:x.url}));
   data.claude.forEach((x,i)=> c.push({cat:"claude", idx:i, title:x.title, text:`${x.title}. Claude ${x.kind}, open source. ${x.desc||""}`, url:x.url}));
   data.skills.forEach(s=> c.push({cat:"skills", title:s.name, text:`${s.name}`, url:null, level:s.level}));
   return c;
@@ -1723,6 +1735,13 @@ function renderLeftPanel() {
             </a></li>`).join('') + `<li class="row-item" data-reveal><a href="https://github.com/MithunSidhaarth?tab=repositories&q=claude" target="_blank" rel="noopener">
               <span class="row-num">&middot;&middot;</span><span class="row-title">More on the way</span><span class="row-arrow">&nearr;</span>
               <span class="row-desc">Plugins and connectors land here as I ship them. Watch GitHub.</span></a></li>`;
+    document.getElementById('list-contrib').innerHTML = data.contributions.map((it, i) => `<li class="row-item"${it.video ? ` data-video="${it.video}"` : ''} data-reveal>
+            <a href="${it.url}" target="_blank" rel="noopener">
+              <span class="row-num">${String(i + 1).padStart(2, '0')}</span>
+              <span class="row-title"><span class="ctag">${it.kind}</span>${it.title} <span class="ctag">${it.repo}</span>${it.video ? '<span class="vid-hint">&#9654; hover to meet Mochi</span>' : ''}</span>
+              <span class="row-arrow">&nearr;</span>
+              <span class="row-desc">${it.desc}</span>
+            </a></li>`).join('');
     const kinds = ['skill', 'plugin', 'connector'], cnt = k => data.claude.filter(x => x.kind === k).length;
     const openSrc = data.claude.filter(x => /^(MIT|Apache|BSD|GPL|MPL)/i.test(x.license || '')).length, total = data.claude.length;
     document.getElementById('claude-meta').textContent = kinds.filter(cnt).map(k => `${cnt(k)} ${k}${cnt(k) > 1 ? 's' : ''}`).join(' · ') + (openSrc === total ? ' · all open source' : ` · ${openSrc} open source · ${total - openSrc} source-available`);
@@ -2240,8 +2259,8 @@ function renderMarquee() {
 }
 /* hover a Claude skill and its video plays beside the cursor (data-video on the row) */
 (function claudePeek() {
-    const list = document.getElementById("list-claude");
-    if (!list || !matchMedia("(hover: hover)").matches || (typeof MOTION !== "undefined" && !MOTION)) return;
+    const lists = ["list-claude", "list-contrib"].map(id => document.getElementById(id)).filter(Boolean);
+    if (!lists.length || !matchMedia("(hover: hover)").matches || (typeof MOTION !== "undefined" && !MOTION)) return;
     const box = document.createElement("div"); box.id = "vidpeek"; box.setAttribute("aria-hidden", "true");
     const v = document.createElement("video"); v.muted = true; v.loop = true; v.playsInline = true; v.preload = "none";
     const tag = document.createElement("span"); tag.textContent = "PREVIEW";
@@ -2254,6 +2273,7 @@ function renderMarquee() {
         if (y + h > innerHeight - 16) y = innerHeight - h - 16;
         box.style.transform = `translate3d(${Math.max(8, x)}px,${Math.max(8, y)}px,0)`;
     };
+    for (const list of lists) {
     list.addEventListener("pointerover", e => {
         const li = e.target.closest("[data-video]");
         if (!li || li === cur) return;
@@ -2267,6 +2287,7 @@ function renderMarquee() {
         if (!cur || (e.relatedTarget && cur.contains(e.relatedTarget))) return;
         cur = null; box.classList.remove("on"); v.pause();
     });
+    }
 })();
 renderLeftPanel();
 function renderAskChips(){
