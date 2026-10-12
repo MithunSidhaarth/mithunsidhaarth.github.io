@@ -670,7 +670,7 @@ html.reveal-on .work-card.in .work-media { clip-path: inset(0 0 0 0 round 14px);
 .desk-icon:hover { background: rgba(255,51,51,0.08); }
 .desk-icon:focus-visible { outline: 1px dashed var(--hacker-red); }
 .di-num { position: absolute; top: 4px; left: 6px; font: 500 0.58rem var(--term-font); color: var(--hacker-red); }
-.di-label { font: 500 0.66rem var(--term-font); color: var(--muted); letter-spacing: 0.3px; }
+.di-label { font: 500 0.66rem var(--term-font); color: var(--muted); letter-spacing: 0.3px; white-space: nowrap; }
 .desk-icon:hover .di-label { color: var(--text); }
 .di-glyph { position: relative; width: 38px; height: 30px; }
 .di-glyph.folder { background: linear-gradient(180deg, #3a1414, #250b0b); border: 1px solid rgba(255,51,51,0.55); border-radius: 3px 5px 5px 5px; margin-top: 5px; }
@@ -725,7 +725,7 @@ html.reveal-on .work-card.in .work-media { clip-path: inset(0 0 0 0 round 14px);
 @media (max-width: 1000px) {
   #hero.desktop { height: auto; min-height: 0; overflow: visible; display: flex; flex-direction: column; gap: 18px; padding: 60px clamp(16px, 4vw, 48px) 24px; }
   #hero.desktop::before { display: none; }
-  .desk-icons { position: static; order: 1; grid-template-columns: repeat(6, 74px); overflow-x: auto; gap: 6px; padding-bottom: 4px; }
+  .desk-icons { position: static; order: 1; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(70px, max-content); overflow-x: auto; gap: 6px; padding-bottom: 4px; }
   .dm-wrap { position: static; order: 0; text-align: left; }
   #hero #name.dm { font-size: 13.5vw; white-space: normal; display: block; background-size: 5px 5px; }
   .win, #readme, #hero #terminal { position: relative; left: auto; right: auto; top: auto; width: auto; order: 2; }
@@ -785,7 +785,9 @@ html.reveal-on .work-card.in .work-media { clip-path: inset(0 0 0 0 round 14px);
 .hb-center { transition: opacity 0.3s ease, transform 0.3s ease; }
 
 @media (max-width: 900px) {
-  .ascii-hero .desk-icons { left: 12px; right: 12px; top: 80px; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 72px; gap: 4px; overflow-x: auto; }
+  /* each column as wide as its label ("contributions/" is wider than 72 px), the row scrolls */
+  .ascii-hero .desk-icons { left: 12px; right: 12px; top: 80px; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(64px, max-content); gap: 4px; overflow-x: auto; scrollbar-width: none; }
+  .ascii-hero .desk-icons::-webkit-scrollbar { display: none; }
   .ascii-hero .desk-icons .di-num { display: none; }
   .ascii-hero #ascii { left: 0; width: 100%; top: 160px; bottom: auto; height: 32vh; }
   .hero-top .ht-right { display: none; }
@@ -870,7 +872,7 @@ html.reveal-on .work-card.in .work-media { clip-path: inset(0 0 0 0 round 14px);
   #hero.ascii-hero { height: auto; min-height: 100svh; display: flex; flex-direction: column; gap: 14px; padding: 54px 16px 26px; overflow: visible; }
   #hero.ascii-hero .hero-top, .ascii-hero .desk-icons, .ascii-hero .hero-bottom { position: static; }
   #hero.ascii-hero .hero-top .ht-extra { display: none; }
-  #hero.ascii-hero .desk-icons { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); grid-template-columns: none; gap: 2px; overflow-x: auto; scrollbar-width: none; margin: 0 -6px; }
+  #hero.ascii-hero .desk-icons { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(max-content, 1fr); grid-template-columns: none; gap: 2px; overflow-x: auto; scrollbar-width: none; margin: 0 -6px; }
   #hero.ascii-hero .desk-icons::-webkit-scrollbar { display: none; }
   #hero.ascii-hero .desk-icon { padding: 6px 2px; }
   #hero.ascii-hero .di-label { font-size: 0.5rem; letter-spacing: 0; white-space: nowrap; }
@@ -1517,7 +1519,8 @@ let data={
   currentStatus: "Figuring out what to learn next w a bottle of omr",
   contributions: [
     { kind: "PR", title: "Coucou for Windows", repo: "Louis-CFM/coucou", desc: "Took Louis Raillé's open-source notch companion further on Windows: Apple Music, Spotify and any-player pills from the system media controls, volume, brightness and battery live activities in the island, chatting with a Claude Pro plan through the Claude Code CLI with no API key (drop a PDF on the notch and ask about it), a calendar pill from any iCal link, and an island that stays on top. Event-driven Rust + TypeScript, tested and translated into 10 languages.", url: "https://github.com/Louis-CFM/coucou/pull/418", video: "/assets/contributions/coucou-mochi.mp4" },
-    { kind: "PR", title: "Coucou: iPhone without a Mac", repo: "Louis-CFM/coucou", desc: "A follow-up PR connecting an iPhone to the Windows notch with no Mac: links and text both ways through iCloud Drive, phone alerts via ntfy when Claude finishes, iPhone calls (with the caller's name and a ring, answered or declined right from the notch) and messages from Phone Link shown in the island, and alerts when Claude finishes or its limits reset. Plus Focus (any length), To-do and Inbox tabs in the notch, 8 pills on two sliding pages and a mini player with play/pause and next in the compact notch.", url: "https://github.com/Louis-CFM/coucou/pull/432", video: "/assets/contributions/coucou-mochi.mp4" }
+    { kind: "PR", title: "Coucou: iPhone without a Mac", repo: "Louis-CFM/coucou", desc: "A follow-up PR connecting an iPhone to the Windows notch with no Mac: links and text both ways through iCloud Drive, phone alerts via ntfy when Claude finishes, iPhone calls (with the caller's name and a ring, answered or declined right from the notch) and messages from Phone Link shown in the island, and alerts when Claude finishes or its limits reset. Plus Focus (any length), To-do and Inbox tabs in the notch, 8 pills on two sliding pages and a mini player with play/pause and next in the compact notch.", url: "https://github.com/Louis-CFM/coucou/pull/432", video: "/assets/contributions/coucou-mochi.mp4" },
+    { kind: "PR", title: "Coucou: Maki, a voice for Mochi", repo: "Louis-CFM/coucou", desc: "Say \"Maki\" and Mochi talks back: an on-device wake word opens a live ElevenLabs voice agent, and Mochi becomes its face, listening, thinking, bobbing as it speaks and wearing its moods. It plays songs by name on YouTube or Apple Music, opens installed apps, sets reminders, pings the phone through ntfy, locks the screen, and shows Claude plan and ElevenLabs credit usage. Heavier work goes to a local Hermes agent that runs in the background, streams its steps into the notch and calls back with the answer. Plus a redesigned Focus timer and Inbox.", url: "https://github.com/Louis-CFM/coucou/pull/578", video: "/assets/contributions/coucou-mochi.mp4" }
   ],
   claude: [
     { kind: "skill", title: "Rapid Skill Sprint", desc: "Learn any skill to functional competence in 2 hours, inside Claude. Coach Sprint plans the sprint, finds verified best-of YouTube videos and real certifications, drills you with feedback, tracks it on a live dashboard and talks back through ElevenLabs. A sub-skill only counts as learned after you pass it twice.", url: "https://github.com/MithunSidhaarth/rapid-skill-sprint", license: "MIT", video: "/assets/claude/rapid-skill-sprint.mp4" },
