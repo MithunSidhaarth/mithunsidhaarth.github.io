@@ -592,6 +592,18 @@ a.sec-meta:hover { color: var(--hacker-red); }
 .row-arrow { grid-row: 1; grid-column: 3; font-family: var(--term-font); color: var(--muted); transition: transform 0.4s ease, color 0.2s; }
 .row-item a:hover .row-arrow { color: var(--hacker-red); transform: translateX(4px); }
 
+/* claude section */
+.claude-lede { max-width: 62ch; color: var(--muted); font-size: 1rem; line-height: 1.55; margin: 0 0 8px; }
+.claude-meta { font: 500 0.72rem var(--term-font); letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin: 0 0 22px; }
+.ctag { display: inline-block; overflow: visible; text-overflow: clip; max-width: none; margin-right: 12px; padding: 3px 7px; border: 1px solid var(--hacker-red); color: var(--hacker-red); font: 700 0.62rem var(--term-font); letter-spacing: 1.5px; text-transform: uppercase; vertical-align: 0.2em; }
+.claude-list .row-desc { -webkit-line-clamp: 3; }
+.vid-hint { margin-left: 14px; font: 500 0.62rem var(--term-font); letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); vertical-align: 0.25em; white-space: nowrap; }
+#vidpeek { position: fixed; left: 0; top: 0; width: min(420px, 70vw); aspect-ratio: 16 / 9; z-index: 60; pointer-events: none; opacity: 0; border: 1px solid var(--hacker-red); background: #000; box-shadow: 0 24px 60px rgba(0,0,0,0.55); transition: opacity 0.25s ease; }
+#vidpeek.on { opacity: 1; }
+#vidpeek video { display: block; width: 100%; height: 100%; object-fit: cover; }
+#vidpeek span { position: absolute; left: 8px; top: 8px; padding: 3px 6px; background: var(--hacker-red); color: #fff; font: 700 0.6rem var(--term-font); letter-spacing: 1.5px; }
+@media (hover: none) { #vidpeek, .vid-hint { display: none; } }
+
 /* about */
 .about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 64px; align-items: start; }
 .about-bio { font-size: clamp(1.25rem, 2vw, 1.75rem); line-height: 1.45; letter-spacing: -0.01em; margin: 0; }
@@ -684,7 +696,7 @@ html.reveal-on .work-card.in .work-media { clip-path: inset(0 0 0 0 round 14px);
 .desk-icon:hover { background: rgba(255,51,51,0.08); }
 .desk-icon:focus-visible { outline: 1px dashed var(--hacker-red); }
 .di-num { position: absolute; top: 4px; left: 6px; font: 500 0.58rem var(--term-font); color: var(--hacker-red); }
-.di-label { font: 500 0.66rem var(--term-font); color: var(--muted); letter-spacing: 0.3px; }
+.di-label { font: 500 0.66rem var(--term-font); color: var(--muted); letter-spacing: 0.3px; white-space: nowrap; }
 .desk-icon:hover .di-label { color: var(--text); }
 .di-glyph { position: relative; width: 38px; height: 30px; }
 .di-glyph.folder { background: linear-gradient(180deg, #3a1414, #250b0b); border: 1px solid rgba(255,51,51,0.55); border-radius: 3px 5px 5px 5px; margin-top: 5px; }
@@ -739,7 +751,7 @@ html.reveal-on .work-card.in .work-media { clip-path: inset(0 0 0 0 round 14px);
 @media (max-width: 1000px) {
   #hero.desktop { height: auto; min-height: 0; overflow: visible; display: flex; flex-direction: column; gap: 18px; padding: 60px clamp(16px, 4vw, 48px) 24px; }
   #hero.desktop::before { display: none; }
-  .desk-icons { position: static; order: 1; grid-template-columns: repeat(6, 74px); overflow-x: auto; gap: 6px; padding-bottom: 4px; }
+  .desk-icons { position: static; order: 1; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(70px, max-content); overflow-x: auto; gap: 6px; padding-bottom: 4px; }
   .dm-wrap { position: static; order: 0; text-align: left; }
   #hero #name.dm { font-size: 13.5vw; white-space: normal; display: block; background-size: 5px 5px; }
   .win, #readme, #hero #terminal { position: relative; left: auto; right: auto; top: auto; width: auto; order: 2; }
@@ -799,7 +811,9 @@ html.reveal-on .work-card.in .work-media { clip-path: inset(0 0 0 0 round 14px);
 .hb-center { transition: opacity 0.3s ease, transform 0.3s ease; }
 
 @media (max-width: 900px) {
-  .ascii-hero .desk-icons { left: 12px; right: 12px; top: 80px; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 72px; gap: 4px; overflow-x: auto; }
+  /* each column as wide as its label ("contributions/" is wider than 72 px), the row scrolls */
+  .ascii-hero .desk-icons { left: 12px; right: 12px; top: 80px; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(64px, max-content); gap: 4px; overflow-x: auto; scrollbar-width: none; }
+  .ascii-hero .desk-icons::-webkit-scrollbar { display: none; }
   .ascii-hero .desk-icons .di-num { display: none; }
   .ascii-hero #ascii { left: 0; width: 100%; top: 160px; bottom: auto; height: 32vh; }
   .hero-top .ht-right { display: none; }
@@ -884,7 +898,7 @@ html.reveal-on .work-card.in .work-media { clip-path: inset(0 0 0 0 round 14px);
   #hero.ascii-hero { height: auto; min-height: 100svh; display: flex; flex-direction: column; gap: 14px; padding: 54px 16px 26px; overflow: visible; }
   #hero.ascii-hero .hero-top, .ascii-hero .desk-icons, .ascii-hero .hero-bottom { position: static; }
   #hero.ascii-hero .hero-top .ht-extra { display: none; }
-  #hero.ascii-hero .desk-icons { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); grid-template-columns: none; gap: 2px; overflow-x: auto; scrollbar-width: none; margin: 0 -6px; }
+  #hero.ascii-hero .desk-icons { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(max-content, 1fr); grid-template-columns: none; gap: 2px; overflow-x: auto; scrollbar-width: none; margin: 0 -6px; }
   #hero.ascii-hero .desk-icons::-webkit-scrollbar { display: none; }
   #hero.ascii-hero .desk-icon { padding: 6px 2px; }
   #hero.ascii-hero .di-label { font-size: 0.5rem; letter-spacing: 0; white-space: nowrap; }
@@ -1114,6 +1128,8 @@ html.lenis, html.lenis body { height: auto; }
   <span class="nav-os">MithunOS</span>
   <nav class="nav-links" aria-label="Sections">
     <a href="#work">Work</a>
+    <a href="#claude">Claude</a>
+    <a href="#contributions">Contributions</a>
     <a href="#writing">Writing</a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
@@ -1132,11 +1148,13 @@ html.lenis, html.lenis body { height: auto; }
   <h1 id="name" class="sr-only">Mithun Sidhaarth</h1>
   <nav class="desk-icons" aria-label="Desktop">
     <a class="desk-icon" href="#work"><span class="di-num">01</span><span class="di-glyph folder" aria-hidden="true"></span><span class="di-label">work/</span></a>
-    <a class="desk-icon" href="#writing"><span class="di-num">02</span><span class="di-glyph folder" aria-hidden="true"></span><span class="di-label">writing/</span></a>
-    <a class="desk-icon" href="#about"><span class="di-num">03</span><span class="di-glyph file" aria-hidden="true"></span><span class="di-label">about.txt</span></a>
-    <a class="desk-icon" href="#contact"><span class="di-num">04</span><span class="di-glyph file" aria-hidden="true"></span><span class="di-label">contact.sh</span></a>
-    <a class="desk-icon" href="/resume.pdf" data-resume><span class="di-num">05</span><span class="di-glyph file pdf" aria-hidden="true"></span><span class="di-label">resume.pdf</span></a>
-    <a class="desk-icon" href="#hero" data-open-console><span class="di-num">06</span><span class="di-glyph app" aria-hidden="true"></span><span class="di-label">terminal.app</span></a>
+    <a class="desk-icon" href="#claude"><span class="di-num">02</span><span class="di-glyph folder" aria-hidden="true"></span><span class="di-label">claude/</span></a>
+    <a class="desk-icon" href="#contributions"><span class="di-num">03</span><span class="di-glyph folder" aria-hidden="true"></span><span class="di-label">contributions/</span></a>
+    <a class="desk-icon" href="#writing"><span class="di-num">04</span><span class="di-glyph folder" aria-hidden="true"></span><span class="di-label">writing/</span></a>
+    <a class="desk-icon" href="#about"><span class="di-num">05</span><span class="di-glyph file" aria-hidden="true"></span><span class="di-label">about.txt</span></a>
+    <a class="desk-icon" href="#contact"><span class="di-num">06</span><span class="di-glyph file" aria-hidden="true"></span><span class="di-label">contact.sh</span></a>
+    <a class="desk-icon" href="/resume.pdf" data-resume><span class="di-num">07</span><span class="di-glyph file pdf" aria-hidden="true"></span><span class="di-label">resume.pdf</span></a>
+    <a class="desk-icon" href="#hero" data-open-console><span class="di-num">08</span><span class="di-glyph app" aria-hidden="true"></span><span class="di-label">terminal.app</span></a>
   </nav>
   <div class="hero-top">
     <span><b>(00)</b> MithunOS v30<span class="ht-extra"> &nbsp;/ &nbsp;interactive portfolio</span></span>
@@ -1197,8 +1215,21 @@ html.lenis, html.lenis body { height: auto; }
   </section>
   <div class="vmarq" id="vm1" data-dir="-1" aria-hidden="true"></div>
 
+  <section id="claude" class="sec">
+    <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">02</span> ~/mithun $ <span class="typed" style="--n:25">ls ./claude --open-source</span></span><h2>Claude</h2><a class="sec-meta" href="https://github.com/MithunSidhaarth" target="_blank" rel="noopener">GitHub &nearr;</a></div>
+    <p class="claude-lede" data-reveal>Skills, plugins and connectors I build for Claude and release as open source. Giving back to the community that taught me.</p>
+    <p class="claude-meta" id="claude-meta" data-reveal></p>
+    <ul id="list-claude" class="row-list claude-list"></ul>
+  </section>
+
+  <section id="contributions" class="sec">
+    <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">03</span> ~/mithun $ <span class="typed" style="--n:28">git log --author=mithun --oss</span></span><h2>Contributions</h2><a class="sec-meta" href="https://github.com/MithunSidhaarth" target="_blank" rel="noopener">GitHub &nearr;</a></div>
+    <p class="claude-lede" data-reveal>Pull requests to open-source projects I use and love.</p>
+    <ul id="list-contrib" class="row-list claude-list"></ul>
+  </section>
+
   <section id="writing" class="sec">
-    <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">02</span> ~/mithun $ <span class="typed" style="--n:18">cat ./writing/*.md</span></span><h2>Writing</h2><a class="sec-meta" href="https://mithunsidhaarth.substack.com" target="_blank" rel="noopener">Substack &nearr;</a></div>
+    <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">04</span> ~/mithun $ <span class="typed" style="--n:18">cat ./writing/*.md</span></span><h2>Writing</h2><a class="sec-meta" href="https://mithunsidhaarth.substack.com" target="_blank" rel="noopener">Substack &nearr;</a></div>
     <ul id="list-blogs" class="row-list"></ul>
     <div class="sub-head" data-reveal>Research</div>
     <ul id="list-research" class="row-list"></ul>
@@ -1206,7 +1237,7 @@ html.lenis, html.lenis body { height: auto; }
 
   <div class="vmarq" id="vm2" data-dir="1" aria-hidden="true"></div>
   <section id="about" class="sec">
-    <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">03</span> ~/mithun $ <span class="typed" style="--n:6">whoami</span></span><h2>About</h2></div>
+    <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">05</span> ~/mithun $ <span class="typed" style="--n:6">whoami</span></span><h2>About</h2></div>
     <div class="about-grid" data-reveal>
       <p class="about-bio" id="bio-typewriter"></p>
       <div><div class="sub-head" style="margin-top:0">Works across</div><ul id="list-skills" class="stack-list"></ul></div>
@@ -1214,7 +1245,7 @@ html.lenis, html.lenis body { height: auto; }
   </section>
 
   <section id="contact" class="sec">
-    <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">04</span> ~/mithun $ <span class="typed" style="--n:11">mail mithun</span></span><h2>Contact</h2></div>
+    <div class="sec-head" data-reveal><span class="sec-cmd"><span class="sec-num">06</span> ~/mithun $ <span class="typed" style="--n:11">mail mithun</span></span><h2>Contact</h2></div>
     <div class="contact-grid">
       <a class="contact-big" href="mailto:mithunsidhaartham@gmail.com" aria-label="Let's build something real. Email Mithun">Let's build<br>something <em>real.</em></a>
       <form class="mailer panel win" id="mailer" novalidate>
@@ -1513,6 +1544,16 @@ const bioElement = document.getElementById("bio-typewriter");
 bioElement.textContent = bioText;
 let data={
   currentStatus: "Figuring out what to learn next w a bottle of omr",
+  contributions: [
+    { kind: "PR", title: "Coucou for Windows", repo: "Louis-CFM/coucou", desc: "Took Louis Raillé's open-source notch companion further on Windows: Apple Music, Spotify and any-player pills from the system media controls, volume, brightness and battery live activities in the island, chatting with a Claude Pro plan through the Claude Code CLI with no API key (drop a PDF on the notch and ask about it), a calendar pill from any iCal link, and an island that stays on top. Event-driven Rust + TypeScript, tested and translated into 10 languages.", url: "https://github.com/Louis-CFM/coucou/pull/418", video: "/assets/contributions/coucou-mochi.mp4" },
+    { kind: "PR", title: "Coucou: iPhone without a Mac", repo: "Louis-CFM/coucou", desc: "A follow-up PR connecting an iPhone to the Windows notch with no Mac: links and text both ways through iCloud Drive, phone alerts via ntfy when Claude finishes, iPhone calls (with the caller's name and a ring, answered or declined right from the notch) and messages from Phone Link shown in the island, and alerts when Claude finishes or its limits reset. Plus Focus (any length), To-do and Inbox tabs in the notch, 8 pills on two sliding pages and a mini player with play/pause and next in the compact notch.", url: "https://github.com/Louis-CFM/coucou/pull/432", video: "/assets/contributions/coucou-mochi.mp4" },
+    { kind: "PR", title: "Coucou: Maki, a voice for Mochi", repo: "Louis-CFM/coucou", desc: "Say \"Maki\" and Mochi talks back: an on-device wake word opens a live ElevenLabs voice agent, and Mochi becomes its face, listening, thinking, bobbing as it speaks and wearing its moods. It plays songs by name on YouTube or Apple Music, opens installed apps, sets reminders, pings the phone through ntfy, locks the screen, and shows Claude plan and ElevenLabs credit usage. Heavier work goes to a local Hermes agent that runs in the background, streams its steps into the notch and calls back with the answer. Plus a redesigned Focus timer and Inbox.", url: "https://github.com/Louis-CFM/coucou/pull/578", video: "/assets/contributions/coucou-mochi.mp4" }
+  ],
+  claude: [
+    { kind: "skill", title: "Rapid Skill Sprint", desc: "Learn any skill to functional competence in 2 hours, inside Claude. Coach Sprint plans the sprint, finds verified best-of YouTube videos and real certifications, drills you with feedback, tracks it on a live dashboard and talks back through ElevenLabs. A sub-skill only counts as learned after you pass it twice.", url: "https://github.com/MithunSidhaarth/rapid-skill-sprint", license: "MIT", video: "/assets/claude/rapid-skill-sprint.mp4" },
+    { kind: "skill", title: "motionspec", desc: "Describe a video in JSON, get an MP4. The skill asks four questions, writes and checks the spec, shows a preview of every scene, then renders every shape (9:16, 4:5, 1:1, 16:9) with generated music, ElevenLabs or local narration and scenes that land on the spoken words. It critiques the cut before rendering and never publishes without your approval. Python engine, 20 scene types, themes, content-rule checks. Open source under MIT.", url: "https://github.com/MithunSidhaarth/motionspec", license: "MIT", video: "/assets/claude/motionspec.mp4" },
+    { kind: "skill", title: "Claude Call Me", desc: "Walk away, Claude calls you. A real voice agent phones you when Claude needs a decision, calls with an update and next steps whenever a task ends and does what you pick live, and runs a daily standup call about yesterday's sessions. Built on Bolna; keys never touch the chat.", url: "https://github.com/MithunSidhaarth/claude-call-me", license: "MIT", video: "/assets/claude/claude-call-me.mp4" }
+  ],
   projects:[
     {title:"NeuraSpace", img:"/assets/projects/neuraspace.webp", tags:["React","Motion system","Particle rendering"], demo:"https://neuraspace.online", blog:"https://methxd.hashnode.dev/neuraspace-engineering-a-living-computational-interface", desc:"An experiment in making the interface itself feel alive, a spatial, particle-driven environment built with a component-driven React layer and a dedicated motion/rendering system, where pointer movement, depth, and interpolation communicate state instead of static UI elements. The long-term goal is to host an AI presence inside this environment rather than a conventional chat window."},
     {title:"Eden", img:"/assets/projects/eden.webp", tags:["AI agent","Tool calling","Tasks + calendar"], demo:"https://edenconsole.netlify.app", blog:"https://methxd.hashnode.dev/eden-building-an-ai-assistant-for-my-everyday-life", desc:"A still-in-progress AI assistant meant to go beyond a chatbot, it's built as an agent that picks from a set of tools (tasks, reminders, calendar, weather) which the app validates and executes, aiming to eventually summarize 'what actually matters today' rather than dumping every task on the user."},
@@ -1520,7 +1561,8 @@ let data={
     {title:"Portfolio Console", img:"/assets/screen.webp", tags:["Vanilla JS","Three.js","Terminal UI"], demo:"https://mithunsidhaarth.in", blog:"https://methxd.hashnode.dev/building-my-portfolio-os-a-personal-system-for-thinking-creating-and-growing", desc:"A terminal-styled personal portfolio built as an interactive system rather than a static page, command-line style navigation, a modal reading system for content, and theme controls, designed around structure and interaction over decoration."},
     {title:"Aeris", img:"/assets/projects/aeris.webp", tags:["Sentinel-2","Remote sensing","Change detection"], demo:"http://aeris.de5.net", blog:"https://methxd.hashnode.dev/building-aeris-from-satellite-imagery-to-an-earth-observation-intelligence-platform", desc:"An earth observation intelligence platform that turns raw satellite imagery into usable insight, bridging remote sensing data with an accessible analysis layer for tracking and understanding change on the ground."},
     {title:"OutreachOS", img:"/assets/projects/outreachos.webp", tags:["Self-hosted CRM","Gmail","AI drafts"], demo:"https://outreach.de5.net", blog:"", desc:"A self-hosted CRM for founder and internship outreach, with Gmail-native sending, AI-personalized drafts, contact discovery, reply classification, and cooldown-aware pacing."},
-    {title:"Ravel", img:"/assets/projects/ravel.webp", tags:["Chrome MV3","TypeScript","Local-only"], demo:"https://ravel.runs-on.dev", blog:"", desc:"A Chrome extension that lets you close any tab without losing your place. It groups open tabs into threads, flags the ones that have gone quiet, and keeps every closed thread as a searchable spool you can reopen later. Everything runs on your device with no network requests, and the code is open source under MIT."}
+    {title:"Ravel", img:"/assets/projects/ravel.webp", tags:["Chrome MV3","TypeScript","Local-only"], demo:"https://ravel.runs-on.dev", blog:"", desc:"A Chrome extension that lets you close any tab without losing your place. It groups open tabs into threads, flags the ones that have gone quiet, and keeps every closed thread as a searchable spool you can reopen later. Everything runs on your device with no network requests, and the code is open source under MIT."},
+    {title:"Cue", img:"/assets/projects/cue.jpg", tags:["Tauri 2","Rust","Windows"], demo:"https://cue.mithunsidhaarth.in", blog:"", desc:"A notch for Windows that lives at the top of the screen, with Tock, an amber capsule character, living in it. It approves what coding agents like Claude Code, Codex and Copilot CLI ask for, shows their live builds and a receipt when they finish, controls whatever is playing with synced lyrics, answers Phone Link calls and messages, and talks to an assistant by text or voice. Built with Tauri 2 and Rust, with keys kept in the Windows Credential Manager and no telemetry. Source on GitHub: github.com/MithunSidhaarth/cue-notch."}
   ],
 blogs:[
   {
@@ -1602,7 +1644,7 @@ blogs:[
     {name: "Business & Financial Strategy", level: 76},
     {name: "Systems Thinking", level: 91}
   ],
-  commands: ["help","ask","work","writing","about","whoami","contact","theme","clear","resume","hack","matrix","ls","cd","open","music","demo","blog","read"]
+  commands: ["help","ask","work","claude","writing","about","whoami","contact","theme","clear","resume","hack","matrix","ls","cd","open","music","demo","blog","read"]
 };
 
 /* ================= ASK MITHUN — client-side grounded assistant =================
@@ -1638,6 +1680,8 @@ function askBuildCorpus(){
   data.projects.forEach((p,i)=> c.push({cat:"projects", idx:i, title:p.title, text:`${p.title}. ${p.desc||""}`, url:p.demo||p.blog}));
   data.blogs.forEach((b,i)=> c.push({cat:"blogs", idx:i, title:b.title, text:`${b.title}. ${b.desc||""}`, url:b.link}));
   data.research.forEach((r,i)=> c.push({cat:"research", idx:i, title:r.title, text:`${r.title}. ${r.desc||""}`, url:r.link}));
+  data.contributions.forEach((x,i)=> c.push({cat:"contributions", idx:i, title:x.title, text:`${x.title}. Open-source contribution to ${x.repo}. ${x.desc||""}`, url:x.url}));
+  data.claude.forEach((x,i)=> c.push({cat:"claude", idx:i, title:x.title, text:`${x.title}. Claude ${x.kind}, open source. ${x.desc||""}`, url:x.url}));
   data.skills.forEach(s=> c.push({cat:"skills", title:s.name, text:`${s.name}`, url:null, level:s.level}));
   return c;
 }
@@ -1684,7 +1728,7 @@ const ASK_SAMPLES = [
   "is he more builder or writer?"
 ];
 function catTag(cat) {
-    return { projects: "PROJ", blogs: "BLOG", research: "RSCH" }[cat] || cat.slice(0,4).toUpperCase();
+    return { projects: "PROJ", blogs: "BLOG", research: "RSCH", claude: "CLDE" }[cat] || cat.slice(0,4).toUpperCase();
 }
 function firstSentence(t) { const m = (t || "").match(/^.*?[.!?](\s|$)/); return m ? m[0].trim() : (t || ""); }
 function renderLeftPanel() {
@@ -1715,6 +1759,25 @@ function renderLeftPanel() {
               ${it.desc ? `<span class="row-desc">${it.desc}</span>` : ''}
             </a></li>`).join('');
     };
+    document.getElementById('list-claude').innerHTML = data.claude.map((it, i) => `<li class="row-item"${it.video ? ` data-video="${it.video}"` : ''} data-reveal>
+            <a href="${it.url}" target="_blank" rel="noopener">
+              <span class="row-num">${String(i + 1).padStart(2, '0')}</span>
+              <span class="row-title"><span class="ctag">${it.kind}</span>${it.title}${it.video ? '<span class="vid-hint">&#9654; hover to preview</span>' : ''}</span>
+              <span class="row-arrow">&nearr;</span>
+              <span class="row-desc">${it.desc}</span>
+            </a></li>`).join('') + `<li class="row-item" data-reveal><a href="https://github.com/MithunSidhaarth?tab=repositories&q=claude" target="_blank" rel="noopener">
+              <span class="row-num">&middot;&middot;</span><span class="row-title">More on the way</span><span class="row-arrow">&nearr;</span>
+              <span class="row-desc">Plugins and connectors land here as I ship them. Watch GitHub.</span></a></li>`;
+    document.getElementById('list-contrib').innerHTML = data.contributions.map((it, i) => `<li class="row-item"${it.video ? ` data-video="${it.video}"` : ''} data-reveal>
+            <a href="${it.url}" target="_blank" rel="noopener">
+              <span class="row-num">${String(i + 1).padStart(2, '0')}</span>
+              <span class="row-title"><span class="ctag">${it.kind}</span>${it.title} <span class="ctag">${it.repo}</span>${it.video ? '<span class="vid-hint">&#9654; hover to meet Mochi</span>' : ''}</span>
+              <span class="row-arrow">&nearr;</span>
+              <span class="row-desc">${it.desc}</span>
+            </a></li>`).join('');
+    const kinds = ['skill', 'plugin', 'connector'], cnt = k => data.claude.filter(x => x.kind === k).length;
+    const openSrc = data.claude.filter(x => /^(MIT|Apache|BSD|GPL|MPL)/i.test(x.license || '')).length, total = data.claude.length;
+    document.getElementById('claude-meta').textContent = kinds.filter(cnt).map(k => `${cnt(k)} ${k}${cnt(k) > 1 ? 's' : ''}`).join(' · ') + (openSrc === total ? ' · all open source' : ` · ${openSrc} open source · ${total - openSrc} source-available`);
     rows('list-blogs', 'blogs');
     rows('list-research', 'research');
     document.getElementById('list-skills').innerHTML = data.skills.map((sk, i) => `<li>${sk.name}<span>${String(i + 1).padStart(2, '0')}</span></li>`).join('');
@@ -2227,6 +2290,38 @@ function renderMarquee() {
     const doubled = tags.concat(tags);
     track.innerHTML = doubled.map(t => `<span class="marquee-tag">${t}</span>`).join('');
 }
+/* hover a Claude skill and its video plays beside the cursor (data-video on the row) */
+(function claudePeek() {
+    const lists = ["list-claude", "list-contrib"].map(id => document.getElementById(id)).filter(Boolean);
+    if (!lists.length || !matchMedia("(hover: hover)").matches || (typeof MOTION !== "undefined" && !MOTION)) return;
+    const box = document.createElement("div"); box.id = "vidpeek"; box.setAttribute("aria-hidden", "true");
+    const v = document.createElement("video"); v.muted = true; v.loop = true; v.playsInline = true; v.preload = "none";
+    const tag = document.createElement("span"); tag.textContent = "PREVIEW";
+    box.append(v, tag); document.body.append(box);
+    let cur = null;
+    const place = e => {
+        const w = box.offsetWidth, h = box.offsetHeight;
+        let x = e.clientX + 28, y = e.clientY + 24;
+        if (x + w > innerWidth - 16) x = e.clientX - w - 28;
+        if (y + h > innerHeight - 16) y = innerHeight - h - 16;
+        box.style.transform = `translate3d(${Math.max(8, x)}px,${Math.max(8, y)}px,0)`;
+    };
+    for (const list of lists) {
+    list.addEventListener("pointerover", e => {
+        const li = e.target.closest("[data-video]");
+        if (!li || li === cur) return;
+        cur = li;
+        if (v.getAttribute("src") !== li.dataset.video) v.src = li.dataset.video;
+        v.currentTime = 0; v.play().catch(() => {});
+        box.classList.add("on"); place(e);
+    });
+    list.addEventListener("pointermove", e => { if (cur) place(e); });
+    list.addEventListener("pointerout", e => {
+        if (!cur || (e.relatedTarget && cur.contains(e.relatedTarget))) return;
+        cur = null; box.classList.remove("on"); v.pause();
+    });
+    }
+})();
 renderLeftPanel();
 function renderAskChips(){
     const row = document.getElementById('ask-chip-row');
@@ -2555,7 +2650,8 @@ function toggleAudio() {
 function handle(cmd){
   if(cmd && cmd !== cmdHistory[cmdHistory.length-1]){ cmdHistory.push(cmd); historyIndex = cmdHistory.length; }
   const p = (str) => str.padEnd(12, ' ');
-  if(cmd==="help") return print(`COMMANDS\n--------\n${p("work")} Jump to projects\n${p("writing")} Jump to essays\n${p("whoami")} About me\n${p("contact")} Get in touch\n${p("ls")} List files\n${p("cd [dir]")} Change dir\n${p("open [id]")} Open a case study (projects by default)\n${p("ask [q]")} Ask about Mithun (grounded, on-page data)\n${p("resume")} PDF Resume\n${p("hack")} Simulation\n${p("music")} Play/Pause\n${p("matrix")} Matrix Mode\n${p("theme")} Light/Dark`);
+  if(cmd==="help") return print(`COMMANDS\n--------\n${p("work")} Jump to projects\n${p("claude")} Open-source Claude skills
+${p("writing")} Jump to essays\n${p("whoami")} About me\n${p("contact")} Get in touch\n${p("ls")} List files\n${p("cd [dir]")} Change dir\n${p("open [id]")} Open a case study (projects by default)\n${p("ask [q]")} Ask about Mithun (grounded, on-page data)\n${p("resume")} PDF Resume\n${p("hack")} Simulation\n${p("music")} Play/Pause\n${p("matrix")} Matrix Mode\n${p("theme")} Light/Dark`);
   if(cmd==="ask") return print(`Usage: ask [question]\ne.g. ask does he have backend experience`);
   if(cmd.startsWith("ask ")) return print(askAssistant(cmd.slice(4).trim()));
   if(cmd.startsWith("cd")){
@@ -2570,7 +2666,7 @@ function handle(cmd){
       if(currentDirectory === "root") return print("drwx------ projects/\ndrwx------ blogs/\ndrwx------ research/\n-r--r--r-- resume.pdf");
       return print(data[currentDirectory].map((item, i) => `[${i+1}] ${item.title}`).join("\n"));
   }
-  const JUMP = { work: "work", projects: "work", writing: "writing", blogs: "writing", research: "writing", about: "about", contact: "contact", mail: "contact" };
+  const JUMP = { work: "work", projects: "work", claude: "claude", skills: "claude", plugins: "claude", connectors: "claude", writing: "writing", blogs: "writing", research: "writing", about: "about", contact: "contact", mail: "contact" };
   if(JUMP[cmd]) { closeConsole(); setTimeout(() => goTo(document.getElementById(JUMP[cmd])), 250); return print(`> cd ./${JUMP[cmd]}`); }
   if(cmd === "whoami") return print(bioText);
   if(cmd.startsWith("open")){
