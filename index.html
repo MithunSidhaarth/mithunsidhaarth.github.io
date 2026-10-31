@@ -550,6 +550,8 @@ a.sec-meta:hover { color: var(--hacker-red); }
 .work-num { font: 500 0.78rem var(--term-font); color: var(--hacker-red); padding-top: 0.55em; }
 .work-title { font-size: clamp(1.5rem, 2.4vw, 2.2rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
 .work-line { grid-column: 2; color: var(--muted); font-size: 0.98rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.work-hack { position: absolute; left: 16px; bottom: 16px; z-index: 2; padding: 7px 12px; border-radius: 999px; background: rgba(10,10,10,0.82); border: 1px solid var(--hacker-red); color: #fff; font: 600 0.66rem var(--term-font); letter-spacing: 1.5px; text-transform: uppercase; backdrop-filter: blur(6px); }
+.work-hack-line { grid-column: 2; font: 600 0.7rem var(--term-font); letter-spacing: 1px; text-transform: uppercase; color: var(--hacker-red); }
 .work-tags { grid-column: 2; display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 .work-tags span { font: 500 0.66rem var(--term-font); letter-spacing: 0.5px; padding: 5px 10px; border-radius: 999px; border: 1px solid rgba(125,125,125,0.25); color: var(--muted); }
 
@@ -1535,7 +1537,8 @@ let data={
     {title:"Aeris", img:"/assets/projects/aeris.webp", tags:["Sentinel-2","Remote sensing","Change detection"], demo:"http://aeris.de5.net", blog:"https://methxd.hashnode.dev/building-aeris-from-satellite-imagery-to-an-earth-observation-intelligence-platform", desc:"An earth observation intelligence platform that turns raw satellite imagery into usable insight, bridging remote sensing data with an accessible analysis layer for tracking and understanding change on the ground."},
     {title:"OutreachOS", img:"/assets/projects/outreachos.webp", tags:["Self-hosted CRM","Gmail","AI drafts"], demo:"https://outreach.de5.net", blog:"", desc:"A self-hosted CRM for founder and internship outreach, with Gmail-native sending, AI-personalized drafts, contact discovery, reply classification, and cooldown-aware pacing."},
     {title:"Ravel", img:"/assets/projects/ravel.webp", tags:["Chrome MV3","TypeScript","Local-only"], demo:"https://ravel.runs-on.dev", blog:"", desc:"A Chrome extension that lets you close any tab without losing your place. It groups open tabs into threads, flags the ones that have gone quiet, and keeps every closed thread as a searchable spool you can reopen later. Everything runs on your device with no network requests, and the code is open source under MIT."},
-    {title:"Cue", img:"/assets/projects/cue.jpg", tags:["Tauri 2","Rust","Windows"], demo:"https://cue.mithunsidhaarth.in", blog:"", desc:"A notch for Windows that lives at the top of the screen, with Tock, an amber capsule character, living in it. It approves what coding agents like Claude Code, Codex and Copilot CLI ask for, shows their live builds and a receipt when they finish, controls whatever is playing with synced lyrics, answers Phone Link calls and messages, and talks to an assistant by text or voice. Built with Tauri 2 and Rust, with keys kept in the Windows Credential Manager and no telemetry. Source on GitHub: github.com/MithunSidhaarth/cue-notch."}
+    {title:"Cue", img:"/assets/projects/cue.jpg", tags:["Tauri 2","Rust","Windows"], demo:"https://cue.mithunsidhaarth.in", blog:"", desc:"A notch for Windows that lives at the top of the screen, with Tock, an amber capsule character, living in it. It approves what coding agents like Claude Code, Codex and Copilot CLI ask for, shows their live builds and a receipt when they finish, controls whatever is playing with synced lyrics, answers Phone Link calls and messages, and talks to an assistant by text or voice. Built with Tauri 2 and Rust, with keys kept in the Windows Credential Manager and no telemetry. Source on GitHub: github.com/MithunSidhaarth/cue-notch."},
+    {title:"Provenant", img:"/assets/projects/provenant.webp", tags:["Python","MCP","Claude Code","Phone alerts","Inbox watch"], hackathon:"PARALLAX 2026 · AgentShield track", team:"Team Parivartan", demo:"https://theprovenant.vercel.app", code:"https://github.com/MithunSidhaarth/provenant", blog:"", desc:"A hackathon project, built with Team Parivartan for PARALLAX 2026 (AgentShield track): a firewall that sits between AI agents and their tools. Every tool call an agent proposes goes through one deterministic policy point that returns ALLOW, DENY or REQUIRE_APPROVAL, with no model in the loop, so an agent fooled by injected instructions still cannot do damage. Values that came from content the agent read, like an email or a web page, can never become a recipient, a path or a command. Allowed calls get single-use grants bound to their exact arguments, risky calls wait for a named person in the terminal or by phone, and every decision goes into a hash-chained audit log. It also watches a real Gmail inbox over read-only IMAP, scans every new email, shows the gate denying any send the email tries to inject, and rings your phone for high-risk mail, where a voice agent reads a 4-digit code: say it back to keep the email, otherwise it moves to Trash. It runs in front of real tools as an MCP proxy or as Claude Code hooks, uses only the Python standard library, and contained all 231 attacks in its scripted red-team eval with no false positives on 53 legitimate actions. Its own tool server also trims tool output, using about 73% fewer tool-result tokens on one scripted benchmark. Source on GitHub: github.com/MithunSidhaarth/provenant."}
   ],
 blogs:[
   {
@@ -1712,10 +1715,11 @@ function renderLeftPanel() {
         const p = data.projects[i];
         return `<li class="work-card${pos === 0 ? ' featured' : ''}" data-reveal>
             <a href="${routePath('projects', i)}" onclick="return handleCardClick(event,'projects',${i})" aria-label="${p.title}: open case study">
-              <div class="work-media"><div class="win-bar"><i></i><i></i><i></i><span>${(p.demo || '').replace(/^https?:\/\//, '').replace(/\/$/, '')}</span></div>${p.img ? `<img src="${p.img}" alt="${p.title} screenshot" loading="lazy" decoding="async">` : ''}<span class="work-open">OPEN CASE &nearr;</span></div>
+              <div class="work-media"><div class="win-bar"><i></i><i></i><i></i><span>${(p.demo || '').replace(/^https?:\/\//, '').replace(/\/$/, '')}</span></div>${p.img ? `<img src="${p.img}" alt="${p.title} screenshot" loading="lazy" decoding="async">` : ''}${p.hackathon ? `<span class="work-hack">Hackathon project</span>` : ''}<span class="work-open">OPEN CASE &nearr;</span></div>
               <div class="work-info">
                 <span class="work-num">${String(i + 1).padStart(2, '0')}</span>
                 <span class="work-title">${p.title}</span>
+                ${p.hackathon ? `<span class="work-hack-line">Hackathon project &middot; ${p.hackathon}${p.team ? ` &middot; ${p.team}` : ''}</span>` : ''}
                 <span class="work-line">${firstSentence(p.desc)}</span>
                 <span class="work-tags">${(p.tags || []).map(t => `<span>${t}</span>`).join('')}</span>
               </div>
@@ -2439,9 +2443,11 @@ function openDetailModal(category, index, pushUrl = true) {
         ? `<a class="btn${primary ? ' primary' : ''}" href="${url}" target="_blank" rel="noopener">${label} &nearr;</a>` : '';
     let actions, meta = '';
     if (category === 'projects') {
-        actions = (ext(item.demo, 'Visit live project', true) || `<span class="btn" aria-disabled="true">Coming soon</span>`) + ext(item.blog, 'Read the build log');
+        actions = (ext(item.demo, 'Visit live project', true) || `<span class="btn" aria-disabled="true">Coming soon</span>`) + ext(item.code, 'View source') + ext(item.blog, 'Read the build log');
         meta = `<dl class="case-meta">
             <div><dt>Index</dt><dd>${String(index + 1).padStart(2, '0')} / ${String(list.length).padStart(2, '0')}</dd></div>
+            ${item.hackathon ? `<div><dt>Type</dt><dd>Hackathon project</dd></div><div><dt>Event</dt><dd>${item.hackathon}</dd></div>` : ''}
+            ${item.team ? `<div><dt>Team</dt><dd>${item.team}</dd></div>` : ''}
             ${item.tags ? `<div><dt>Built with</dt><dd>${item.tags.join(' · ')}</dd></div>` : ''}
             ${item.demo && item.demo !== '#' ? `<div><dt>Live</dt><dd>${item.demo.replace(/^https?:\/\//, '')}</dd></div>` : ''}
           </dl>`;
@@ -2453,7 +2459,7 @@ function openDetailModal(category, index, pushUrl = true) {
         ${item.img ? `<div class="case-hero"><img src="${item.img}" alt="${item.title} screenshot"></div>` : ''}
         <div class="case-grid">
           <div>
-            <div class="detail-kicker">${kicker}</div>
+            <div class="detail-kicker">${item.hackathon ? `Hackathon project &middot; ${item.hackathon}` : kicker}</div>
             <h2 class="case-title">${item.title}</h2>
             ${item.desc ? `<p class="detail-intro">${item.desc}</p>` : ''}
             <div class="detail-actions">${actions}</div>
